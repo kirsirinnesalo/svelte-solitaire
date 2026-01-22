@@ -135,6 +135,11 @@ export function dealCards(state: AcesUpState): MoveResult {
  * Check if the game is won (only 4 aces remaining)
  */
 export function isGameWon(state: AcesUpState): boolean {
+  // Game is won only if stock is empty AND only 4 aces remain
+  if (state.stock.length > 0) {
+    return false; // Still cards to deal
+  }
+  
   // Should have exactly 4 cards left, all aces
   let totalCards = 0;
   let aceCount = 0;

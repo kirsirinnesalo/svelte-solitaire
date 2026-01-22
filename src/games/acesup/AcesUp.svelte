@@ -416,13 +416,8 @@
     transition: box-shadow 0.2s;
   }
 
-  .card-in-pile.draggable-wrapper:hover {
-    box-shadow: 0 0 0 2px rgba(255, 255, 255, 0.5);
-  }
-
   .card-in-pile.can-remove {
     box-shadow: 0 0 0 3px #4CAF50;
-    border-radius: 8px;
   }
 
   .pile {

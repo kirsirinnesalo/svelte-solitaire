@@ -1,0 +1,686 @@
+<script lang="ts">
+  import { createEventDispatcher } from 'svelte';
+  import { createDeck, shuffleDeck } from '../../lib/cardUtils';
+  import type { Card } from '../../types/game';
+  import CardComponent from '../../components/CardComponent.svelte';
+  import { moveCard, isGameWon, isGameLost, type KlondikeState } from './klondikeRules';
+
+  const dispatch = createEventDispatcher();
+
+  let state: KlondikeState = {
+    tableau: [],
+    foundations: [[], [], [], []],
+    stock: [],
+    waste: []
+  };
+  let moves = 0;
+  let isWon = false;
+  let isLost = false;
+  let gameStarted = false;
+  let firstGameStarted = false; // Track if first game has been started
+  let drawCount: 1 | 3 = 1; // Number of cards to draw from stock (setting)
+  let activeDrawCount: 1 | 3 = 1; // Active draw count for current game
+  let recycleCount = 0; // Track stock recycling (only for drawCount = 1)
+  let history: { state: KlondikeState; moves: number }[] = [];
+  let draggedCard: { type: 'tableau' | 'waste' | 'foundation', index: number, cardIndex?: number } | null = null;
+
+  function initGame() {
+    activeDrawCount = drawCount; // Lock in the draw count for this game
+    recycleCount = 0;
+    gameStarted = true;
+    firstGameStarted = true;
+    isLost = false;
+    const deck = shuffleDeck(createDeck());
+    const tableau: Card[][] = [];
+    
+    // Deal cards to tableau (7 piles)
+    let cardIndex = 0;
+    for (let i = 0; i < 7; i++) {
+      const pile: Card[] = [];
+      for (let j = 0; j <= i; j++) {
+        const card = deck[cardIndex++];
+        card.faceUp = j === i;
+        pile.push(card);
+      }
+      tableau.push(pile);
+    }
+    
+    // Remaining cards go to stock
+    state = {
+      tableau,
+      stock: deck.slice(cardIndex).map(card => ({ ...card, faceUp: false })),
+      waste: [],
+      foundations: [[], [], [], []]
+    };
+    moves = 0;
+    isWon = false;
+    recycleCount = 0;
+    history = [];
+    draggedCard = null;
+  }
+
+  function saveState() {
+    history = [...history, {
+      state: JSON.parse(JSON.stringify(state)),
+      moves
+    }];
+  }
+
+  function undo() {
+    if (history.length === 0 || isWon) return;
+    const previous = history[history.length - 1];
+    state = JSON.parse(JSON.stringify(previous.state));
+    moves = previous.moves;
+    history = history.slice(0, -1);
+    isWon = false;
+  }
+
+  function drawFromStock() {
+    saveState();
+    if (state.stock.length === 0) {
+      // Check recycle limit for 1-card draw mode
+      if (activeDrawCount === 1 && recycleCount >= 2) return; // Max 2 recycles (3 rounds total)
+      if (state.waste.length === 0) return; // Nothing to recycle
+      
+      // Reset stock from waste
+      state.stock = state.waste.reverse().map(card => ({ ...card, faceUp: false }));
+      state.waste = [];
+      recycleCount++;
+    } else {
+      // Draw 1 or 3 cards based on activeDrawCount setting
+      const cardsToDraw = Math.min(activeDrawCount, state.stock.length);
+      for (let i = 0; i < cardsToDraw; i++) {
+        const card = state.stock.pop()!;
+        card.faceUp = true;
+        state.waste.push(card);
+      }
+    }
+    state = state; // Trigger reactivity
+    moves++;
+  }
+
+  function handleDragStart(event: DragEvent, type: 'tableau' | 'waste' | 'foundation', index: number, cardIndex?: number) {
+    if (isWon || isLost) return;
+    draggedCard = { type, index, cardIndex };
+    if (event.dataTransfer) {
+      event.dataTransfer.effectAllowed = 'move';
+      event.dataTransfer.setData('text/plain', ''); // Required for Firefox
+    }
+  }
+
+  function handleDrop(event: DragEvent, toType: 'tableau' | 'foundation', toIndex: number) {
+    event.preventDefault();
+    if (!draggedCard) return;
+
+    const result = moveCard(state, draggedCard, { type: toType, index: toIndex });
+
+    if (result.valid && result.newState) {
+      saveState();
+      state = result.newState;
+      moves++;
+      checkWin();
+    }
+    
+    draggedCard = null;
+  }
+
+  function handleDragOver(event: DragEvent) {
+    event.preventDefault();
+    if (event.dataTransfer) {
+      event.dataTransfer.dropEffect = 'move';
+    }
+  }
+
+  function handleDoubleClick(type: 'tableau' | 'waste', index: number, cardIndex?: number) {
+    if (isWon || isLost) return;
+    // Try to move card to foundation first (priority)
+    for (let i = 0; i < 4; i++) {
+      const result = moveCard(
+        state,
+        { type, index, cardIndex },
+        { type: 'foundation', index: i }
+      );
+      
+      if (result.valid && result.newState) {
+        saveState();
+        state = result.newState;
+        moves++;
+        checkWin();
+        return;
+      }
+    }
+    
+    // If foundation didn't work, try tableau piles
+    for (let i = 0; i < 7; i++) {
+      // Skip moving to same pile
+      if (type === 'tableau' && i === index) continue;
+      
+      const result = moveCard(
+        state,
+        { type, index, cardIndex },
+        { type: 'tableau', index: i }
+      );
+      
+      if (result.valid && result.newState) {
+        saveState();
+        state = result.newState;
+        moves++;
+        checkWin();
+        return;
+      }
+    }
+  }
+
+  function checkWin() {
+    isWon = isGameWon(state);
+    isLost = !isWon && isGameLost(state, recycleCount, activeDrawCount);
+    
+    if (isWon) {
+      setTimeout(() => alert('Voitit pelin! 🎉'), 100);
+    } else if (isLost) {
+      setTimeout(() => alert('Peli päättyi. Ei enää siirtoja. 😔'), 100);
+    }
+  }
+
+  // Calculate dynamic card spacing based on pile length
+  function getCardSpacing(pileLength: number): number {
+    const maxHeight = 420; // Max available height for tableau cards
+    const cardHeight = 100; // Height of one card
+    const minSpacing = 15; // Minimum spacing between cards
+    const maxSpacing = 35; // Maximum spacing between cards
+    
+    if (pileLength <= 1) return maxSpacing;
+    
+    // Calculate required total height: (n-1) * spacing + cardHeight
+    const requiredHeight = cardHeight + (pileLength - 1) * maxSpacing;
+    
+    if (requiredHeight <= maxHeight) {
+      return maxSpacing;
+    }
+    
+    // Calculate adjusted spacing to fit within maxHeight
+    const spacing = Math.max(minSpacing, (maxHeight - cardHeight) / (pileLength - 1));
+    return Math.floor(spacing);
+  }
+</script>
+
+<div class="klondike">
+  <h1 class="game-title">Klondike</h1>
+  
+  <div class="game-header">
+    <button on:click={() => dispatch('back')} class="back-btn">← Takaisin</button>
+    <button on:click={undo} class="undo-btn" disabled={history.length === 0 || isWon || isLost || !gameStarted}>↶ Kumoa</button>
+    <div class="game-controls">
+      <div class="draw-toggle-container">
+        <span class="toggle-label">Nosta</span>
+        <div class="toggle-slider" class:three={drawCount === 3}>
+          <div class="slider-track">
+            <!-- svelte-ignore a11y-click-events-have-key-events -->
+            <div class="slider-option" on:click={() => drawCount = 1} role="button" tabindex="0">
+              <span class="slider-label">1</span>
+            </div>
+            <!-- svelte-ignore a11y-click-events-have-key-events -->
+            <div class="slider-option" on:click={() => drawCount = 3} role="button" tabindex="0">
+              <span class="slider-label">3</span>
+            </div>
+            <div class="slider-thumb"></div>
+          </div>
+        </div>
+      </div>
+      <button 
+        on:click={initGame} 
+        class="new-game-btn"
+      >
+        {firstGameStarted ? 'Uusi peli' : 'Aloita peli'}
+      </button>
+    </div>
+  </div>
+
+  <div class="game-area">
+    <!-- Stock and Waste -->
+    <div class="top-row">
+      <div class="stock-waste-wrapper">
+        <div class="stock-area">
+          {#if firstGameStarted && activeDrawCount === 1}
+            <div class="stock-counter">Jako: {recycleCount + 1}/3</div>
+          {/if}
+          <button
+            class="stock-pile pile"
+            on:click={drawFromStock}
+            disabled={state.stock.length === 0 && state.waste.length === 0 || isWon || isLost}
+          >
+            {#if activeDrawCount === 1 && state.stock.length === 0 && recycleCount >= 2}
+              <div class="empty-pile no-more-draws">✖</div>
+            {:else if state.stock.length > 0}
+              {#if state.stock.length > 2}
+                <div class="klondike-stack-card" style="top: 4px; left: -2px; z-index: 0;"></div>
+              {/if}
+              {#if state.stock.length > 1}
+                <div class="klondike-stack-card" style="top: 2px; left: -1px; z-index: 1;"></div>
+              {/if}
+              <div style="position: relative; z-index: 2;">
+                <CardComponent card={state.stock[state.stock.length - 1]} />
+              </div>
+            {:else}
+              <div class="empty-pile">↻</div>
+            {/if}
+          </button>
+        </div>
+        
+        <!-- svelte-ignore a11y-no-static-element-interactions -->
+        <div class="waste-pile pile">
+          {#if state.waste.length > 0}
+            {#if activeDrawCount === 3}
+              <!-- Show last 3 cards fanned out in 3-card mode -->
+              {#each state.waste.slice(-3) as card, i}
+                {@const isLast = i === state.waste.slice(-3).length - 1}
+                <!-- svelte-ignore a11y-click-events-have-key-events -->
+                <div
+                  role="button"
+                  tabindex={isLast ? 0 : -1}
+                  draggable={isLast && !isWon && !isLost}
+                  on:dragstart={(e) => isLast && handleDragStart(e, 'waste', 0)}
+                  on:click={() => isLast && handleDoubleClick('waste', 0)}
+                  class="waste-card"
+                  class:draggable={isLast && !isWon && !isLost}
+                  style="left: {i * 35}px"
+                >
+                  <CardComponent {card} />
+                </div>
+              {/each}
+            {:else}
+              <!-- Show only top card in 1-card mode -->
+              {#if state.waste.length > 2}
+                <div class="klondike-stack-card" style="top: 4px; left: -2px; z-index: 0;"></div>
+              {/if}
+              {#if state.waste.length > 1}
+                <div class="klondike-stack-card" style="top: 2px; left: -1px; z-index: 1;"></div>
+              {/if}
+              <!-- svelte-ignore a11y-click-events-have-key-events -->
+              <div
+                role="button"
+                tabindex="0"
+                draggable={!isWon && !isLost}
+                on:dragstart={(e) => handleDragStart(e, 'waste', 0)}
+                on:click={() => handleDoubleClick('waste', 0)}
+                class="waste-card"
+                class:draggable={!isWon && !isLost}
+                style="position: relative; z-index: 2;"
+              >
+                <CardComponent card={state.waste[state.waste.length - 1]} />
+              </div>
+            {/if}
+          {:else}
+            <div class="empty-pile"></div>
+          {/if}
+
+      </div>
+      </div>
+
+      <!-- Foundations -->
+      <div class="foundations">
+        {#each state.foundations as foundation, i}
+          <!-- svelte-ignore a11y-no-static-element-interactions -->
+          <div
+            class="foundation pile"
+            on:drop={(e) => handleDrop(e, 'foundation', i)}
+            on:dragover={handleDragOver}
+          >
+            {#if foundation.length > 0}
+              <!-- Background cards to show stack depth -->
+              {#if foundation.length > 2}
+                <div class="foundation-stack-card" style="top: 4px; left: -2px; z-index: 0;"></div>
+              {/if}
+              {#if foundation.length > 1}
+                <div class="foundation-stack-card" style="top: 2px; left: -1px; z-index: 1;"></div>
+              {/if}
+              <div
+                role="button"
+                tabindex="0"
+                draggable={!isWon && !isLost}
+                on:dragstart={(e) => handleDragStart(e, 'foundation', i)}
+                class="draggable-wrapper"
+                class:draggable={!isWon && !isLost}
+                style="position: relative; z-index: 2;"
+              >
+                <CardComponent card={foundation[foundation.length - 1]} />
+              </div>
+            {:else}
+              <div class="empty-pile foundation-empty">
+                {['♥', '♦', '♣', '♠'][i]}
+              </div>
+            {/if}
+          </div>
+        {/each}
+      </div>
+    </div>
+
+    <!-- Tableau -->
+    <div class="tableau">
+      {#if !firstGameStarted}
+        <!-- Show empty piles before game starts -->
+        {#each Array(7) as _, i}
+          <div class="tableau-pile">
+            <div class="empty-pile tableau-empty"></div>
+          </div>
+        {/each}
+      {:else}
+        {#each state.tableau as pile, i}
+          <!-- svelte-ignore a11y-no-static-element-interactions -->
+          <div
+            class="tableau-pile"
+            on:drop={(e) => handleDrop(e, 'tableau', i)}
+            on:dragover={handleDragOver}
+          >
+            {#if pile.length === 0}
+              <div class="empty-pile tableau-empty"></div>
+            {:else}
+              {#each pile as card, j}
+                <div class="card-position" style="top: {j * getCardSpacing(pile.length)}px">
+                  <!-- svelte-ignore a11y-click-events-have-key-events -->
+                  <div
+                    role="button"
+                    tabindex={card.faceUp ? 0 : -1}
+                    draggable={card.faceUp && !isWon && !isLost}
+                    on:dragstart={(e) => handleDragStart(e, 'tableau', i, j)}
+                    on:click={() => handleDoubleClick('tableau', i, j)}
+                    class="draggable-wrapper"
+                    class:draggable={card.faceUp && !isWon && !isLost}
+                  >
+                    <CardComponent {card} />
+                  </div>
+                </div>
+              {/each}
+            {/if}
+          </div>
+        {/each}
+      {/if}
+    </div>
+  </div>
+</div>
+
+<style>
+  .klondike {
+    padding: 1rem;
+  }
+
+  .game-title {
+    font-size: 2rem;
+    color: #2c3e50;
+    margin: 0 0 1rem 0;
+    text-align: center;
+  }
+
+  .game-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 2rem;
+  }
+
+  .back-btn, .new-game-btn, .undo-btn {
+    padding: 0.5rem 1rem;
+    border: none;
+    border-radius: 6px;
+    background: #4CAF50;
+    color: white;
+    cursor: pointer;
+    font-size: 1rem;
+  }
+
+  .back-btn:hover, .new-game-btn:hover, .undo-btn:hover:not(:disabled) {
+    background: #45a049;
+  }
+
+  .game-controls {
+    display: flex;
+    gap: 0.5rem;
+    align-items: center;
+  }
+
+  .draw-toggle-container {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    gap: 0.5rem;
+  }
+
+  .toggle-label {
+    font-size: 0.85rem;
+    font-weight: 600;
+    color: #2c3e50;
+  }
+
+  .toggle-slider {
+    position: relative;
+  }
+
+  .slider-track {
+    position: relative;
+    display: flex;
+    background: #e0e0e0;
+    border-radius: 16px;
+    padding: 2px;
+    width: 70px;
+    height: 32px;
+  }
+
+  .slider-option {
+    flex: 1;
+    background: transparent;
+    border: none;
+    cursor: pointer;
+    z-index: 2;
+    position: relative;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 0;
+  }
+
+  .slider-label {
+    font-size: 0.9rem;
+    font-weight: 600;
+    color: #666;
+    transition: color 0.3s;
+  }
+
+  .toggle-slider.three .slider-button:first-child .slider-label {
+    color: #666;
+  }
+
+  .toggle-slider:not(.three) .slider-button:first-child .slider-label,
+  .toggle-slider.three .slider-button:last-child .slider-label {
+    color: white;
+  }
+
+  .slider-thumb {
+    position: absolute;
+    top: 2px;
+    left: 2px;
+    width: calc(50% - 2px);
+    height: calc(100% - 4px);
+    background: #4CAF50;
+    border-radius: 14px;
+    transition: transform 0.3s ease;
+    z-index: 1;
+  }
+
+  .toggle-slider.three .slider-thumb {
+    transform: translateX(100%);
+  }
+
+  .undo-btn:disabled {
+    background: #ccc;
+    cursor: not-allowed;
+    opacity: 0.5;
+  }
+
+  .game-area {
+    background: #2d6e2d;
+    border-radius: 12px;
+    padding: 2rem;
+    min-height: 650px;
+  }
+
+  .top-row {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 3rem;
+  }
+
+  .stock-waste-wrapper {
+    display: flex;
+    gap: 1rem;
+    align-items: flex-start;
+  }
+
+  .stock-area {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+  }
+
+  .foundations {
+    display: flex;
+    gap: 1rem;
+  }
+
+  .foundation {
+    position: relative;
+  }
+
+  .foundation-stack-card {
+    position: absolute;
+    width: 70px;
+    height: 100px;
+    background: white;
+    border: 1px solid #ccc;
+    border-radius: 8px;
+    pointer-events: none;
+  }
+
+  .klondike-stack-card {
+    position: absolute;
+    width: 70px;
+    height: 100px;
+    background: white;
+    border: 1px solid #ccc;
+    border-radius: 8px;
+    pointer-events: none;
+  }
+
+  .pile {
+    width: 70px;
+    height: 100px;
+  }
+
+  .stock-pile {
+    position: relative;
+    background: transparent;
+    border: none;
+    cursor: pointer;
+    padding: 0;
+  }
+
+  .stock-pile:disabled {
+    cursor: default;
+  }
+
+  .klondike-stack-card {
+    position: absolute;
+    width: 70px;
+    height: 100px;
+    background: white;
+    border: 1px solid #ccc;
+    border-radius: 8px;
+    pointer-events: none;
+  }
+
+  .stock-counter {
+    position: absolute;
+    top: -1.5rem;
+    left: 50%;
+    transform: translateX(-50%);
+    text-align: center;
+    font-size: 0.9rem;
+    font-weight: bold;
+    color: white;
+    white-space: nowrap;
+  }
+
+  .waste-pile {
+    position: relative;
+    min-width: 120px;
+  }
+
+  .waste-card {
+    position: absolute;
+    top: 0;
+    left: 0;
+  }
+
+  .waste-card.draggable {
+    cursor: grab;
+  }
+
+  .waste-card.draggable:active {
+    cursor: grabbing;
+  }
+
+  .empty-pile {
+    width: 70px;
+    height: 100px;
+    border: 2px dashed rgba(255, 255, 255, 0.4);
+    border-radius: 8px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 2rem;
+    color: rgba(255, 255, 255, 0.5);
+  }
+
+  .empty-pile.no-more-draws {
+    border-color: rgba(255, 0, 0, 0.6);
+    color: #ff4444;
+    font-size: 3rem;
+    font-weight: bold;
+  }
+
+  .draggable-wrapper {
+    display: inline-block;
+  }
+
+  .draggable-wrapper.draggable {
+    cursor: grab;
+  }
+
+  .draggable-wrapper.draggable:active {
+    cursor: grabbing;
+  }
+
+  .foundation-empty {
+    font-size: 2.5rem;
+  }
+
+  .tableau {
+    display: flex;
+    gap: 1rem;
+    justify-content: center;
+  }
+
+  .tableau-pile {
+    position: relative;
+    width: 70px;
+    min-height: 100px;
+  }
+
+  .card-position {
+    position: absolute;
+    left: 0;
+  }
+
+  .tableau-empty {
+    border: 2px dashed rgba(255, 255, 255, 0.3);
+  }
+</style>

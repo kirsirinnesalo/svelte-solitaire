@@ -19,6 +19,11 @@
       id: 'acesup' as GameType,
       name: 'Aces Up',
       description: 'Poista kaikki kortit paitsi ässät'
+    },
+    {
+      id: 'clock' as GameType,
+      name: 'Kellopasianssi',
+      description: 'Käännä kortit kellotauluun: Q→klo 12, A→klo 1, kuningas→keskelle'
     }
   ];
 

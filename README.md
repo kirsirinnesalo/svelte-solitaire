@@ -35,8 +35,17 @@ src/
 │   ├── CardComponent.svelte   # Yksittäinen kortti
 │   └── GameSelector.svelte    # Pelivalikko
 ├── games/              # Peli-implementaatiot
-│   └── klondike/       # Klondike-pasianssi
-│       └── Klondike.svelte
+│   ├── klondike/       # Klondike-pasianssi
+│   │   └── Klondike.svelte
+│   ├── napoleon/       # Napoleonin hauta
+│   │   ├── Napoleon.svelte
+│   │   └── napoleonRules.ts
+│   ├── acesup/         # Aces Up
+│   │   ├── AcesUp.svelte
+│   │   └── acesUpRules.ts
+│   └── clock/          # Kellopasianssi
+│       ├── Clock.svelte
+│       └── clockRules.ts
 ├── lib/                # Apufunktiot ja logiikka
 │   └── cardUtils.ts    # Kortti- ja pelitoiminnot
 ├── types/              # TypeScript-tyyppimääritykset
@@ -48,13 +57,37 @@ src/
 
 ## Pelit
 
-### Klondike (valmis)
-- Klassinen pasianssi seitsemällä korttipinolla
-- Perusominaisuudet: korttien jako, pakasta nostaminen, perustus- ja työpinot
+### Klondike
+Klassinen pasianssi seitsemällä tableaupinolla. Tavoite on järjestää kortit nousevaan järjestykseen foundationiin maan mukaan.
+- Drag & drop -toiminnallisuus
+- 1/3 kortin nosto pakasta
+- Tuplaklikkaus siirtää kortin automaattisesti foundationiin
+
+### Napoleon's Tomb (Napoleonin hauta)
+Strateginen pasianssi, jossa tavoitteena on täyttää Napoleonin hauta ja neljä kulmaa.
+- **Napoleonin hauta (keskus)**: Rakenna laskevasti 6→5→4→3→2→A, neljä kierrosta
+- **4 kulmaa**: Rakenna nousevasti 7→8→9→10→J→Q→K (7 korttia kuhunkin)
+- **4 apupinoa**: Tilapäissäilytys, max 1 kortti per pino
+- Vain yksi kortti kerrallaan siirrettävissä
+- Haastava, mutta palkitseva peli
+
+### Aces Up
+Nopea ja yksinkertainen pasianssi 4 pinolla.
+- Tavoite: jättää vain ässät
+- Poista kortteja klikkaamalla
+- Automaattinen "voidaan poistaa" -havaitseminen
+
+### Clock (Kellopasianssi)
+Uniikki pasianssi, jossa kortit järjestetään kellotauluun.
+- 13 pinoa: 12 kellotaulun ympärillä + kuninkaiden pino keskellä
+- Klikkaa pinoa paljastaaksesi kortin
+- Raahaa paljastettu kortti oikeaan paikkaan (Q=12, A=1, 2=2, ..., K=keskelle)
+- Voita paljastamalla kaikki kortit ennen 4. kuninkaan asettamista
 
 ### Tulossa
-- **Hämähäkki (Spider)**: Haastavampi pasianssi kahdella pakalla
-- **FreeCell**: Strateginen pasianssi vapailla soluilla
+- **Pyramid (Pyramidi)**: Poista pareja, joiden summa on 13
+- **Yukon**: Kuten Klondike, mutta enemmän strategisia vaihtoehtoja
+- **Perpetual Motion (Ikiliikkuja)**: Loputon pasianssi jatkuvalla sekoituksella
 
 ## Teknologiat
 

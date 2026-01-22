@@ -3,6 +3,7 @@
   import Klondike from './games/klondike/Klondike.svelte';
   import Napoleon from './games/napoleon/Napoleon.svelte';
   import AcesUp from './games/acesup/AcesUp.svelte';
+  import Clock from './games/clock/Clock.svelte';
   import type { GameType } from './types/game';
   import { cardBackType, type CardBackType } from './lib/cardBackStore';
 
@@ -39,6 +40,8 @@
     <Napoleon on:back={handleBackToMenu} />
   {:else if selectedGame === 'acesup'}
     <AcesUp on:back={handleBackToMenu} />
+  {:else if selectedGame === 'clock'}
+    <Clock on:back={handleBackToMenu} />
   {/if}
 </main>
 

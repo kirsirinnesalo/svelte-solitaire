@@ -8,7 +8,7 @@ export interface Card {
   id: string;
 }
 
-export type GameType = 'klondike' | 'napoleon' | 'acesup';
+export type GameType = 'klondike' | 'napoleon' | 'acesup' | 'clock';
 
 export interface GameState {
   moves: number;

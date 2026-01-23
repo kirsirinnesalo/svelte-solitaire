@@ -1,4 +1,4 @@
-import { writable, derived, type Writable } from 'svelte/store';
+import { writable, derived, type Writable, type Readable } from 'svelte/store';
 
 export interface GameStateManager<T> {
   state: Writable<T>;
@@ -6,7 +6,7 @@ export interface GameStateManager<T> {
   moves: Writable<number>;
   isWon: Writable<boolean>;
   isLost: Writable<boolean>;
-  canUndo: Writable<boolean>;
+  canUndo: Readable<boolean>;
   
   saveState: () => void;
   undo: () => void;
@@ -43,8 +43,8 @@ export function createGameState<T>(
   );
 
   function saveState() {
-    const currentState = cloneFn(initialState);
-    state.subscribe(s => { currentState as any = cloneFn(s); })();
+    let currentState = cloneFn(initialState);
+    state.subscribe(s => { currentState = cloneFn(s); })();
     
     let currentMoves = 0;
     moves.subscribe(m => { currentMoves = m; })();

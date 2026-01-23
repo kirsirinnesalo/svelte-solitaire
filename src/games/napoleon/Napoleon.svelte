@@ -276,6 +276,7 @@
       draggedFromWaste = false;
     } else if (draggedFromHelper !== null && state.helpers[draggedFromHelper]) {
       const card = state.helpers[draggedFromHelper];
+      if (!card) return; // Type guard
       let placed = false;
       
       if (target === 'center' && canMoveToCenter(card, state.center)) {

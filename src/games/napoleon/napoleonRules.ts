@@ -207,7 +207,7 @@ export function isGameLost(state: NapoleonState): boolean {
     
     // Check if can move to any helper (if empty)
     for (let i = 0; i < state.helpers.length; i++) {
-      if (canMoveToHelper(wasteCard, i, state.helpers)) return false;
+      if (canMoveToHelper(state.helpers[i])) return false;
     }
     
     // Check if it's a 6 and can go to sixPile
@@ -219,7 +219,7 @@ export function isGameLost(state: NapoleonState): boolean {
     if (helperCard === null) continue;
     
     // Check if can move to center
-    if (canMoveToCenter(helperCard, state.center)) return false;
+    if (helperCard && canMoveToCenter(helperCard, state.center)) return false;
     
     // Check if can move to any corner
     for (const corner of state.corners) {
@@ -236,7 +236,7 @@ export function isGameLost(state: NapoleonState): boolean {
     
     // Check if can move to any helper
     for (let i = 0; i < state.helpers.length; i++) {
-      if (canMoveToHelper(sixCard, i, state.helpers)) return false;
+      if (canMoveToHelper(state.helpers[i])) return false;
     }
   }
   

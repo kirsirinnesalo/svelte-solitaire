@@ -12,6 +12,7 @@
     isGameLost,
     type AcesUpState 
   } from './acesUpRules';
+  import '../../styles/shared.css';
 
   const dispatch = createEventDispatcher();
 
@@ -253,10 +254,10 @@
       <div class="discard-pile pile">
         {#if state.discarded.length > 0}
           {#if state.discarded.length > 2}
-            <div class="acesup-stack-card" style="top: 4px; left: -2px; z-index: 0;"></div>
+            <div class="stack-card" style="top: 4px; left: -2px; z-index: 0;"></div>
           {/if}
           {#if state.discarded.length > 1}
-            <div class="acesup-stack-card" style="top: 2px; left: -1px; z-index: 1;"></div>
+            <div class="stack-card" style="top: 2px; left: -1px; z-index: 1;"></div>
           {/if}
           <div style="position: relative; z-index: 2;">
             <CardComponent card={{...state.discarded[state.discarded.length - 1], faceUp: false}} />
@@ -274,17 +275,8 @@
     padding: 1rem;
   }
 
-  .game-title {
-    font-size: 2rem;
-    color: #2c3e50;
-    margin: 0 0 1rem 0;
-    text-align: center;
-  }
-
+  /* AcesUp-specific overrides */
   .game-header {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
     margin-bottom: 1rem;
     gap: 1rem;
   }
@@ -310,30 +302,7 @@
     height: 16px;
   }
 
-  .back-btn, .new-game-btn, .undo-btn {
-    padding: 0.5rem 1rem;
-    border: none;
-    border-radius: 6px;
-    background: #4CAF50;
-    color: white;
-    cursor: pointer;
-    font-size: 1rem;
-  }
-
-  .back-btn:hover, .new-game-btn:hover, .undo-btn:hover:not(:disabled) {
-    background: #45a049;
-  }
-
-  .undo-btn:disabled {
-    background: #ccc;
-    cursor: not-allowed;
-    opacity: 0.6;
-  }
-
   .game-area {
-    background: #2d6e2d;
-    border-radius: 12px;
-    padding: 2rem;
     min-height: 400px;
     display: flex;
     gap: 5rem;
@@ -425,17 +394,6 @@
     height: 100px;
   }
 
-  .empty-pile {
-    width: 70px;
-    height: 100px;
-    border: 2px dashed rgba(255, 255, 255, 0.4);
-    border-radius: 8px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    color: rgba(255, 255, 255, 0.6);
-  }
-
   .empty-pile.discard-icon {
     font-size: 2.5rem;
   }
@@ -458,16 +416,6 @@
     background: transparent;
     border: none;
     padding: 0;
-  }
-
-  .acesup-stack-card {
-    position: absolute;
-    width: 70px;
-    height: 100px;
-    background: white;
-    border: 1px solid #ccc;
-    border-radius: 8px;
-    pointer-events: none;
   }
 
   .draggable-wrapper {

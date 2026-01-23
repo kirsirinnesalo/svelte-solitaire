@@ -4,6 +4,7 @@
   import type { Card } from '../../types/game';
   import CardComponent from '../../components/CardComponent.svelte';
   import { moveCard, isGameWon, isGameLost, type KlondikeState } from './klondikeRules';
+  import '../../styles/shared.css';
 
   const dispatch = createEventDispatcher();
 
@@ -253,10 +254,10 @@
               <div class="empty-pile no-more-draws">✖</div>
             {:else if state.stock.length > 0}
               {#if state.stock.length > 2}
-                <div class="klondike-stack-card" style="top: 4px; left: -2px; z-index: 0;"></div>
+                <div class="stack-card" style="top: 4px; left: -2px; z-index: 0;"></div>
               {/if}
               {#if state.stock.length > 1}
-                <div class="klondike-stack-card" style="top: 2px; left: -1px; z-index: 1;"></div>
+                <div class="stack-card" style="top: 2px; left: -1px; z-index: 1;"></div>
               {/if}
               <div style="position: relative; z-index: 2;">
                 <CardComponent card={state.stock[state.stock.length - 1]} />
@@ -291,10 +292,10 @@
             {:else}
               <!-- Show only top card in 1-card mode -->
               {#if state.waste.length > 2}
-                <div class="klondike-stack-card" style="top: 4px; left: -2px; z-index: 0;"></div>
+                <div class="stack-card" style="top: 4px; left: -2px; z-index: 0;"></div>
               {/if}
               {#if state.waste.length > 1}
-                <div class="klondike-stack-card" style="top: 2px; left: -1px; z-index: 1;"></div>
+                <div class="stack-card" style="top: 2px; left: -1px; z-index: 1;"></div>
               {/if}
               <!-- svelte-ignore a11y-click-events-have-key-events -->
               <div
@@ -329,10 +330,10 @@
             {#if foundation.length > 0}
               <!-- Background cards to show stack depth -->
               {#if foundation.length > 2}
-                <div class="foundation-stack-card" style="top: 4px; left: -2px; z-index: 0;"></div>
+                <div class="stack-card" style="top: 4px; left: -2px; z-index: 0;"></div>
               {/if}
               {#if foundation.length > 1}
-                <div class="foundation-stack-card" style="top: 2px; left: -1px; z-index: 1;"></div>
+                <div class="stack-card" style="top: 2px; left: -1px; z-index: 1;"></div>
               {/if}
               <div
                 role="button"
@@ -404,32 +405,9 @@
     padding: 1rem;
   }
 
-  .game-title {
-    font-size: 2rem;
-    color: #2c3e50;
-    margin: 0 0 1rem 0;
-    text-align: center;
-  }
-
+  /* Klondike-specific overrides and additions */
   .game-header {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
     margin-bottom: 2rem;
-  }
-
-  .back-btn, .new-game-btn, .undo-btn {
-    padding: 0.5rem 1rem;
-    border: none;
-    border-radius: 6px;
-    background: #4CAF50;
-    color: white;
-    cursor: pointer;
-    font-size: 1rem;
-  }
-
-  .back-btn:hover, .new-game-btn:hover, .undo-btn:hover:not(:disabled) {
-    background: #45a049;
   }
 
   .game-controls {
@@ -510,16 +488,7 @@
     transform: translateX(100%);
   }
 
-  .undo-btn:disabled {
-    background: #ccc;
-    cursor: not-allowed;
-    opacity: 0.5;
-  }
-
   .game-area {
-    background: #2d6e2d;
-    border-radius: 12px;
-    padding: 2rem;
     min-height: 650px;
   }
 
@@ -548,26 +517,6 @@
 
   .foundation {
     position: relative;
-  }
-
-  .foundation-stack-card {
-    position: absolute;
-    width: 70px;
-    height: 100px;
-    background: white;
-    border: 1px solid #ccc;
-    border-radius: 8px;
-    pointer-events: none;
-  }
-
-  .klondike-stack-card {
-    position: absolute;
-    width: 70px;
-    height: 100px;
-    background: white;
-    border: 1px solid #ccc;
-    border-radius: 8px;
-    pointer-events: none;
   }
 
   .pile {
@@ -626,18 +575,6 @@
 
   .waste-card.draggable:active {
     cursor: grabbing;
-  }
-
-  .empty-pile {
-    width: 70px;
-    height: 100px;
-    border: 2px dashed rgba(255, 255, 255, 0.4);
-    border-radius: 8px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    font-size: 2rem;
-    color: rgba(255, 255, 255, 0.5);
   }
 
   .empty-pile.no-more-draws {

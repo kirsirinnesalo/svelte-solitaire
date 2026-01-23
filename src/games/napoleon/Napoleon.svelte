@@ -14,6 +14,7 @@
     countCycles,
     type NapoleonState 
   } from './napoleonRules';
+  import '../../styles/shared.css';
 
   const dispatch = createEventDispatcher();
 
@@ -374,10 +375,10 @@
            on:drop={(e) => handleDrop(e, 'corner', 0)}>
         {#if state.corners[0].length > 0}
           {#if state.corners[0].length > 2}
-            <div class="napoleon-stack-card" style="top: 4px; left: -2px; z-index: 0;"></div>
+            <div class="stack-card" style="top: 4px; left: -2px; z-index: 0;"></div>
           {/if}
           {#if state.corners[0].length > 1}
-            <div class="napoleon-stack-card" style="top: 2px; left: -1px; z-index: 1;"></div>
+            <div class="stack-card" style="top: 2px; left: -1px; z-index: 1;"></div>
           {/if}
           <div style="position: relative; z-index: 2;">
             <CardComponent card={state.corners[0][state.corners[0].length - 1]} />
@@ -414,10 +415,10 @@
            on:drop={(e) => handleDrop(e, 'corner', 1)}>
         {#if state.corners[1].length > 0}
           {#if state.corners[1].length > 2}
-            <div class="napoleon-stack-card" style="top: 4px; left: -2px; z-index: 0;"></div>
+            <div class="stack-card" style="top: 4px; left: -2px; z-index: 0;"></div>
           {/if}
           {#if state.corners[1].length > 1}
-            <div class="napoleon-stack-card" style="top: 2px; left: -1px; z-index: 1;"></div>
+            <div class="stack-card" style="top: 2px; left: -1px; z-index: 1;"></div>
           {/if}
           <div style="position: relative; z-index: 2;">
             <CardComponent card={state.corners[1][state.corners[1].length - 1]} />
@@ -457,10 +458,10 @@
            on:drop={(e) => handleDrop(e, 'center')}>
         {#if state.center.length > 0}
           {#if state.center.length > 2}
-            <div class="napoleon-stack-card" style="top: 4px; left: -2px; z-index: 0;"></div>
+            <div class="stack-card" style="top: 4px; left: -2px; z-index: 0;"></div>
           {/if}
           {#if state.center.length > 1}
-            <div class="napoleon-stack-card" style="top: 2px; left: -1px; z-index: 1;"></div>
+            <div class="stack-card" style="top: 2px; left: -1px; z-index: 1;"></div>
           {/if}
           <div style="position: relative; z-index: 2;">
             <CardComponent card={state.center[state.center.length - 1]} />
@@ -503,10 +504,10 @@
            on:drop={(e) => handleDrop(e, 'corner', 2)}>
         {#if state.corners[2].length > 0}
           {#if state.corners[2].length > 2}
-            <div class="napoleon-stack-card" style="top: 4px; left: -2px; z-index: 0;"></div>
+            <div class="stack-card" style="top: 4px; left: -2px; z-index: 0;"></div>
           {/if}
           {#if state.corners[2].length > 1}
-            <div class="napoleon-stack-card" style="top: 2px; left: -1px; z-index: 1;"></div>
+            <div class="stack-card" style="top: 2px; left: -1px; z-index: 1;"></div>
           {/if}
           <div style="position: relative; z-index: 2;">
             <CardComponent card={state.corners[2][state.corners[2].length - 1]} />
@@ -543,10 +544,10 @@
            on:drop={(e) => handleDrop(e, 'corner', 3)}>
         {#if state.corners[3].length > 0}
           {#if state.corners[3].length > 2}
-            <div class="napoleon-stack-card" style="top: 4px; left: -2px; z-index: 0;"></div>
+            <div class="stack-card" style="top: 4px; left: -2px; z-index: 0;"></div>
           {/if}
           {#if state.corners[3].length > 1}
-            <div class="napoleon-stack-card" style="top: 2px; left: -1px; z-index: 1;"></div>
+            <div class="stack-card" style="top: 2px; left: -1px; z-index: 1;"></div>
           {/if}
           <div style="position: relative; z-index: 2;">
             <CardComponent card={state.corners[3][state.corners[3].length - 1]} />
@@ -569,10 +570,10 @@
              on:drop={(e) => handleDrop(e, 'sixPile')}>
         {#if state.sixPile.length > 0}
           {#if state.sixPile.length > 2}
-            <div class="napoleon-stack-card" style="top: 4px; left: -2px; z-index: 0;"></div>
+            <div class="stack-card" style="top: 4px; left: -2px; z-index: 0;"></div>
           {/if}
           {#if state.sixPile.length > 1}
-            <div class="napoleon-stack-card" style="top: 2px; left: -1px; z-index: 1;"></div>
+            <div class="stack-card" style="top: 2px; left: -1px; z-index: 1;"></div>
           {/if}
           <!-- svelte-ignore a11y-no-static-element-interactions -->
           <!-- svelte-ignore a11y-click-events-have-key-events -->
@@ -595,10 +596,10 @@
       <div class="current-card-slot">
         {#if state.waste.length > 0}
           {#if state.waste.length > 2}
-            <div class="napoleon-stack-card" style="top: 4px; left: -2px; z-index: 0;"></div>
+            <div class="stack-card" style="top: 4px; left: -2px; z-index: 0;"></div>
           {/if}
           {#if state.waste.length > 1}
-            <div class="napoleon-stack-card" style="top: 2px; left: -1px; z-index: 1;"></div>
+            <div class="stack-card" style="top: 2px; left: -1px; z-index: 1;"></div>
           {/if}
           <!-- svelte-ignore a11y-no-static-element-interactions -->
           <!-- svelte-ignore a11y-click-events-have-key-events -->
@@ -627,10 +628,10 @@
                 disabled={state.stock.length === 0 && (state.waste.length === 0 || recycleCount >= activeMaxRecycles - 1)}>
         {#if state.stock.length > 0}
           {#if state.stock.length > 2}
-            <div class="napoleon-stack-card" style="top: 4px; left: -2px; z-index: 0;"></div>
+            <div class="stack-card" style="top: 4px; left: -2px; z-index: 0;"></div>
           {/if}
           {#if state.stock.length > 1}
-            <div class="napoleon-stack-card" style="top: 2px; left: -1px; z-index: 1;"></div>
+            <div class="stack-card" style="top: 2px; left: -1px; z-index: 1;"></div>
           {/if}
           <div style="position: relative; z-index: 2;">
             <CardComponent card={state.stock[state.stock.length - 1]} />
@@ -655,19 +656,11 @@
     padding: 1rem;
   }
 
-  .game-title {
-    font-size: 2rem;
-    color: #2c3e50;
-    margin: 0 0 1rem 0;
-    text-align: center;
-  }
-
+  /* Napoleon-specific overrides */
   .game-header {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
     margin-bottom: 1rem;
   }
+
   .header-right {
     display: flex;
     align-items: center;
@@ -731,26 +724,6 @@
     height: 16px;
   }
 
-  .back-btn, .new-game-btn, .undo-btn {
-    padding: 0.5rem 1rem;
-    border: none;
-    border-radius: 6px;
-    background: #4CAF50;
-    color: white;
-    cursor: pointer;
-    font-size: 1rem;
-  }
-
-  .back-btn:hover, .new-game-btn:hover, .undo-btn:hover:not(:disabled) {
-    background: #45a049;
-  }
-
-  .undo-btn:disabled {
-    background: #ccc;
-    cursor: not-allowed;
-    opacity: 0.5;
-  }
-
   .draw-count {
     text-align: center;
     margin-top: 0.5rem;
@@ -760,9 +733,6 @@
   }
 
   .game-area {
-    background: #2d6e2d;
-    border-radius: 12px;
-    padding: 2rem;
     display: flex;
     gap: 0;
     align-items: flex-start;
@@ -815,7 +785,7 @@
     justify-content: center;
   }
 
-  .napoleon-stack-card {
+  .stack-card {
     position: absolute;
     width: 70px;
     height: 100px;
@@ -829,7 +799,7 @@
     position: relative;
   }
 
-  .napoleon-stack-card {
+  .stack-card {
     position: absolute;
     width: 70px;
     height: 100px;
@@ -848,19 +818,7 @@
     border-radius: 8px;
   }
 
-  .empty-pile {
-    width: 100%;
-    height: 100%;
-    border: 2px dashed rgba(255, 255, 255, 0.4);
-    border-radius: 8px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    font-size: 1.2rem;
-    font-weight: bold;
-    color: rgba(255, 255, 255, 0.6);
-  }
-
+  /* Napoleon-specific empty pile overrides */
   .helper-slot .empty-pile.small {
     width: 80%;
     height: 80%;

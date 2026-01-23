@@ -140,10 +140,13 @@ export function isGameWon(state: KlondikeState): boolean {
 /**
  * Check if the game is lost (no moves available)
  */
-export function isGameLost(state: KlondikeState, recycleCount: number, drawCount: number): boolean {
-  // Game can't be lost if stock still has cards or can recycle
+export function isGameLost(state: KlondikeState, recycleCount: number, maxRecycles: number | 'unlimited'): boolean {
+  // Game can't be lost if stock still has cards
   if (state.stock.length > 0) return false;
-  if (drawCount === 3 || (drawCount === 1 && recycleCount < 2)) return false;
+  
+  // Game can't be lost if can still recycle
+  if (maxRecycles === 'unlimited') return false;
+  if (recycleCount < maxRecycles - 1) return false;
   
   // Check if waste card can move anywhere
   if (state.waste.length > 0) {

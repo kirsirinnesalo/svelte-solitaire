@@ -186,7 +186,7 @@
 
   function checkWin() {
     isWon = isGameWon(state);
-    isLost = !isWon && isGameLost(state, recycleCount, activeDrawCount);
+    isLost = !isWon && isGameLost(state, recycleCount, activeMaxRecycles);
     
     if (isWon) {
       setTimeout(() => alert('Voitit pelin! 🎉'), 100);

@@ -3,6 +3,7 @@
   import { createDeck, shuffleDeck } from '../../lib/cardUtils';
   import type { Card } from '../../types/game';
   import CardComponent from '../../components/CardComponent.svelte';
+  import GameHeader from '../../components/GameHeader.svelte';
   import { 
     dealCards, 
     removeCard, 
@@ -160,20 +161,20 @@
 </script>
 
 <div class="acesup">
-  <div class="game-header">
-    <div class="action-buttons">
-      <button on:click={initGame} class="new-game-btn">▶ Uusi peli</button>
-      <button class="restart-btn" disabled title="Tulossa pian">↻ Uudelleen</button>
-      <button on:click={undo} disabled={history.length === 0 || isWon || isLost} class="undo-btn">↺ Kumoa</button>
-      <button class="hint-btn" disabled title="Tulossa pian">💡 Vihje</button>
-    </div>
-    <div class="game-settings">
+  <GameHeader
+    undoDisabled={history.length === 0 || isWon || isLost}
+    restartDisabled={true}
+    hintDisabled={true}
+    on:newGame={initGame}
+    on:undo={undo}
+  >
+    <svelte:fragment slot="settings">
       <label class="highlight-toggle">
         <input type="checkbox" bind:checked={showHighlight} />
         Korostus
       </label>
-    </div>
-  </div>
+    </svelte:fragment>
+  </GameHeader>
 
   <div class="game-area">
     <!-- Stock -->
@@ -256,44 +257,7 @@
     padding: 1rem;
   }
 
-  /* AcesUp-specific overrides */
-  .game-header {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    margin-bottom: 1rem;
-    gap: 1rem;
-  }
-
-  .action-buttons {
-    display: flex;
-    gap: 0.5rem;
-    align-items: center;
-  }
-
-  .game-settings {
-    display: flex;
-    align-items: center;
-    gap: 0.75rem;
-  }
-
-  .restart-btn, .hint-btn {
-    padding: 0.5rem 1rem;
-    border: none;
-    border-radius: 6px;
-    background: #4CAF50;
-    color: white;
-    cursor: pointer;
-    font-size: 1rem;
-    transition: background 0.2s;
-  }
-
-  .restart-btn:disabled, .hint-btn:disabled {
-    background: #ccc;
-    cursor: not-allowed;
-    opacity: 0.6;
-  }
-
+  /* AcesUp-specific settings styles */
   .highlight-toggle {
     display: flex;
     align-items: center;

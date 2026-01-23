@@ -3,6 +3,7 @@
   import { createDeck, shuffleDeck } from '../../lib/cardUtils';
   import type { Card } from '../../types/game';
   import CardComponent from '../../components/CardComponent.svelte';
+  import GameHeader from '../../components/GameHeader.svelte';
   import { revealCard, moveRevealedCard, isGameWon, isGameLost, type ClockState } from './clockRules';
   import '../../styles/shared.css';
 
@@ -130,18 +131,16 @@
 </script>
 
 <div class="clock-game">
-  <div class="game-header">
-    <div class="action-buttons">
-      <button on:click={initGame} class="new-game-btn">
-        ▶ Uusi peli
-      </button>
-      <button class="restart-btn" disabled title="Tulossa pian">↻ Uudelleen</button>
-      <button class="hint-btn" disabled title="Tulossa pian">💡 Vihje</button>
-    </div>
-    <div class="game-settings">
+  <GameHeader
+    undoDisabled={true}
+    restartDisabled={true}
+    hintDisabled={true}
+    on:newGame={initGame}
+  >
+    <svelte:fragment slot="settings">
       <!-- Ei asetuksia tällä hetkellä -->
-    </div>
-  </div>
+    </svelte:fragment>
+  </GameHeader>
 
   <div class="game-area">
     <div class="clock-container" style="position: relative; width: 500px; height: 500px; margin: 2rem auto;">
@@ -233,44 +232,7 @@
     padding: 1rem;
   }
 
-  /* Clock-specific overrides */
-  .game-header {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    margin-bottom: 1rem;
-    gap: 1rem;
-  }
-
-  .action-buttons {
-    display: flex;
-    gap: 0.5rem;
-    align-items: center;
-  }
-
-  .game-settings {
-    display: flex;
-    align-items: center;
-    gap: 0.75rem;
-  }
-
-  .restart-btn, .hint-btn {
-    padding: 0.5rem 1rem;
-    border: none;
-    border-radius: 6px;
-    background: #4CAF50;
-    color: white;
-    cursor: pointer;
-    font-size: 1rem;
-    transition: background 0.2s;
-  }
-
-  .restart-btn:disabled, .hint-btn:disabled {
-    background: #ccc;
-    cursor: not-allowed;
-    opacity: 0.6;
-  }
-
+  /* Clock-specific styles */
   .game-area {
     min-height: 600px;
   }

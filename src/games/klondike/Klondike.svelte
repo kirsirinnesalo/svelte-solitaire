@@ -463,12 +463,12 @@
     transition: color 0.3s;
   }
 
-  .toggle-slider.three .slider-button:first-child .slider-label {
+  .toggle-slider.three .slider-option:first-child .slider-label {
     color: #666;
   }
 
-  .toggle-slider:not(.three) .slider-button:first-child .slider-label,
-  .toggle-slider.three .slider-button:last-child .slider-label {
+  .toggle-slider:not(.three) .slider-option:first-child .slider-label,
+  .toggle-slider.three .slider-option:last-child .slider-label {
     color: white;
   }
 

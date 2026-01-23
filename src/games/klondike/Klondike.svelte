@@ -288,7 +288,7 @@
       <div class="stock-waste-wrapper">
         <div class="stock-area">
           {#if firstGameStarted && activeMaxRecycles !== 'unlimited'}
-            <div class="stock-counter">Jako: {recycleCount + 1}/{activeMaxRecycles}</div>
+            <div class="stock-counter">{recycleCount + 1}/{activeMaxRecycles}</div>
           {/if}
           <button
             class="stock-pile pile"
@@ -298,7 +298,7 @@
             {#if !firstGameStarted}
               <div class="empty-pile">↻</div>
             {:else if state.stock.length === 0 && (state.waste.length === 0 || (activeMaxRecycles !== 'unlimited' && recycleCount >= activeMaxRecycles - 1))}
-              <div class="empty-pile no-more-draws">✖</div>
+              <div class="empty-pile no-more-draws">✕</div>
             {:else if state.stock.length > 0}
               {#if state.stock.length > 2}
                 <div class="stack-card" style="top: 4px; left: -2px; z-index: 0;"></div>
@@ -650,11 +650,10 @@
   }
 
   .empty-pile.no-more-draws {
-    background: rgba(255, 0, 0, 0.15);
-    border-color: rgba(255, 0, 0, 0.6);
-    color: #ff4444;
-    font-size: 3rem;
-    font-weight: bold;
+    font-size: 2.5rem;
+    color: rgba(244, 67, 54, 0.9);
+    border-color: rgba(244, 67, 54, 0.6);
+    cursor: not-allowed;
   }
 
   .draggable-wrapper {

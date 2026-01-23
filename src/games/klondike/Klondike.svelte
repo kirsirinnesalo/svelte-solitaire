@@ -187,8 +187,8 @@
   function getCardSpacing(pileLength: number): number {
     const maxHeight = 420; // Max available height for tableau cards
     const cardHeight = 100; // Height of one card
-    const minSpacing = 15; // Minimum spacing between cards
-    const maxSpacing = 35; // Maximum spacing between cards
+    const minSpacing = 10; // Minimum spacing between cards
+    const maxSpacing = 20; // Maximum spacing between cards
     
     if (pileLength <= 1) return maxSpacing;
     
@@ -284,7 +284,7 @@
                   on:click={() => isLast && handleDoubleClick('waste', 0)}
                   class="waste-card"
                   class:draggable={isLast && !isWon && !isLost}
-                  style="left: {i * 35}px"
+                  style="left: {i * 15}px"
                 >
                   <CardComponent {card} />
                 </div>

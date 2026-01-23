@@ -156,27 +156,6 @@
     }
   }
 
-  // Calculate dynamic card spacing based on pile length
-  function getCardSpacing(pileLength: number): number {
-    const maxHeight = 320; // Max available height for pile cards
-    const cardHeight = 100; // Height of one card
-    const minSpacing = 15; // Minimum spacing between cards
-    const maxSpacing = 30; // Maximum spacing between cards
-    
-    if (pileLength <= 1) return maxSpacing;
-    
-    // Calculate required total height: (n-1) * spacing + cardHeight
-    const requiredHeight = cardHeight + (pileLength - 1) * maxSpacing;
-    
-    if (requiredHeight <= maxHeight) {
-      return maxSpacing;
-    }
-    
-    // Calculate adjusted spacing to fit within maxHeight
-    const spacing = Math.max(minSpacing, (maxHeight - cardHeight) / (pileLength - 1));
-    return Math.floor(spacing);
-  }
-
   initGame();
 </script>
 
@@ -236,7 +215,7 @@
                   class="card-in-pile"
                   class:draggable-wrapper={isLast}
                   class:can-remove={showHighlight && canRemove}
-                  style="top: {cardIndex * getCardSpacing(pile.length)}px;"
+                  style="top: {cardIndex * 20}px;"
                 >
                   <CardComponent card={card} />
                 </div>

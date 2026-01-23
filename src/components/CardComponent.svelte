@@ -29,6 +29,12 @@
       <div class="corner top-right">
         <div class="suit-small">{suitSymbols[card.suit]}</div>
       </div>
+      <div class="corner bottom-left">
+        <div class="suit-small">{suitSymbols[card.suit]}</div>
+      </div>
+      <div class="corner bottom-right">
+        <div class="rank">{card.rank}</div>
+      </div>
       <div class="center">
         <div class="suit-large">{suitSymbols[card.suit]}</div>
       </div>
@@ -229,6 +235,18 @@
     right: 4px;
   }
 
+  .bottom-right {
+    bottom: 4px;
+    right: 4px;
+    transform: rotate(180deg);
+  }
+
+  .bottom-left {
+    bottom: 4px;
+    left: 4px;
+    transform: rotate(180deg);
+  }
+
   .rank {
     font-size: 0.9rem;
     font-weight: bold;
@@ -239,10 +257,6 @@
   }
 
   .center {
-    position: absolute;
-    bottom: -2px;
-    left: 50%;
-    transform: translateX(-50%);
     display: flex;
     align-items: center;
     justify-content: center;

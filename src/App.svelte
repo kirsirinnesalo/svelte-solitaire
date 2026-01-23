@@ -7,7 +7,7 @@
   import type { GameType } from './types/game';
   import { cardBackType, type CardBackType } from './lib/cardBackStore';
 
-  let selectedGame: GameType | null = null;
+  let selectedGame = $state<GameType | null>(null);
 
   function handleGameSelect(event: CustomEvent<GameType>) {
     selectedGame = event.detail;
@@ -56,7 +56,7 @@
   
   {#if selectedGame !== null}
     <div class="game-nav">
-      <button on:click={handleBackToMenu} class="back-btn">← Takaisin</button>
+      <button onclick={handleBackToMenu} class="back-btn">← Takaisin</button>
       <h2 class="game-title">
         {#if selectedGame === 'klondike'}
           Klondike

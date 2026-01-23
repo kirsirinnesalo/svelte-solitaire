@@ -11,33 +11,33 @@
 
   const dispatch = createEventDispatcher();
 
-  let state: KlondikeState = {
+  let state = $state<KlondikeState>({
     tableau: [],
     foundations: [[], [], [], []],
     stock: [],
     waste: []
-  };
-  let moves = 0;
-  let isWon = false;
-  let isLost = false;
-  let gameStarted = false;
-  let firstGameStarted = false; // Track if first game has been started
-  let drawCount: 1 | 3 = 1; // Number of cards to draw from stock (setting)
-  let activeDrawCount: 1 | 3 = 1; // Active draw count for current game
-  let recycleCount = 0; // Track stock recycling
-  let maxRecycles: 1 | 2 | 3 | 'unlimited' = 3; // Setting for next game
-  let activeMaxRecycles: 1 | 2 | 3 | 'unlimited' = 3; // Locked for current game
-  let history: { state: KlondikeState; moves: number }[] = [];
-  let draggedCard: { type: 'tableau' | 'waste' | 'foundation', index: number, cardIndex?: number } | null = null;
+  });
+  let moves = $state(0);
+  let isWon = $state(false);
+  let isLost = $state(false);
+  let gameStarted = $state(false);
+  let firstGameStarted = $state(false); // Track if first game has been started
+  let drawCount = $state<1 | 3>(1); // Number of cards to draw from stock (setting)
+  let activeDrawCount = $state<1 | 3>(1); // Active draw count for current game
+  let recycleCount = $state(0); // Track stock recycling
+  let maxRecycles = $state<1 | 2 | 3 | 'unlimited'>(3); // Setting for next game
+  let activeMaxRecycles = $state<1 | 2 | 3 | 'unlimited'>(3); // Locked for current game
+  let history = $state<{ state: KlondikeState; moves: number }[]>([]);
+  let draggedCard = $state<{ type: 'tableau' | 'waste' | 'foundation', index: number, cardIndex?: number } | null>(null);
 
   // Automatically update maxRecycles when drawCount changes
-  $: {
+  $effect(() => {
     if (drawCount === 1) {
       maxRecycles = 3;
     } else if (drawCount === 3) {
       maxRecycles = 'unlimited';
     }
-  }
+  });
 
   function initGame() {
     activeDrawCount = drawCount; // Lock in the draw count for this game
@@ -228,10 +228,10 @@
     on:newGame={initGame}
     on:undo={undo}
   >
-    <svelte:fragment slot="settings">
+    {#snippet settings()}
       <DrawCountToggle bind:value={drawCount} />
       <RecycleToggle bind:value={maxRecycles} />
-    </svelte:fragment>
+    {/snippet}
   </GameHeader>
 
   <div class="game-area">
@@ -244,7 +244,7 @@
           {/if}
           <button
             class="stock-pile pile"
-            on:click={drawFromStock}
+            onclick={drawFromStock}
             disabled={state.stock.length === 0 && state.waste.length === 0 || isWon || isLost}
           >
             {#if !firstGameStarted}
@@ -267,20 +267,20 @@
           </button>
         </div>
         
-        <!-- svelte-ignore a11y-no-static-element-interactions -->
+        <!-- svelte-ignore a11y_no_static_element_interactions -->
         <div class="waste-pile pile">
           {#if state.waste.length > 0}
             {#if activeDrawCount === 3}
               <!-- Show last 3 cards fanned out in 3-card mode -->
               {#each state.waste.slice(-3) as card, i}
                 {@const isLast = i === state.waste.slice(-3).length - 1}
-                <!-- svelte-ignore a11y-click-events-have-key-events -->
+                <!-- svelte-ignore a11y_click_events_have_key_events -->
                 <div
                   role="button"
                   tabindex={isLast ? 0 : -1}
                   draggable={isLast && !isWon && !isLost}
-                  on:dragstart={(e) => isLast && handleDragStart(e, 'waste', 0)}
-                  on:click={() => isLast && handleDoubleClick('waste', 0)}
+                  ondragstart={(e) => isLast && handleDragStart(e, 'waste', 0)}
+                  onclick={() => isLast && handleDoubleClick('waste', 0)}
                   class="waste-card"
                   class:draggable={isLast && !isWon && !isLost}
                   style="left: {i * 15}px"
@@ -296,13 +296,13 @@
               {#if state.waste.length > 1}
                 <div class="stack-card" style="top: 2px; left: -1px; z-index: 1;"></div>
               {/if}
-              <!-- svelte-ignore a11y-click-events-have-key-events -->
+              <!-- svelte-ignore a11y_click_events_have_key_events -->
               <div
                 role="button"
                 tabindex="0"
                 draggable={!isWon && !isLost}
-                on:dragstart={(e) => handleDragStart(e, 'waste', 0)}
-                on:click={() => handleDoubleClick('waste', 0)}
+              ondragstart={(e) => handleDragStart(e, 'waste', 0)}
+                onclick={() => handleDoubleClick('waste', 0)}
                 class="waste-card"
                 class:draggable={!isWon && !isLost}
                 style="position: relative; z-index: 2;"
@@ -320,11 +320,11 @@
       <!-- Foundations -->
       <div class="foundations">
         {#each state.foundations as foundation, i}
-          <!-- svelte-ignore a11y-no-static-element-interactions -->
+          <!-- svelte-ignore a11y_no_static_element_interactions -->
           <div
             class="foundation pile"
-            on:drop={(e) => handleDrop(e, 'foundation', i)}
-            on:dragover={handleDragOver}
+            ondrop={(e) => handleDrop(e, 'foundation', i)}
+            ondragover={handleDragOver}
           >
             {#if foundation.length > 0}
               <!-- Background cards to show stack depth -->
@@ -338,7 +338,7 @@
                 role="button"
                 tabindex="0"
                 draggable={!isWon && !isLost}
-                on:dragstart={(e) => handleDragStart(e, 'foundation', i)}
+                ondragstart={(e) => handleDragStart(e, 'foundation', i)}
                 class="draggable-wrapper"
                 class:draggable={!isWon && !isLost}
                 style="position: relative; z-index: 2;"
@@ -366,24 +366,24 @@
         {/each}
       {:else}
         {#each state.tableau as pile, i}
-          <!-- svelte-ignore a11y-no-static-element-interactions -->
+          <!-- svelte-ignore a11y_no_static_element_interactions -->
           <div
             class="tableau-pile"
-            on:drop={(e) => handleDrop(e, 'tableau', i)}
-            on:dragover={handleDragOver}
+            ondrop={(e) => handleDrop(e, 'tableau', i)}
+            ondragover={handleDragOver}
           >
             {#if pile.length === 0}
               <div class="empty-pile tableau-empty"></div>
             {:else}
               {#each pile as card, j}
                 <div class="card-position" style="top: {j * getCardSpacing(pile.length)}px">
-                  <!-- svelte-ignore a11y-click-events-have-key-events -->
+                  <!-- svelte-ignore a11y_click_events_have_key_events -->
                   <div
                     role="button"
                     tabindex={card.faceUp ? 0 : -1}
                     draggable={card.faceUp && !isWon && !isLost}
-                    on:dragstart={(e) => handleDragStart(e, 'tableau', i, j)}
-                    on:click={() => handleDoubleClick('tableau', i, j)}
+                    ondragstart={(e) => handleDragStart(e, 'tableau', i, j)}
+                    onclick={() => handleDoubleClick('tableau', i, j)}
                     class="draggable-wrapper"
                     class:draggable={card.faceUp && !isWon && !isLost}
                   >

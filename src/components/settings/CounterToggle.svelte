@@ -1,6 +1,5 @@
 <script lang="ts">
-  export let checked: boolean;
-  export let label: string = "Laskurit";
+  let { checked = $bindable(), label = "Laskurit" }: { checked: boolean; label?: string } = $props();
 </script>
 
 <label class="counter-checkbox">

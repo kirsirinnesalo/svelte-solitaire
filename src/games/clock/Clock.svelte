@@ -9,14 +9,14 @@
 
   const dispatch = createEventDispatcher();
 
-  let state: ClockState = {
+  let state = $state<ClockState>({
     piles: Array(13).fill([]).map(() => []),
     revealedCardPileIndex: null
-  };
-  let isWon = false;
-  let isLost = false;
-  let gameStarted = false;
-  let draggedFromPileIndex: number | null = null;
+  });
+  let isWon = $state(false);
+  let isLost = $state(false);
+  let gameStarted = $state(false);
+  let draggedFromPileIndex = $state<number | null>(null);
 
   // Clock positions: angles for each hour (0=12 o'clock, going clockwise)
   const clockPositions = [
@@ -137,9 +137,9 @@
     hintDisabled={true}
     on:newGame={initGame}
   >
-    <svelte:fragment slot="settings">
+    {#snippet settings()}
       <!-- Ei asetuksia tällä hetkellä -->
-    </svelte:fragment>
+    {/snippet}
   </GameHeader>
 
   <div class="game-area">
@@ -151,13 +151,13 @@
         {@const hasRevealedCard = pile.length > 0 && pile[pile.length - 1].faceUp}
         {@const rotation = i * 30}
         
-        <!-- svelte-ignore a11y-click-events-have-key-events -->
-        <!-- svelte-ignore a11y-no-static-element-interactions -->
+        <!-- svelte-ignore a11y_click_events_have_key_events -->
+        <!-- svelte-ignore a11y_no_static_element_interactions -->
         <div 
           class="clock-pile"
-          on:click={() => handlePileClick(i)}
-          on:dragover={handleDragOver}
-          on:drop={(e) => handleDrop(e, i)}
+          onclick={() => handlePileClick(i)}
+          ondragover={handleDragOver}
+          ondrop={(e) => handleDrop(e, i)}
           style="position: absolute; left: {position.x}px; top: {position.y}px; transform: rotate({rotation}deg); transform-origin: center;"
         >
           {#if pile.length > 0}
@@ -173,8 +173,8 @@
             <div 
               style="position: relative; z-index: 3;"
               draggable={hasRevealedCard && !isWon && !isLost}
-              on:dragstart={(e) => handleDragStart(e, i)}
-              on:dragend={handleDragEnd}
+              ondragstart={(e) => handleDragStart(e, i)}
+              ondragend={handleDragEnd}
               class:draggable={hasRevealedCard && !isWon && !isLost}
             >
               <CardComponent card={pile[pile.length - 1]} />
@@ -190,13 +190,13 @@
         {@const centerPile = state.piles[12]}
         {@const hasRevealedCard = centerPile.length > 0 && centerPile[centerPile.length - 1].faceUp}
         
-        <!-- svelte-ignore a11y-click-events-have-key-events -->
-        <!-- svelte-ignore a11y-no-static-element-interactions -->
+        <!-- svelte-ignore a11y_click_events_have_key_events -->
+        <!-- svelte-ignore a11y_no_static_element_interactions -->
         <div 
           class="clock-pile center-pile"
-          on:click={() => handlePileClick(12)}
-          on:dragover={handleDragOver}
-          on:drop={(e) => handleDrop(e, 12)}
+          onclick={() => handlePileClick(12)}
+          ondragover={handleDragOver}
+          ondrop={(e) => handleDrop(e, 12)}
           style="position: absolute; left: 215px; top: 200px;"
         >
           {#if centerPile.length > 0}
@@ -212,8 +212,8 @@
             <div 
               style="position: relative; z-index: 3;"
               draggable={hasRevealedCard && !isWon && !isLost}
-              on:dragstart={(e) => handleDragStart(e, 12)}
-              on:dragend={handleDragEnd}
+              ondragstart={(e) => handleDragStart(e, 12)}
+              ondragend={handleDragEnd}
               class:draggable={hasRevealedCard && !isWon && !isLost}
             >
               <CardComponent card={centerPile[centerPile.length - 1]} />

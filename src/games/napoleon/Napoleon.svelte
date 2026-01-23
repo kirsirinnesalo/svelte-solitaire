@@ -21,26 +21,26 @@
 
   const dispatch = createEventDispatcher();
 
-  let state: NapoleonState = {
+  let state = $state<NapoleonState>({
     center: [],
     corners: [[], [], [], []],
     helpers: [null, null, null, null],
     sixPile: [],
     stock: [],
     waste: []
-  };
-  let moves = 0;
-  let isWon = false;
-  let isLost = false;
-  let recycleCount = 0;
-  let maxRecycles: 1 | 2 | 'unlimited' = 1; // Setting for next game
-  let activeMaxRecycles: 1 | 2 | 'unlimited' = 1; // Locked for current game
-  let showCounters = false; // Toggle for counter badges
-  let history: { state: NapoleonState; recycleCount: number; moves: number }[] = [];
-  let draggedFromWaste = false;
-  let draggedFromHelper: number | null = null;
-  let draggedFromSixPile = false;
-  let dragOverTarget: string | null = null;
+  });
+  let moves = $state(0);
+  let isWon = $state(false);
+  let isLost = $state(false);
+  let recycleCount = $state(0);
+  let maxRecycles = $state<1 | 2 | 'unlimited'>(1); // Setting for next game
+  let activeMaxRecycles = $state<1 | 2 | 'unlimited'>(1); // Locked for current game
+  let showCounters = $state(false); // Toggle for counter badges
+  let history = $state<{ state: NapoleonState; recycleCount: number; moves: number }[]>([]);
+  let draggedFromWaste = $state(false);
+  let draggedFromHelper = $state<number | null>(null);
+  let draggedFromSixPile = $state(false);
+  let dragOverTarget = $state<string | null>(null);
 
   function initGame() {
     const deck = shuffleDeck(createDeck());
@@ -336,21 +336,21 @@
     on:newGame={initGame}
     on:undo={undo}
   >
-    <svelte:fragment slot="settings">
+    {#snippet settings()}
       <RecycleToggle bind:value={maxRecycles} options={[1, 2, 'unlimited']} />
       <CounterToggle bind:checked={showCounters} />
-    </svelte:fragment>
+    {/snippet}
   </GameHeader>
 
   <div class="game-area">
     <div class="play-field">
       <!-- Row 1: Top corner + Top helper + Top corner -->
       <div class="row row-1">
-      <!-- svelte-ignore a11y-no-static-element-interactions -->
+      <!-- svelte-ignore a11y_no_static_element_interactions -->
       <div class="corner-slot {dragOverTarget === 'corner-0' ? 'drag-over' : ''}" 
-           on:dragover={(e) => handleDragOver(e, 'corner-0')}
-           on:dragleave={handleDragLeave}
-           on:drop={(e) => handleDrop(e, 'corner', 0)}>
+           ondragover={(e) => handleDragOver(e, 'corner-0')}
+           ondragleave={handleDragLeave}
+           ondrop={(e) => handleDrop(e, 'corner', 0)}>
         {#if state.corners[0].length > 0}
           {#if state.corners[0].length > 2}
             <div class="stack-card" style="top: 4px; left: -2px; z-index: 0;"></div>
@@ -366,19 +366,19 @@
         {/if}
       </div>
 
-      <!-- svelte-ignore a11y-no-static-element-interactions -->
+      <!-- svelte-ignore a11y_no_static_element_interactions -->
       <div class="helper-slot {dragOverTarget === 'helper-0' ? 'drag-over' : ''}" 
-           on:dragover={(e) => handleDragOver(e, 'helper-0')}
-           on:dragleave={handleDragLeave}
-           on:drop={(e) => handleDrop(e, 'helper', 0)}>
+           ondragover={(e) => handleDragOver(e, 'helper-0')}
+           ondragleave={handleDragLeave}
+           ondrop={(e) => handleDrop(e, 'helper', 0)}>
         {#if state.helpers[0]}
-          <!-- svelte-ignore a11y-no-static-element-interactions -->
-          <!-- svelte-ignore a11y-click-events-have-key-events -->
+          <!-- svelte-ignore a11y_no_static_element_interactions -->
+          <!-- svelte-ignore a11y_click_events_have_key_events -->
           <div class="helper-card-wrapper" 
                draggable="true"
-               on:dragstart={(e) => handleDragStart(e, 'helper', 0)}
-               on:dragend={handleDragEnd}
-               on:click={() => moveFromHelper(0)}>
+               ondragstart={(e) => handleDragStart(e, 'helper', 0)}
+               ondragend={handleDragEnd}
+               onclick={() => moveFromHelper(0)}>
             <CardComponent card={state.helpers[0]} />
           </div>
         {:else}
@@ -386,11 +386,11 @@
         {/if}
       </div>
 
-      <!-- svelte-ignore a11y-no-static-element-interactions -->
+      <!-- svelte-ignore a11y_no_static_element_interactions -->
       <div class="corner-slot {dragOverTarget === 'corner-1' ? 'drag-over' : ''}" 
-           on:dragover={(e) => handleDragOver(e, 'corner-1')}
-           on:dragleave={handleDragLeave}
-           on:drop={(e) => handleDrop(e, 'corner', 1)}>
+           ondragover={(e) => handleDragOver(e, 'corner-1')}
+           ondragleave={handleDragLeave}
+           ondrop={(e) => handleDrop(e, 'corner', 1)}>
         {#if state.corners[1].length > 0}
           {#if state.corners[1].length > 2}
             <div class="stack-card" style="top: 4px; left: -2px; z-index: 0;"></div>
@@ -409,19 +409,19 @@
 
     <!-- Row 2: Left helper + Center tomb + Right helper -->
     <div class="row row-2">
-      <!-- svelte-ignore a11y-no-static-element-interactions -->
+      <!-- svelte-ignore a11y_no_static_element_interactions -->
       <div class="helper-slot {dragOverTarget === 'helper-1' ? 'drag-over' : ''}" 
-           on:dragover={(e) => handleDragOver(e, 'helper-1')}
-           on:dragleave={handleDragLeave}
-           on:drop={(e) => handleDrop(e, 'helper', 1)}>
+           ondragover={(e) => handleDragOver(e, 'helper-1')}
+           ondragleave={handleDragLeave}
+           ondrop={(e) => handleDrop(e, 'helper', 1)}>
         {#if state.helpers[1]}
-          <!-- svelte-ignore a11y-no-static-element-interactions -->
-          <!-- svelte-ignore a11y-click-events-have-key-events -->
+          <!-- svelte-ignore a11y_no_static_element_interactions -->
+          <!-- svelte-ignore a11y_click_events_have_key_events -->
           <div class="helper-card-wrapper" 
                draggable="true"
-               on:dragstart={(e) => handleDragStart(e, 'helper', 1)}
-               on:dragend={handleDragEnd}
-               on:click={() => moveFromHelper(1)}>
+               ondragstart={(e) => handleDragStart(e, 'helper', 1)}
+               ondragend={handleDragEnd}
+               onclick={() => moveFromHelper(1)}>
             <CardComponent card={state.helpers[1]} />
           </div>
         {:else}
@@ -429,11 +429,11 @@
         {/if}
       </div>
 
-      <!-- svelte-ignore a11y-no-static-element-interactions -->
+      <!-- svelte-ignore a11y_no_static_element_interactions -->
       <div class="center-slot {dragOverTarget === 'center' ? 'drag-over' : ''}" 
-           on:dragover={(e) => handleDragOver(e, 'center')}
-           on:dragleave={handleDragLeave}
-           on:drop={(e) => handleDrop(e, 'center')}>
+           ondragover={(e) => handleDragOver(e, 'center')}
+           ondragleave={handleDragLeave}
+           ondrop={(e) => handleDrop(e, 'center')}>
         {#if state.center.length > 0}
           {#if state.center.length > 2}
             <div class="stack-card" style="top: 4px; left: -2px; z-index: 0;"></div>
@@ -452,19 +452,19 @@
         {/if}
       </div>
 
-      <!-- svelte-ignore a11y-no-static-element-interactions -->
+      <!-- svelte-ignore a11y_no_static_element_interactions -->
       <div class="helper-slot {dragOverTarget === 'helper-2' ? 'drag-over' : ''}" 
-           on:dragover={(e) => handleDragOver(e, 'helper-2')}
-           on:dragleave={handleDragLeave}
-           on:drop={(e) => handleDrop(e, 'helper', 2)}>
+           ondragover={(e) => handleDragOver(e, 'helper-2')}
+           ondragleave={handleDragLeave}
+           ondrop={(e) => handleDrop(e, 'helper', 2)}>
         {#if state.helpers[2]}
-          <!-- svelte-ignore a11y-no-static-element-interactions -->
-          <!-- svelte-ignore a11y-click-events-have-key-events -->
+          <!-- svelte-ignore a11y_no_static_element_interactions -->
+          <!-- svelte-ignore a11y_click_events_have_key_events -->
           <div class="helper-card-wrapper" 
                draggable="true"
-               on:dragstart={(e) => handleDragStart(e, 'helper', 2)}
-               on:dragend={handleDragEnd}
-               on:click={() => moveFromHelper(2)}>
+               ondragstart={(e) => handleDragStart(e, 'helper', 2)}
+               ondragend={handleDragEnd}
+               onclick={() => moveFromHelper(2)}>
             <CardComponent card={state.helpers[2]} />
           </div>
         {:else}
@@ -475,11 +475,11 @@
 
     <!-- Row 3: Bottom corner + Bottom helper + Bottom corner -->
     <div class="row row-3">
-      <!-- svelte-ignore a11y-no-static-element-interactions -->
+      <!-- svelte-ignore a11y_no_static_element_interactions -->
       <div class="corner-slot {dragOverTarget === 'corner-2' ? 'drag-over' : ''}" 
-           on:dragover={(e) => handleDragOver(e, 'corner-2')}
-           on:dragleave={handleDragLeave}
-           on:drop={(e) => handleDrop(e, 'corner', 2)}>
+           ondragover={(e) => handleDragOver(e, 'corner-2')}
+           ondragleave={handleDragLeave}
+           ondrop={(e) => handleDrop(e, 'corner', 2)}>
         {#if state.corners[2].length > 0}
           {#if state.corners[2].length > 2}
             <div class="stack-card" style="top: 4px; left: -2px; z-index: 0;"></div>
@@ -495,19 +495,19 @@
         {/if}
       </div>
 
-      <!-- svelte-ignore a11y-no-static-element-interactions -->
+      <!-- svelte-ignore a11y_no_static_element_interactions -->
       <div class="helper-slot {dragOverTarget === 'helper-3' ? 'drag-over' : ''}" 
-           on:dragover={(e) => handleDragOver(e, 'helper-3')}
-           on:dragleave={handleDragLeave}
-           on:drop={(e) => handleDrop(e, 'helper', 3)}>
+           ondragover={(e) => handleDragOver(e, 'helper-3')}
+           ondragleave={handleDragLeave}
+           ondrop={(e) => handleDrop(e, 'helper', 3)}>
         {#if state.helpers[3]}
-          <!-- svelte-ignore a11y-no-static-element-interactions -->
-          <!-- svelte-ignore a11y-click-events-have-key-events -->
+          <!-- svelte-ignore a11y_no_static_element_interactions -->
+          <!-- svelte-ignore a11y_click_events_have_key_events -->
           <div class="helper-card-wrapper" 
                draggable="true"
-               on:dragstart={(e) => handleDragStart(e, 'helper', 3)}
-               on:dragend={handleDragEnd}
-               on:click={() => moveFromHelper(3)}>
+               ondragstart={(e) => handleDragStart(e, 'helper', 3)}
+               ondragend={handleDragEnd}
+               onclick={() => moveFromHelper(3)}>
             <CardComponent card={state.helpers[3]} />
           </div>
         {:else}
@@ -515,11 +515,11 @@
         {/if}
       </div>
 
-      <!-- svelte-ignore a11y-no-static-element-interactions -->
+      <!-- svelte-ignore a11y_no_static_element_interactions -->
       <div class="corner-slot {dragOverTarget === 'corner-3' ? 'drag-over' : ''}" 
-           on:dragover={(e) => handleDragOver(e, 'corner-3')}
-           on:dragleave={handleDragLeave}
-           on:drop={(e) => handleDrop(e, 'corner', 3)}>
+           ondragover={(e) => handleDragOver(e, 'corner-3')}
+           ondragleave={handleDragLeave}
+           ondrop={(e) => handleDrop(e, 'corner', 3)}>
         {#if state.corners[3].length > 0}
           {#if state.corners[3].length > 2}
             <div class="stack-card" style="top: 4px; left: -2px; z-index: 0;"></div>
@@ -541,11 +541,11 @@
     <div class="controls">
       <!-- Kutosvarasto ylimpänä -->
       <div class="control-group">
-        <!-- svelte-ignore a11y-no-static-element-interactions -->
+        <!-- svelte-ignore a11y_no_static_element_interactions -->
         <div class="pile-wrapper {dragOverTarget === 'sixPile' ? 'drag-over' : ''}" 
-             on:dragover={(e) => handleDragOver(e, 'sixPile')}
-             on:dragleave={handleDragLeave}
-             on:drop={(e) => handleDrop(e, 'sixPile')}>
+             ondragover={(e) => handleDragOver(e, 'sixPile')}
+             ondragleave={handleDragLeave}
+             ondrop={(e) => handleDrop(e, 'sixPile')}>
         {#if state.sixPile.length > 0}
           {#if state.sixPile.length > 2}
             <div class="stack-card" style="top: 4px; left: -2px; z-index: 0;"></div>
@@ -553,13 +553,13 @@
           {#if state.sixPile.length > 1}
             <div class="stack-card" style="top: 2px; left: -1px; z-index: 1;"></div>
           {/if}
-          <!-- svelte-ignore a11y-no-static-element-interactions -->
-          <!-- svelte-ignore a11y-click-events-have-key-events -->
+          <!-- svelte-ignore a11y_no_static_element_interactions -->
+          <!-- svelte-ignore a11y_click_events_have_key_events -->
           <div class="sixpile-card-wrapper" 
                draggable="true"
-               on:dragstart={(e) => handleDragStart(e, 'sixPile')}
-               on:dragend={handleDragEnd}
-               on:click={moveFromSixPile}
+               ondragstart={(e) => handleDragStart(e, 'sixPile')}
+               ondragend={handleDragEnd}
+               onclick={moveFromSixPile}
                style="position: relative; z-index: 2;">
             <CardComponent card={state.sixPile[state.sixPile.length - 1]} />
           </div>
@@ -579,13 +579,13 @@
           {#if state.waste.length > 1}
             <div class="stack-card" style="top: 2px; left: -1px; z-index: 1;"></div>
           {/if}
-          <!-- svelte-ignore a11y-no-static-element-interactions -->
-          <!-- svelte-ignore a11y-click-events-have-key-events -->
+          <!-- svelte-ignore a11y_no_static_element_interactions -->
+          <!-- svelte-ignore a11y_click_events_have_key_events -->
           <div class="current-card-wrapper" 
                draggable="true"
-               on:dragstart={handleDragStart}
-               on:dragend={handleDragEnd}
-               on:click={tryAutoPlaceCard}
+               ondragstart={handleDragStart}
+               ondragend={handleDragEnd}
+               onclick={tryAutoPlaceCard}
                style="position: relative; z-index: 2;">
             <CardComponent card={state.waste[state.waste.length - 1]} />
             {#if showCounters}
@@ -602,7 +602,7 @@
     <div class="control-group">
       <button class="stock-btn" 
                 aria-label="{state.stock.length > 0 ? 'Nosta kortti jakopakasta' : state.waste.length > 0 && (activeMaxRecycles === 'unlimited' || recycleCount < activeMaxRecycles - 1) ? 'Kierrätä kääntöpakka takaisin' : 'Jakopakka tyhjä'}"
-                on:click={drawCard} 
+                onclick={drawCard} 
                 disabled={state.stock.length === 0 && (state.waste.length === 0 || (activeMaxRecycles !== 'unlimited' && recycleCount >= activeMaxRecycles - 1))}>
         {#if state.stock.length > 0}
           {#if state.stock.length > 2}

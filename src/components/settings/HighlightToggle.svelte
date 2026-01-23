@@ -1,6 +1,5 @@
 <script lang="ts">
-  export let checked: boolean;
-  export let label: string = "Korostus";
+  let { checked = $bindable(), label = "Korostus" }: { checked: boolean; label?: string } = $props();
 </script>
 
 <label class="highlight-toggle">

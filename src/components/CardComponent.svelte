@@ -3,8 +3,7 @@
   import { isRed } from '../lib/cardUtils';
   import { cardBackType } from '../lib/cardBackStore';
 
-  export let card: Card;
-  export let draggable = false;
+  let { card, draggable = false }: { card: Card; draggable?: boolean } = $props();
 
   const suitSymbols = {
     hearts: '♥',

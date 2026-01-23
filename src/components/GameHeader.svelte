@@ -1,9 +1,18 @@
 <script lang="ts">
+  import type { Snippet } from 'svelte';
   import { createEventDispatcher } from 'svelte';
 
-  export let undoDisabled = true;
-  export let restartDisabled = true;
-  export let hintDisabled = true;
+  let { 
+    undoDisabled = true, 
+    restartDisabled = true, 
+    hintDisabled = true,
+    settings
+  }: { 
+    undoDisabled?: boolean; 
+    restartDisabled?: boolean; 
+    hintDisabled?: boolean;
+    settings?: Snippet;
+  } = $props();
 
   const dispatch = createEventDispatcher<{
     newGame: void;
@@ -15,19 +24,19 @@
 
 <div class="game-header">
   <div class="action-buttons">
-    <button on:click={() => dispatch('newGame')} class="new-game-btn">
+    <button onclick={() => dispatch('newGame')} class="new-game-btn">
       ▶ Uusi peli
     </button>
     <button 
       class="restart-btn" 
       disabled={restartDisabled} 
       title={restartDisabled ? "Tulossa pian" : "Aloita peli alusta samoilla korteilla"}
-      on:click={() => dispatch('restart')}
+      onclick={() => dispatch('restart')}
     >
       ↻ Uudelleen
     </button>
     <button 
-      on:click={() => dispatch('undo')} 
+      onclick={() => dispatch('undo')} 
       class="undo-btn" 
       disabled={undoDisabled}
     >
@@ -37,13 +46,15 @@
       class="hint-btn" 
       disabled={hintDisabled} 
       title={hintDisabled ? "Tulossa pian" : "Näytä mahdollinen siirto"}
-      on:click={() => dispatch('hint')}
+      onclick={() => dispatch('hint')}
     >
       💡 Vihje
     </button>
   </div>
   <div class="game-settings">
-    <slot name="settings" />
+    {#if settings}
+      {@render settings()}
+    {/if}
   </div>
 </div>
 

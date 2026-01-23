@@ -1,6 +1,8 @@
 <script lang="ts">
-  export let value: 1 | 2 | 3 | 'unlimited';
-  export let options: (1 | 2 | 3 | 'unlimited')[] = [1, 2, 3, 'unlimited'];
+  let { value = $bindable(), options = [1, 2, 3, 'unlimited'] }: { 
+    value: 1 | 2 | 3 | 'unlimited'; 
+    options?: (1 | 2 | 3 | 'unlimited')[] 
+  } = $props();
   
   function getLabel(option: typeof value): string {
     return option === 'unlimited' ? '∞' : String(option);
@@ -14,7 +16,7 @@
       <button 
         class="recycle-option" 
         class:active={value === option}
-        on:click={() => value = option}
+        onclick={() => value = option}
       >
         {getLabel(option)}
       </button>

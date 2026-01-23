@@ -39,7 +39,7 @@
       <button
         class="game-card"
         class:disabled={game.disabled}
-        on:click={() => selectGame(game.id)}
+        onclick={() => selectGame(game.id)}
         disabled={game.disabled}
       >
         <h3>{game.name}</h3>

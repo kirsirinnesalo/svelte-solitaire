@@ -1,20 +1,25 @@
 <script lang="ts">
-  export let value: 1 | 3;
-  export let label: string = "Nosta";
+  let { value = $bindable(), label = "Nosta" }: { value: 1 | 3; label?: string } = $props();
 </script>
 
 <div class="draw-toggle-container">
   <span class="toggle-label">{label}</span>
   <div class="toggle-slider" class:three={value === 3}>
     <div class="slider-track">
-      <!-- svelte-ignore a11y-click-events-have-key-events -->
-      <div class="slider-option" on:click={() => value = 1} role="button" tabindex="0">
+      <button 
+        type="button"
+        class="slider-option" 
+        onclick={() => value = 1}
+      >
         <span class="slider-label">1</span>
-      </div>
-      <!-- svelte-ignore a11y-click-events-have-key-events -->
-      <div class="slider-option" on:click={() => value = 3} role="button" tabindex="0">
+      </button>
+      <button 
+        type="button"
+        class="slider-option" 
+        onclick={() => value = 3}
+      >
         <span class="slider-label">3</span>
-      </div>
+      </button>
       <div class="slider-thumb"></div>
     </div>
   </div>

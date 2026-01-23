@@ -18,17 +18,17 @@
 
   const dispatch = createEventDispatcher();
 
-  let state: AcesUpState = {
+  let state = $state<AcesUpState>({
     piles: [[], [], [], []],
     stock: [],
     discarded: []
-  };
-  let moves = 0;
-  let isWon = false;
-  let isLost = false;
-  let draggedPile: number | null = null;
-  let showHighlight = false;
-  let history: AcesUpState[] = [];
+  });
+  let moves = $state(0);
+  let isWon = $state(false);
+  let isLost = $state(false);
+  let draggedPile = $state<number | null>(null);
+  let showHighlight = $state(false);
+  let history = $state<AcesUpState[]>([]);
 
   function initGame() {
     const deck = shuffleDeck(createDeck());
@@ -169,9 +169,9 @@
     on:newGame={initGame}
     on:undo={undo}
   >
-    <svelte:fragment slot="settings">
+    {#snippet settings()}
       <HighlightToggle bind:checked={showHighlight} />
-    </svelte:fragment>
+    {/snippet}
   </GameHeader>
 
   <div class="game-area">
@@ -179,7 +179,7 @@
     <div class="stock-section">
       <button
         class="stock-pile pile"
-        on:click={handleDeal}
+        onclick={handleDeal}
         disabled={state.stock.length < 4}
       >
         {#if state.stock.length >= 4}
@@ -199,10 +199,10 @@
             role="button"
             tabindex="0"
             class="play-pile pile"
-            on:click={() => handlePileClick(i)}
-            on:keydown={(e) => e.key === 'Enter' && handlePileClick(i)}
-            on:drop={(e) => handleDrop(e, i)}
-            on:dragover={handleDragOver}
+            onclick={() => handlePileClick(i)}
+            onkeydown={(e) => e.key === 'Enter' && handlePileClick(i)}
+            ondrop={(e) => handleDrop(e, i)}
+            ondragover={handleDragOver}
           >
             {#if pile.length > 0}
               {#each pile as card, cardIndex}
@@ -212,7 +212,7 @@
                   role="button"
                   tabindex="0"
                   draggable={isLast}
-                  on:dragstart={(e) => isLast && handleDragStart(e, i)}
+                  ondragstart={(e) => isLast && handleDragStart(e, i)}
                   class="card-in-pile"
                   class:draggable-wrapper={isLast}
                   class:can-remove={showHighlight && canRemove}

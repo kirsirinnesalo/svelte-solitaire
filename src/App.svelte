@@ -20,7 +20,29 @@
 
 <main>
   <div class="header">
-    <h1>🃏 Pasianssit</h1>
+    <h1>
+      <svg class="logo" width="120" height="80" viewBox="0 0 120 80" xmlns="http://www.w3.org/2000/svg">
+        <!-- Vasen kortti (10) - käännetty vasemmalle -->
+        <g transform="translate(10,15) rotate(-15)">
+          <rect width="35" height="50" rx="3" fill="white" stroke="#333" stroke-width="1.5"/>
+          <text x="17.5" y="30" font-size="16" font-weight="bold" fill="#d32f2f" text-anchor="middle">10</text>
+          <text x="17.5" y="40" font-size="12" fill="#d32f2f" text-anchor="middle">♥</text>
+        </g>
+        <!-- Keskimmäinen kortti (Ässä) - suorassa -->
+        <g transform="translate(42.5,10)">
+          <rect width="35" height="50" rx="3" fill="white" stroke="#333" stroke-width="1.5"/>
+          <text x="17.5" y="30" font-size="20" font-weight="bold" fill="#000" text-anchor="middle">A</text>
+          <text x="17.5" y="42" font-size="14" fill="#000" text-anchor="middle">♠</text>
+        </g>
+        <!-- Oikea kortti (Jokeri) - käännetty oikealle -->
+        <g transform="translate(75,15) rotate(15)">
+          <rect width="35" height="50" rx="3" fill="white" stroke="#333" stroke-width="1.5"/>
+          <text x="17.5" y="34" font-size="28" text-anchor="middle">🃏</text>
+          <text x="17.5" y="45" font-size="7" fill="#9c27b0" font-weight="600" text-anchor="middle">JOKER</text>
+        </g>
+      </svg>
+      <span class="title-text">Pasianssit</span>
+    </h1>
     <div class="card-back-selector">
       <label for="cardBack">Kortin tausta:</label>
       <select id="cardBack" bind:value={$cardBackType}>
@@ -66,6 +88,17 @@
     color: #2c3e50;
     font-size: 2.5rem;
     margin: 0;
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+  }
+
+  .logo {
+    filter: drop-shadow(0 2px 4px rgba(0,0,0,0.15));
+  }
+
+  .title-text {
+    font-size: 2.5rem;
   }
 
   .card-back-selector {

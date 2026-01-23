@@ -25,14 +25,12 @@
     <div class="card-content">
       <div class="corner top-left">
         <div class="rank">{card.rank}</div>
+      </div>
+      <div class="corner top-right">
         <div class="suit-small">{suitSymbols[card.suit]}</div>
       </div>
       <div class="center">
         <div class="suit-large">{suitSymbols[card.suit]}</div>
-      </div>
-      <div class="corner bottom-right">
-        <div class="rank">{card.rank}</div>
-        <div class="suit-small">{suitSymbols[card.suit]}</div>
       </div>
     </div>
   {:else}
@@ -60,9 +58,6 @@
     background: white;
     border: 2px solid #333;
     border-radius: 8px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
     position: relative;
     user-select: none;
     box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
@@ -214,9 +209,6 @@
     width: 100%;
     height: 100%;
     position: relative;
-    display: flex;
-    align-items: center;
-    justify-content: center;
   }
 
   .corner {
@@ -232,10 +224,9 @@
     left: 4px;
   }
 
-  .bottom-right {
-    bottom: 4px;
+  .top-right {
+    top: 4px;
     right: 4px;
-    transform: rotate(180deg);
   }
 
   .rank {
@@ -248,13 +239,17 @@
   }
 
   .center {
+    position: absolute;
+    bottom: -2px;
+    left: 50%;
+    transform: translateX(-50%);
     display: flex;
     align-items: center;
     justify-content: center;
   }
 
   .suit-large {
-    font-size: 2.5rem;
+    font-size: 4rem;
   }
 
   .red {

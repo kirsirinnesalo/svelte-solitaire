@@ -160,9 +160,7 @@
 </script>
 
 <div class="acesup">
-  <h1 class="game-title">Aces Up</h1>
   <div class="game-header">
-    <button on:click={() => dispatch('back')} class="back-btn">← Takaisin</button>
     <button on:click={undo} disabled={history.length === 0 || isWon || isLost} class="undo-btn">↺ Kumoa</button>
     <div class="header-right">
       <label class="highlight-toggle">

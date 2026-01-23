@@ -54,6 +54,23 @@
     </div>
   </div>
   
+  {#if selectedGame !== null}
+    <div class="game-nav">
+      <button on:click={handleBackToMenu} class="back-btn">← Takaisin</button>
+      <h2 class="game-title">
+        {#if selectedGame === 'klondike'}
+          Klondike
+        {:else if selectedGame === 'napoleon'}
+          Napoleon's Tomb
+        {:else if selectedGame === 'acesup'}
+          Aces Up
+        {:else if selectedGame === 'clock'}
+          Kello
+        {/if}
+      </h2>
+    </div>
+  {/if}
+  
   {#if selectedGame === null}
     <GameSelector on:selectGame={handleGameSelect} />
   {:else if selectedGame === 'klondike'}
@@ -125,5 +142,36 @@
 
   .card-back-selector select:hover {
     background: #f0f0f0;
+  }
+
+  .game-nav {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 0.5rem;
+    margin-bottom: 1.5rem;
+  }
+
+  .game-nav .back-btn {
+    padding: 0.5rem 1rem;
+    border: none;
+    border-radius: 6px;
+    background: #4CAF50;
+    color: white;
+    cursor: pointer;
+    font-size: 1rem;
+    transition: background 0.2s;
+  }
+
+  .game-nav .back-btn:hover {
+    background: #45a049;
+  }
+
+  .game-nav .game-title {
+    font-size: 2rem;
+    color: #2c3e50;
+    margin: 0;
+    text-align: center;
+    width: 100%;
   }
 </style>

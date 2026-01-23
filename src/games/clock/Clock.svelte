@@ -130,10 +130,7 @@
 </script>
 
 <div class="clock-game">
-  <h1 class="game-title">Kellopasianssi</h1>
-  
   <div class="game-header">
-    <button on:click={() => dispatch('back')} class="back-btn">← Takaisin</button>
     <button on:click={initGame} class="new-game-btn">
       {gameStarted ? 'Uusi peli' : 'Aloita peli'}
     </button>

@@ -326,9 +326,7 @@
 </script>
 
 <div class="napoleon">
-  <h1 class="game-title">Napoleonin hauta</h1>
   <div class="game-header">
-    <button on:click={() => dispatch('back')} class="back-btn">← Takaisin</button>
     <button on:click={undo} class="undo-btn" disabled={history.length === 0 || isWon || isLost}>↶ Kumoa</button>
     <div class="header-right">
       <div class="recycle-toggle-container">

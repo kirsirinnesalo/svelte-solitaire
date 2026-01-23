@@ -218,10 +218,7 @@
 </script>
 
 <div class="klondike">
-  <h1 class="game-title">Klondike</h1>
-  
   <div class="game-header">
-    <button on:click={() => dispatch('back')} class="back-btn">← Takaisin</button>
     <button on:click={undo} class="undo-btn" disabled={history.length === 0 || isWon || isLost || !gameStarted}>↶ Kumoa</button>
     <div class="game-controls">
       <div class="draw-toggle-container">

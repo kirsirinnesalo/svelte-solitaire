@@ -536,16 +536,6 @@
     cursor: default;
   }
 
-  .klondike-stack-card {
-    position: absolute;
-    width: 70px;
-    height: 100px;
-    background: white;
-    border: 1px solid #ccc;
-    border-radius: 8px;
-    pointer-events: none;
-  }
-
   .stock-counter {
     position: absolute;
     top: -1.5rem;

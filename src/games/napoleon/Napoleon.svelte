@@ -4,6 +4,8 @@
   import type { Card } from '../../types/game';
   import CardComponent from '../../components/CardComponent.svelte';
   import GameHeader from '../../components/GameHeader.svelte';
+  import RecycleToggle from '../../components/settings/RecycleToggle.svelte';
+  import CounterToggle from '../../components/settings/CounterToggle.svelte';
   import { 
     canMoveToCenter, 
     canMoveToCorner,
@@ -335,36 +337,8 @@
     on:undo={undo}
   >
     <svelte:fragment slot="settings">
-      <div class="recycle-toggle-container">
-        <span class="toggle-label">Jakoja:</span>
-        <div class="recycle-toggle">
-          <button 
-            class="recycle-option" 
-            class:active={maxRecycles === 1}
-            on:click={() => maxRecycles = 1}
-          >
-            1
-          </button>
-          <button 
-            class="recycle-option" 
-            class:active={maxRecycles === 2}
-            on:click={() => maxRecycles = 2}
-          >
-            2
-          </button>
-          <button 
-            class="recycle-option" 
-            class:active={maxRecycles === 'unlimited'}
-            on:click={() => maxRecycles = 'unlimited'}
-          >
-            ∞
-          </button>
-        </div>
-      </div>
-      <label class="counter-checkbox">
-        <input type="checkbox" bind:checked={showCounters} />
-        <span>Laskurit</span>
-      </label>
+      <RecycleToggle bind:value={maxRecycles} options={[1, 2, 'unlimited']} />
+      <CounterToggle bind:checked={showCounters} />
     </svelte:fragment>
   </GameHeader>
 
@@ -660,64 +634,6 @@
 <style>
   .napoleon {
     padding: 1rem;
-  }
-
-  /* Napoleon-specific settings styles */
-  .recycle-toggle-container {
-    display: flex;
-    align-items: center;
-    gap: 0.5rem;
-  }
-
-  .toggle-label {
-    font-size: 0.9rem;
-    color: #2c3e50;
-    font-weight: 500;
-  }
-
-  .recycle-toggle {
-    display: flex;
-    gap: 0.25rem;
-    background: #e0e0e0;
-    padding: 2px;
-    border-radius: 6px;
-  }
-
-  .recycle-option {
-    padding: 0.3rem 0.6rem;
-    border: none;
-    background: transparent;
-    color: #666;
-    cursor: pointer;
-    font-size: 0.9rem;
-    font-weight: 500;
-    border-radius: 4px;
-    transition: all 0.2s;
-  }
-
-  .recycle-option:hover {
-    background: rgba(76, 175, 80, 0.1);
-  }
-
-  .recycle-option.active {
-    background: #4CAF50;
-    color: white;
-  }
-
-  .counter-checkbox {
-    display: flex;
-    align-items: center;
-    gap: 0.4rem;
-    font-size: 0.9rem;
-    color: #2c3e50;
-    cursor: pointer;
-    user-select: none;
-  }
-
-  .counter-checkbox input[type="checkbox"] {
-    cursor: pointer;
-    width: 16px;
-    height: 16px;
   }
 
   .draw-count {

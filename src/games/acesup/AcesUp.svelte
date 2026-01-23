@@ -4,6 +4,7 @@
   import type { Card } from '../../types/game';
   import CardComponent from '../../components/CardComponent.svelte';
   import GameHeader from '../../components/GameHeader.svelte';
+  import HighlightToggle from '../../components/settings/HighlightToggle.svelte';
   import { 
     dealCards, 
     removeCard, 
@@ -169,10 +170,7 @@
     on:undo={undo}
   >
     <svelte:fragment slot="settings">
-      <label class="highlight-toggle">
-        <input type="checkbox" bind:checked={showHighlight} />
-        Korostus
-      </label>
+      <HighlightToggle bind:checked={showHighlight} />
     </svelte:fragment>
   </GameHeader>
 
@@ -255,22 +253,6 @@
 <style>
   .acesup {
     padding: 1rem;
-  }
-
-  /* AcesUp-specific settings styles */
-  .highlight-toggle {
-    display: flex;
-    align-items: center;
-    gap: 0.4rem;
-    font-size: 0.9rem;
-    color: #2c3e50;
-    cursor: pointer;
-  }
-
-  .highlight-toggle input[type="checkbox"] {
-    cursor: pointer;
-    width: 16px;
-    height: 16px;
   }
 
   .game-area {

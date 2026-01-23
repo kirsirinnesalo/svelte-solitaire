@@ -4,6 +4,8 @@
   import type { Card } from '../../types/game';
   import CardComponent from '../../components/CardComponent.svelte';
   import GameHeader from '../../components/GameHeader.svelte';
+  import DrawCountToggle from '../../components/settings/DrawCountToggle.svelte';
+  import RecycleToggle from '../../components/settings/RecycleToggle.svelte';
   import { moveCard, isGameWon, isGameLost, type KlondikeState } from './klondikeRules';
   import '../../styles/shared.css';
 
@@ -227,55 +229,8 @@
     on:undo={undo}
   >
     <svelte:fragment slot="settings">
-      <div class="draw-toggle-container">
-        <span class="toggle-label">Nosta</span>
-        <div class="toggle-slider" class:three={drawCount === 3}>
-          <div class="slider-track">
-            <!-- svelte-ignore a11y-click-events-have-key-events -->
-            <div class="slider-option" on:click={() => drawCount = 1} role="button" tabindex="0">
-              <span class="slider-label">1</span>
-            </div>
-            <!-- svelte-ignore a11y-click-events-have-key-events -->
-            <div class="slider-option" on:click={() => drawCount = 3} role="button" tabindex="0">
-              <span class="slider-label">3</span>
-            </div>
-            <div class="slider-thumb"></div>
-          </div>
-        </div>
-      </div>
-      <div class="recycle-toggle-container">
-        <span class="toggle-label">Jakoja:</span>
-        <div class="recycle-toggle">
-          <button 
-            class="recycle-option" 
-            class:active={maxRecycles === 1}
-            on:click={() => maxRecycles = 1}
-          >
-            1
-          </button>
-          <button 
-            class="recycle-option" 
-            class:active={maxRecycles === 2}
-            on:click={() => maxRecycles = 2}
-          >
-            2
-          </button>
-          <button 
-            class="recycle-option" 
-            class:active={maxRecycles === 3}
-            on:click={() => maxRecycles = 3}
-          >
-            3
-          </button>
-          <button 
-            class="recycle-option" 
-            class:active={maxRecycles === 'unlimited'}
-            on:click={() => maxRecycles = 'unlimited'}
-          >
-            ∞
-          </button>
-        </div>
-      </div>
+      <DrawCountToggle bind:value={drawCount} />
+      <RecycleToggle bind:value={maxRecycles} />
     </svelte:fragment>
   </GameHeader>
 
@@ -450,113 +405,6 @@
   }
 
   /* Klondike-specific settings styles */
-  .draw-toggle-container {
-    display: flex;
-    flex-direction: row;
-    align-items: center;
-    gap: 0.5rem;
-  }
-
-  .recycle-toggle-container {
-    display: flex;
-    align-items: center;
-    gap: 0.5rem;
-  }
-
-  .recycle-toggle {
-    display: flex;
-    gap: 0.25rem;
-    background: #e0e0e0;
-    padding: 2px;
-    border-radius: 6px;
-  }
-
-  .recycle-option {
-    padding: 0.3rem 0.6rem;
-    border: none;
-    background: transparent;
-    color: #666;
-    cursor: pointer;
-    font-size: 0.9rem;
-    font-weight: 500;
-    border-radius: 4px;
-    transition: all 0.2s;
-  }
-
-  .recycle-option:hover {
-    background: rgba(76, 175, 80, 0.1);
-  }
-
-  .recycle-option.active {
-    background: #4CAF50;
-    color: white;
-  }
-
-  .toggle-label {
-    font-size: 0.85rem;
-    font-weight: 600;
-    color: #2c3e50;
-  }
-
-  .toggle-slider {
-    position: relative;
-  }
-
-  .slider-track {
-    position: relative;
-    display: flex;
-    background: #e0e0e0;
-    border-radius: 16px;
-    padding: 2px;
-    width: 70px;
-    height: 32px;
-  }
-
-  .slider-option {
-    flex: 1;
-    background: transparent;
-    border: none;
-    cursor: pointer;
-    z-index: 2;
-    position: relative;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    padding: 0;
-  }
-
-  .slider-label {
-    font-size: 0.9rem;
-    font-weight: 600;
-    color: #666;
-    transition: color 0.3s;
-  }
-
-  .toggle-slider.three .slider-option:first-child .slider-label {
-    color: #666;
-  }
-
-  .toggle-slider:not(.three) .slider-option:first-child .slider-label,
-  .toggle-slider.three .slider-option:last-child .slider-label {
-    color: white;
-  }
-
-  .slider-thumb {
-    position: absolute;
-    top: 2px;
-    left: 2px;
-    width: calc(50% - 2px);
-    height: calc(100% - 4px);
-    background: #4CAF50;
-    border-radius: 14px;
-    transition: transform 0.3s ease;
-    z-index: 1;
-  }
-
-  .toggle-slider.three .slider-thumb {
-    transform: translateX(100%);
-  }
-
   .game-area {
     min-height: 650px;
   }

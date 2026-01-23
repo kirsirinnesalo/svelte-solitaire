@@ -21,12 +21,24 @@
   let firstGameStarted = false; // Track if first game has been started
   let drawCount: 1 | 3 = 1; // Number of cards to draw from stock (setting)
   let activeDrawCount: 1 | 3 = 1; // Active draw count for current game
-  let recycleCount = 0; // Track stock recycling (only for drawCount = 1)
+  let recycleCount = 0; // Track stock recycling
+  let maxRecycles: 1 | 2 | 3 | 'unlimited' = 3; // Setting for next game
+  let activeMaxRecycles: 1 | 2 | 3 | 'unlimited' = 3; // Locked for current game
   let history: { state: KlondikeState; moves: number }[] = [];
   let draggedCard: { type: 'tableau' | 'waste' | 'foundation', index: number, cardIndex?: number } | null = null;
 
+  // Automatically update maxRecycles when drawCount changes
+  $: {
+    if (drawCount === 1) {
+      maxRecycles = 3;
+    } else if (drawCount === 3) {
+      maxRecycles = 'unlimited';
+    }
+  }
+
   function initGame() {
     activeDrawCount = drawCount; // Lock in the draw count for this game
+    activeMaxRecycles = maxRecycles; // Lock in the setting
     recycleCount = 0;
     gameStarted = true;
     firstGameStarted = true;
@@ -79,8 +91,8 @@
   function drawFromStock() {
     saveState();
     if (state.stock.length === 0) {
-      // Check recycle limit for 1-card draw mode
-      if (activeDrawCount === 1 && recycleCount >= 2) return; // Max 2 recycles (3 rounds total)
+      // Check recycle limit
+      if (activeMaxRecycles !== 'unlimited' && recycleCount >= activeMaxRecycles - 1) return; // Max recycles reached
       if (state.waste.length === 0) return; // Nothing to recycle
       
       // Reset stock from waste
@@ -228,6 +240,39 @@
           </div>
         </div>
       </div>
+      <div class="recycle-toggle-container">
+        <span class="toggle-label">Jakoja:</span>
+        <div class="recycle-toggle">
+          <button 
+            class="recycle-option" 
+            class:active={maxRecycles === 1}
+            on:click={() => maxRecycles = 1}
+          >
+            1
+          </button>
+          <button 
+            class="recycle-option" 
+            class:active={maxRecycles === 2}
+            on:click={() => maxRecycles = 2}
+          >
+            2
+          </button>
+          <button 
+            class="recycle-option" 
+            class:active={maxRecycles === 3}
+            on:click={() => maxRecycles = 3}
+          >
+            3
+          </button>
+          <button 
+            class="recycle-option" 
+            class:active={maxRecycles === 'unlimited'}
+            on:click={() => maxRecycles = 'unlimited'}
+          >
+            ∞
+          </button>
+        </div>
+      </div>
       <button 
         on:click={initGame} 
         class="new-game-btn"
@@ -242,15 +287,17 @@
     <div class="top-row">
       <div class="stock-waste-wrapper">
         <div class="stock-area">
-          {#if firstGameStarted && activeDrawCount === 1}
-            <div class="stock-counter">Jako: {recycleCount + 1}/3</div>
+          {#if firstGameStarted && activeMaxRecycles !== 'unlimited'}
+            <div class="stock-counter">Jako: {recycleCount + 1}/{activeMaxRecycles}</div>
           {/if}
           <button
             class="stock-pile pile"
             on:click={drawFromStock}
             disabled={state.stock.length === 0 && state.waste.length === 0 || isWon || isLost}
           >
-            {#if activeDrawCount === 1 && state.stock.length === 0 && recycleCount >= 2}
+            {#if !firstGameStarted}
+              <div class="empty-pile">↻</div>
+            {:else if state.stock.length === 0 && (state.waste.length === 0 || (activeMaxRecycles !== 'unlimited' && recycleCount >= activeMaxRecycles - 1))}
               <div class="empty-pile no-more-draws">✖</div>
             {:else if state.stock.length > 0}
               {#if state.stock.length > 2}
@@ -423,6 +470,41 @@
     gap: 0.5rem;
   }
 
+  .recycle-toggle-container {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+  }
+
+  .recycle-toggle {
+    display: flex;
+    gap: 0.25rem;
+    background: #e0e0e0;
+    padding: 2px;
+    border-radius: 6px;
+  }
+
+  .recycle-option {
+    padding: 0.3rem 0.6rem;
+    border: none;
+    background: transparent;
+    color: #666;
+    cursor: pointer;
+    font-size: 0.9rem;
+    font-weight: 500;
+    border-radius: 4px;
+    transition: all 0.2s;
+  }
+
+  .recycle-option:hover {
+    background: rgba(76, 175, 80, 0.1);
+  }
+
+  .recycle-option.active {
+    background: #4CAF50;
+    color: white;
+  }
+
   .toggle-label {
     font-size: 0.85rem;
     font-weight: 600;
@@ -568,6 +650,7 @@
   }
 
   .empty-pile.no-more-draws {
+    background: rgba(255, 0, 0, 0.15);
     border-color: rgba(255, 0, 0, 0.6);
     color: #ff4444;
     font-size: 3rem;

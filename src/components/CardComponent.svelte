@@ -177,7 +177,6 @@
   /* Four Suits */
   .card-back[data-back-type="four-suits"] {
     background: white;
-    padding: 6px;
   }
 
   .card-back[data-back-type="four-suits"] .back-inner {
@@ -193,7 +192,7 @@
     grid-template-columns: 1fr 1fr;
     grid-template-rows: 1fr 1fr;
     gap: 3px;
-    font-size: 1.5rem;
+    font-size: 1.8rem;
     padding: 2px;
   }
 

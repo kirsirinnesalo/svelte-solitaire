@@ -30,8 +30,8 @@
   let isWon = false;
   let isLost = false;
   let recycleCount = 0;
-  let maxRecycles: 1 | 2 | 3 = 1; // Setting for next game
-  let activeMaxRecycles: 1 | 2 | 3 = 1; // Locked for current game
+  let maxRecycles: 1 | 2 | 'unlimited' = 1; // Setting for next game
+  let activeMaxRecycles: 1 | 2 | 'unlimited' = 1; // Locked for current game
   let showCounters = false; // Toggle for counter badges
   let history: { state: NapoleonState; recycleCount: number; moves: number }[] = [];
   let draggedFromWaste = false;
@@ -82,7 +82,7 @@
     // If stock is empty, recycle waste back to stock
     if (state.stock.length === 0) {
       if (state.waste.length === 0) return; // Nothing to recycle
-      if (recycleCount >= activeMaxRecycles - 1) return; // Max recycles reached
+      if (activeMaxRecycles !== 'unlimited' && recycleCount >= activeMaxRecycles - 1) return; // Max recycles reached
       
       saveState();
       // Move all waste cards back to stock (face down)
@@ -332,7 +332,7 @@
     <button on:click={undo} class="undo-btn" disabled={history.length === 0 || isWon || isLost}>↶ Kumoa</button>
     <div class="header-right">
       <div class="recycle-toggle-container">
-        <span class="toggle-label">Käännöt:</span>
+        <span class="toggle-label">Jakoja:</span>
         <div class="recycle-toggle">
           <button 
             class="recycle-option" 
@@ -350,10 +350,10 @@
           </button>
           <button 
             class="recycle-option" 
-            class:active={maxRecycles === 3}
-            on:click={() => maxRecycles = 3}
+            class:active={maxRecycles === 'unlimited'}
+            on:click={() => maxRecycles = 'unlimited'}
           >
-            3
+            ∞
           </button>
         </div>
       </div>
@@ -624,9 +624,9 @@
     <!-- Jakopakka alimpana -->
     <div class="control-group">
       <button class="stock-btn" 
-                aria-label="{state.stock.length > 0 ? 'Nosta kortti jakopakasta' : state.waste.length > 0 && recycleCount < activeMaxRecycles - 1 ? 'Kierrätä kääntöpakka takaisin' : 'Jakopakka tyhjä'}"
+                aria-label="{state.stock.length > 0 ? 'Nosta kortti jakopakasta' : state.waste.length > 0 && (activeMaxRecycles === 'unlimited' || recycleCount < activeMaxRecycles - 1) ? 'Kierrätä kääntöpakka takaisin' : 'Jakopakka tyhjä'}"
                 on:click={drawCard} 
-                disabled={state.stock.length === 0 && (state.waste.length === 0 || recycleCount >= activeMaxRecycles - 1)}>
+                disabled={state.stock.length === 0 && (state.waste.length === 0 || (activeMaxRecycles !== 'unlimited' && recycleCount >= activeMaxRecycles - 1))}>
         {#if state.stock.length > 0}
           {#if state.stock.length > 2}
             <div class="stack-card" style="top: 4px; left: -2px; z-index: 0;"></div>
@@ -640,13 +640,15 @@
           {#if showCounters}
             <div class="stock-count">{state.stock.length}</div>
           {/if}
-        {:else if state.waste.length > 0 && recycleCount < activeMaxRecycles - 1}
+        {:else if state.waste.length > 0 && (activeMaxRecycles === 'unlimited' || recycleCount < activeMaxRecycles - 1)}
           <div class="empty-pile recycle">↻</div>
         {:else}
           <div class="empty-pile game-over">✕</div>
         {/if}
       </button>
-      <div class="draw-count">Jako: {recycleCount + 1}/{activeMaxRecycles}</div>
+      {#if activeMaxRecycles !== 'unlimited'}
+        <div class="draw-count">{recycleCount + 1}/{activeMaxRecycles}</div>
+      {/if}
     </div>
     </div>
   </div>

@@ -1,5 +1,4 @@
 <script lang="ts">
-  import { createEventDispatcher } from 'svelte';
   import { createDeck, shuffleDeck } from '../../lib/cardUtils';
   import type { Card } from '../../types/game';
   import CardComponent from '../../components/CardComponent.svelte';
@@ -14,9 +13,8 @@
     isGameLost,
     type AcesUpState 
   } from './acesUpRules';
+  import { allowDrop } from '../../lib/dragUtils';
   import '../../styles/shared.css';
-
-  const dispatch = createEventDispatcher();
 
   let state = $state<AcesUpState>({
     piles: [[], [], [], []],
@@ -130,13 +128,6 @@
     draggedPile = null;
   }
 
-  function handleDragOver(event: DragEvent) {
-    event.preventDefault();
-    if (event.dataTransfer) {
-      event.dataTransfer.dropEffect = 'move';
-    }
-  }
-
   function undo() {
     if (history.length === 0) return;
     
@@ -166,8 +157,8 @@
     undoDisabled={history.length === 0 || isWon || isLost}
     restartDisabled={true}
     hintDisabled={true}
-    on:newGame={initGame}
-    on:undo={undo}
+    onNewGame={initGame}
+    onUndo={undo}
   >
     {#snippet settings()}
       <HighlightToggle bind:checked={showHighlight} />
@@ -202,7 +193,7 @@
             onclick={() => handlePileClick(i)}
             onkeydown={(e) => e.key === 'Enter' && handlePileClick(i)}
             ondrop={(e) => handleDrop(e, i)}
-            ondragover={handleDragOver}
+            ondragover={allowDrop}
           >
             {#if pile.length > 0}
               {#each pile as card, cardIndex}

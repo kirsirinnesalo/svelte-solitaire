@@ -1,5 +1,4 @@
 <script lang="ts">
-  import { createEventDispatcher } from 'svelte';
   import { createDeck, shuffleDeck } from '../../lib/cardUtils';
   import type { Card } from '../../types/game';
   import CardComponent from '../../components/CardComponent.svelte';
@@ -17,9 +16,8 @@
     countCycles,
     type NapoleonState 
   } from './napoleonRules';
+  import { allowDrop } from '../../lib/dragUtils';
   import '../../styles/shared.css';
-
-  const dispatch = createEventDispatcher();
 
   let state = $state<NapoleonState>({
     center: [],
@@ -65,7 +63,7 @@
 
   function saveState() {
     history = [...history, {
-      state: JSON.parse(JSON.stringify(state)),
+      state: structuredClone(state),
       recycleCount,
       moves
     }];
@@ -74,7 +72,7 @@
   function undo() {
     if (history.length === 0 || isWon) return;
     const previous = history[history.length - 1];
-    state = JSON.parse(JSON.stringify(previous.state));
+    state = structuredClone(previous.state);
     recycleCount = previous.recycleCount;
     moves = previous.moves;
     history = history.slice(0, -1);
@@ -333,8 +331,8 @@
     undoDisabled={history.length === 0 || isWon || isLost}
     restartDisabled={true}
     hintDisabled={true}
-    on:newGame={initGame}
-    on:undo={undo}
+    onNewGame={initGame}
+    onUndo={undo}
   >
     {#snippet settings()}
       <RecycleToggle bind:value={maxRecycles} options={[1, 2, 'unlimited']} />

@@ -1,42 +1,42 @@
 <script lang="ts">
   import type { Snippet } from 'svelte';
-  import { createEventDispatcher } from 'svelte';
 
   let { 
     undoDisabled = true, 
     restartDisabled = true, 
     hintDisabled = true,
+    onNewGame,
+    onRestart,
+    onUndo,
+    onHint,
     settings
   }: { 
     undoDisabled?: boolean; 
     restartDisabled?: boolean; 
     hintDisabled?: boolean;
+    onNewGame: () => void;
+    onRestart?: () => void;
+    onUndo?: () => void;
+    onHint?: () => void;
     settings?: Snippet;
   } = $props();
-
-  const dispatch = createEventDispatcher<{
-    newGame: void;
-    restart: void;
-    undo: void;
-    hint: void;
-  }>();
 </script>
 
 <div class="game-header">
   <div class="action-buttons">
-    <button onclick={() => dispatch('newGame')} class="new-game-btn">
+    <button onclick={onNewGame} class="new-game-btn">
       ▶ Uusi peli
     </button>
     <button 
       class="restart-btn" 
       disabled={restartDisabled} 
       title={restartDisabled ? "Tulossa pian" : "Aloita peli alusta samoilla korteilla"}
-      onclick={() => dispatch('restart')}
+      onclick={onRestart}
     >
       ↻ Uudelleen
     </button>
     <button 
-      onclick={() => dispatch('undo')} 
+      onclick={onUndo} 
       class="undo-btn" 
       disabled={undoDisabled}
     >
@@ -46,7 +46,7 @@
       class="hint-btn" 
       disabled={hintDisabled} 
       title={hintDisabled ? "Tulossa pian" : "Näytä mahdollinen siirto"}
-      onclick={() => dispatch('hint')}
+      onclick={onHint}
     >
       💡 Vihje
     </button>

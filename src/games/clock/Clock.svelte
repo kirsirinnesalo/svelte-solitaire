@@ -1,13 +1,11 @@
 <script lang="ts">
-  import { createEventDispatcher } from 'svelte';
   import { createDeck, shuffleDeck } from '../../lib/cardUtils';
   import type { Card } from '../../types/game';
   import CardComponent from '../../components/CardComponent.svelte';
   import GameHeader from '../../components/GameHeader.svelte';
   import { revealCard, moveRevealedCard, isGameWon, isGameLost, type ClockState } from './clockRules';
+  import { allowDrop } from '../../lib/dragUtils';
   import '../../styles/shared.css';
-
-  const dispatch = createEventDispatcher();
 
   let state = $state<ClockState>({
     piles: Array(13).fill([]).map(() => []),
@@ -82,13 +80,6 @@
     }
   }
 
-  function handleDragOver(event: DragEvent) {
-    event.preventDefault();
-    if (event.dataTransfer) {
-      event.dataTransfer.dropEffect = 'move';
-    }
-  }
-
   function handleDrop(event: DragEvent, toPileIndex: number) {
     event.preventDefault();
     
@@ -135,7 +126,7 @@
     undoDisabled={true}
     restartDisabled={true}
     hintDisabled={true}
-    on:newGame={initGame}
+    onNewGame={initGame}
   >
     {#snippet settings()}
       <!-- Ei asetuksia tällä hetkellä -->
@@ -156,7 +147,7 @@
         <div 
           class="clock-pile"
           onclick={() => handlePileClick(i)}
-          ondragover={handleDragOver}
+          ondragover={allowDrop}
           ondrop={(e) => handleDrop(e, i)}
           style="position: absolute; left: {position.x}px; top: {position.y}px; transform: rotate({rotation}deg); transform-origin: center;"
         >
@@ -195,7 +186,7 @@
         <div 
           class="clock-pile center-pile"
           onclick={() => handlePileClick(12)}
-          ondragover={handleDragOver}
+          ondragover={allowDrop}
           ondrop={(e) => handleDrop(e, 12)}
           style="position: absolute; left: 215px; top: 200px;"
         >

@@ -1,5 +1,4 @@
 <script lang="ts">
-  import { createEventDispatcher } from 'svelte';
   import { createDeck, shuffleDeck } from '../../lib/cardUtils';
   import type { Card } from '../../types/game';
   import CardComponent from '../../components/CardComponent.svelte';
@@ -7,9 +6,8 @@
   import DrawCountToggle from '../../components/settings/DrawCountToggle.svelte';
   import RecycleToggle from '../../components/settings/RecycleToggle.svelte';
   import { moveCard, isGameWon, isGameLost, type KlondikeState } from './klondikeRules';
+  import { allowDrop } from '../../lib/dragUtils';
   import '../../styles/shared.css';
-
-  const dispatch = createEventDispatcher();
 
   let state = $state<KlondikeState>({
     tableau: [],
@@ -77,7 +75,7 @@
 
   function saveState() {
     history = [...history, {
-      state: JSON.parse(JSON.stringify(state)),
+      state: structuredClone(state),
       moves
     }];
   }
@@ -85,7 +83,7 @@
   function undo() {
     if (history.length === 0 || isWon) return;
     const previous = history[history.length - 1];
-    state = JSON.parse(JSON.stringify(previous.state));
+    state = structuredClone(previous.state);
     moves = previous.moves;
     history = history.slice(0, -1);
     isWon = false;
@@ -138,13 +136,6 @@
     }
     
     draggedCard = null;
-  }
-
-  function handleDragOver(event: DragEvent) {
-    event.preventDefault();
-    if (event.dataTransfer) {
-      event.dataTransfer.dropEffect = 'move';
-    }
   }
 
   function handleDoubleClick(type: 'tableau' | 'waste', index: number, cardIndex?: number) {
@@ -225,8 +216,8 @@
     undoDisabled={history.length === 0 || isWon || isLost || !gameStarted}
     restartDisabled={true}
     hintDisabled={true}
-    on:newGame={initGame}
-    on:undo={undo}
+    onNewGame={initGame}
+    onUndo={undo}
   >
     {#snippet settings()}
       <DrawCountToggle bind:value={drawCount} />
@@ -324,7 +315,7 @@
           <div
             class="foundation pile"
             ondrop={(e) => handleDrop(e, 'foundation', i)}
-            ondragover={handleDragOver}
+            ondragover={allowDrop}
           >
             {#if foundation.length > 0}
               <!-- Background cards to show stack depth -->
@@ -370,7 +361,7 @@
           <div
             class="tableau-pile"
             ondrop={(e) => handleDrop(e, 'tableau', i)}
-            ondragover={handleDragOver}
+            ondragover={allowDrop}
           >
             {#if pile.length === 0}
               <div class="empty-pile tableau-empty"></div>

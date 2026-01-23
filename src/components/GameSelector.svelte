@@ -4,7 +4,7 @@
 
   const dispatch = createEventDispatcher<{ selectGame: GameType }>();
 
-  const games = [
+  const games: Array<{id: GameType, name: string, description: string, disabled?: boolean}> = [
     {
       id: 'klondike' as GameType,
       name: 'Klondike',

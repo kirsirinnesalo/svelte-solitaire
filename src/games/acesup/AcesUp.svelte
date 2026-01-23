@@ -161,13 +161,17 @@
 
 <div class="acesup">
   <div class="game-header">
-    <button on:click={undo} disabled={history.length === 0 || isWon || isLost} class="undo-btn">↺ Kumoa</button>
-    <div class="header-right">
+    <div class="action-buttons">
+      <button on:click={initGame} class="new-game-btn">▶ Uusi peli</button>
+      <button class="restart-btn" disabled title="Tulossa pian">↻ Uudelleen</button>
+      <button on:click={undo} disabled={history.length === 0 || isWon || isLost} class="undo-btn">↺ Kumoa</button>
+      <button class="hint-btn" disabled title="Tulossa pian">💡 Vihje</button>
+    </div>
+    <div class="game-settings">
       <label class="highlight-toggle">
         <input type="checkbox" bind:checked={showHighlight} />
         Korostus
       </label>
-      <button on:click={initGame} class="new-game-btn">Uusi peli</button>
     </div>
   </div>
 
@@ -254,14 +258,40 @@
 
   /* AcesUp-specific overrides */
   .game-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
     margin-bottom: 1rem;
     gap: 1rem;
   }
 
-  .header-right {
+  .action-buttons {
+    display: flex;
+    gap: 0.5rem;
+    align-items: center;
+  }
+
+  .game-settings {
     display: flex;
     align-items: center;
     gap: 0.75rem;
+  }
+
+  .restart-btn, .hint-btn {
+    padding: 0.5rem 1rem;
+    border: none;
+    border-radius: 6px;
+    background: #4CAF50;
+    color: white;
+    cursor: pointer;
+    font-size: 1rem;
+    transition: background 0.2s;
+  }
+
+  .restart-btn:disabled, .hint-btn:disabled {
+    background: #ccc;
+    cursor: not-allowed;
+    opacity: 0.6;
   }
 
   .highlight-toggle {

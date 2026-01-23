@@ -219,8 +219,18 @@
 
 <div class="klondike">
   <div class="game-header">
-    <button on:click={undo} class="undo-btn" disabled={history.length === 0 || isWon || isLost || !gameStarted}>↶ Kumoa</button>
-    <div class="game-controls">
+    <div class="action-buttons">
+      <button 
+        on:click={initGame} 
+        class="new-game-btn"
+      >
+        ▶ Uusi peli
+      </button>
+      <button class="restart-btn" disabled title="Tulossa pian">↻ Uudelleen</button>
+      <button on:click={undo} class="undo-btn" disabled={history.length === 0 || isWon || isLost || !gameStarted}>↶ Kumoa</button>
+      <button class="hint-btn" disabled title="Tulossa pian">💡 Vihje</button>
+    </div>
+    <div class="game-settings">
       <div class="draw-toggle-container">
         <span class="toggle-label">Nosta</span>
         <div class="toggle-slider" class:three={drawCount === 3}>
@@ -270,12 +280,6 @@
           </button>
         </div>
       </div>
-      <button 
-        on:click={initGame} 
-        class="new-game-btn"
-      >
-        {firstGameStarted ? 'Uusi peli' : 'Aloita peli'}
-      </button>
     </div>
   </div>
 
@@ -451,13 +455,40 @@
 
   /* Klondike-specific overrides and additions */
   .game-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
     margin-bottom: 2rem;
+    gap: 1rem;
   }
 
-  .game-controls {
+  .action-buttons {
     display: flex;
     gap: 0.5rem;
     align-items: center;
+  }
+
+  .game-settings {
+    display: flex;
+    gap: 0.5rem;
+    align-items: center;
+  }
+
+  .restart-btn, .hint-btn {
+    padding: 0.5rem 1rem;
+    border: none;
+    border-radius: 6px;
+    background: #4CAF50;
+    color: white;
+    cursor: pointer;
+    font-size: 1rem;
+    transition: background 0.2s;
+  }
+
+  .restart-btn:disabled, .hint-btn:disabled {
+    background: #ccc;
+    cursor: not-allowed;
+    opacity: 0.6;
   }
 
   .draw-toggle-container {

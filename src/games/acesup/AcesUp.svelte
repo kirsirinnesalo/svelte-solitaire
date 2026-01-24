@@ -4,7 +4,6 @@
   import CardComponent from '../../components/CardComponent.svelte';
   import GameHeader from '../../components/GameHeader.svelte';
   import GameResultModal from '../../components/GameResultModal.svelte';
-  import HighlightToggle from '../../components/settings/HighlightToggle.svelte';
   import { 
     dealCards, 
     removeCard, 
@@ -65,6 +64,7 @@
     if (result.valid && result.newState) {
       saveState();
       gameState = result.newState;
+      showHighlight = false; // Hide hint after dealing
       moves++;
       checkGameStatus();
     }
@@ -144,6 +144,11 @@
     isLost = false;
   }
 
+  function showHint() {
+    // Show highlights temporarily - next deal will hide them
+    showHighlight = true;
+  }
+
   function checkGameStatus() {
     isWon = isGameWon(gameState);
     isLost = !isWon && isGameLost(gameState);
@@ -162,14 +167,11 @@
   <GameHeader
     {undoDisabled}
     restartDisabled={true}
-    hintDisabled={true}
+    hintDisabled={false}
     onNewGame={initGame}
     onUndo={undo}
-  >
-    {#snippet settings()}
-      <HighlightToggle bind:checked={showHighlight} />
-    {/snippet}
-  </GameHeader>
+    onHint={showHint}
+  />
 
   <div class="game-area">
     <!-- Stock -->

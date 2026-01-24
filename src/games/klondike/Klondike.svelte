@@ -98,8 +98,14 @@
     saveState();
     if (gameState.stock.length === 0) {
       // Check recycle limit
-      if (activeMaxRecycles !== 'unlimited' && recycleCount >= activeMaxRecycles - 1) return; // Max recycles reached
-      if (gameState.waste.length === 0) return; // Nothing to recycle
+      if (activeMaxRecycles !== 'unlimited' && recycleCount >= activeMaxRecycles - 1) {
+        checkWin(); // Check for loss when can't recycle anymore
+        return;
+      }
+      if (gameState.waste.length === 0) {
+        checkWin(); // Check for loss when nothing to recycle
+        return;
+      }
       
       // Reset stock from waste
       gameState = {
@@ -127,6 +133,7 @@
       };
     }
     moves++;
+    checkWin(); // Check for win/loss after drawing cards
   }
 
   function handleDragStart(event: DragEvent, type: 'tableau' | 'waste' | 'foundation', index: number, cardIndex?: number) {

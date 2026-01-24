@@ -31,6 +31,8 @@
   let draggedCard: { type: 'tableau' | 'waste' | 'foundation', index: number, cardIndex?: number } | null = $state(null);
   let showHighlight = $state(false);
   let highlightedCards = $state(new Set<string>());
+  let noMovesMessage = $state(false);
+  let stockHighlight = $state(false);
 
   // Derived state for undo button
   let undoDisabled = $derived(history.length === 0 || isWon || isLost || !gameStarted);
@@ -53,6 +55,7 @@
     isLost = false;
     showHighlight = false; // Reset hints
     highlightedCards = new Set<string>(); // Clear highlighted cards
+    stockHighlight = false; // Reset stock highlight
     const deck = shuffleDeck(createDeck());
     const tableau: Card[][] = [];
     
@@ -100,6 +103,7 @@
 
   function drawFromStock() {
     showHighlight = false; // Hide hints when drawing
+    stockHighlight = false; // Hide stock highlight
     saveState();
     if (gameState.stock.length === 0) {
       // Check recycle limit
@@ -264,6 +268,11 @@
           if (k === i) continue;
           const result = moveCard(gameState, { type: 'tableau', index: i, cardIndex: j }, { type: 'tableau', index: k });
           if (result.valid) {
+            // Skip if moving a king from bottom of pile to an empty tableau (pointless move)
+            const targetPile = gameState.tableau[k];
+            if (card.rank === 'K' && j === 0 && targetPile.length === 0) {
+              continue;
+            }
             highlightedCards.add(card.id);
             break;
           }
@@ -271,7 +280,20 @@
       }
     }
     
-    showHighlight = true;
+    // Check if any moves were found
+    if (highlightedCards.size === 0) {
+      // No moves available - check if can draw more cards
+      if (gameState.stock.length > 0 || gameState.waste.length > 0) {
+        stockHighlight = true;
+        setTimeout(() => { stockHighlight = false; }, 2500);
+      } else {
+        // Truly no moves
+        noMovesMessage = true;
+        setTimeout(() => { noMovesMessage = false; }, 2500);
+      }
+    } else {
+      showHighlight = true;
+    }
   }
 
   function checkWin() {
@@ -320,6 +342,17 @@
     {/snippet}
   </GameHeader>
 
+  <!-- No moves message toast -->
+  {#if noMovesMessage}
+    <div class="no-moves-toast">
+      {#if gameState.stock.length > 0 || gameState.waste.length > 0}
+        Käännä lisää kortteja peliin
+      {:else}
+        Ei mahdollisia siirtoja
+      {/if}
+    </div>
+  {/if}
+
   <div class="game-area">
     <!-- Stock and Waste -->
     <div class="top-row">
@@ -330,6 +363,7 @@
           {/if}
           <button
             class="stock-pile pile"
+            class:highlight={stockHighlight}
             onclick={drawFromStock}
             disabled={gameState.stock.length === 0 && gameState.waste.length === 0 || isWon || isLost}
           >
@@ -491,6 +525,32 @@
 <style>
   .klondike {
     padding: 1rem;
+    position: relative;
+  }
+
+  /* No moves toast notification */
+  .no-moves-toast {
+    position: absolute;
+    top: 4rem;
+    left: 50%;
+    transform: translateX(-50%);
+    background: #e3f2fd;
+    color: #1565c0;
+    padding: 0.6rem 1.2rem;
+    border-radius: 6px;
+    border: 1px solid #90caf9;
+    font-size: 0.95rem;
+    font-weight: 500;
+    z-index: 1000;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.15);
+    animation: slideInFadeOut 2.5s ease-in-out;
+  }
+
+  @keyframes slideInFadeOut {
+    0% { opacity: 0; transform: translateX(-50%) translateY(-10px); }
+    10% { opacity: 1; transform: translateX(-50%) translateY(0); }
+    90% { opacity: 1; transform: translateX(-50%) translateY(0); }
+    100% { opacity: 0; transform: translateX(-50%) translateY(-10px); }
   }
 
   /* Klondike-specific settings styles */

@@ -46,6 +46,7 @@
     moves = 0;
     isWon = false;
     isLost = false;
+    showResultModal = false;
     draggedPile = null;
     history = [];
   }
@@ -376,11 +377,10 @@
   }
 </style>
 
-{#if showResultModal}
-  <GameResultModal 
-    isWon={isWon} 
-    moves={moves} 
-    onNewGame={initGame} 
-    onClose={() => { showResultModal = false; }} 
-  />
-{/if}
+<GameResultModal 
+  isOpen={showResultModal}
+  isWon={isWon} 
+  moves={moves} 
+  onNewGame={initGame} 
+  onClose={() => { showResultModal = false; }} 
+/>

@@ -52,6 +52,7 @@
     
     isWon = false;
     isLost = false;
+    showResultModal = false;
     gameStarted = true;
   }
 
@@ -259,11 +260,10 @@
   }
 </style>
 
-{#if showResultModal}
-  <GameResultModal 
-    isWon={isWon} 
-    moves={0} 
-    onNewGame={initGame} 
-    onClose={() => { showResultModal = false; }} 
-  />
-{/if}
+<GameResultModal 
+  isOpen={showResultModal}
+  isWon={isWon} 
+  moves={0} 
+  onNewGame={initGame} 
+  onClose={() => { showResultModal = false; }} 
+/>

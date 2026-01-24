@@ -15,10 +15,21 @@
 </script>
 
 {#if isOpen}
-  <div class="modal-overlay" onclick={onClose}>
-    <div class="modal-content" onclick={(e) => e.stopPropagation()}>
+  <div class="modal-overlay" 
+       onclick={onClose}
+       onkeydown={(e) => e.key === 'Escape' && onClose()}
+       role="button"
+       tabindex="-1"
+       aria-label="Sulje dialogi">
+    <div class="modal-content" 
+         onclick={(e) => e.stopPropagation()}
+         onkeydown={(e) => e.stopPropagation()}
+         role="dialog"
+         aria-modal="true"
+         aria-labelledby="modal-title"
+         tabindex="0">
       <div class="modal-header">
-        <h2 class="modal-title">
+        <h2 id="modal-title" class="modal-title">
           {isWon ? '🎉 Onneksi olkoon!' : '😔 Peli päättyi'}
         </h2>
       </div>

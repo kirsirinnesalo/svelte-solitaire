@@ -43,7 +43,7 @@
   let dragOverTarget: string | null = $state(null);
 
   // Derived state for undo button
-  let undoDisabled = $derived(history.length === 0 || isWon);
+  let undoDisabled = $derived(history.length === 0 || isWon || isLost);
 
   function initGame() {
     const deck = shuffleDeck(createDeck());
@@ -62,6 +62,7 @@
     moves = 0;
     isWon = false;
     isLost = false;
+    showResultModal = false;
     recycleCount = 0;
     history = [];
   }
@@ -114,6 +115,9 @@
       stock: newStock,
       waste: [...gameState.waste, card]
     };
+    
+    // Check for game over after drawing
+    checkWin();
   }
 
   function placeWasteCard(target: 'center' | 'corner' | 'helper' | 'sixPile', index?: number) {
@@ -183,7 +187,8 @@
     const result = tryAutoPlace(gameState, card);
     if (result.success && result.newState) {
       saveState();
-      const newHelpers = [...gameState.helpers];
+      // Clear the source helper pile in the new state
+      const newHelpers = [...result.newState.helpers];
       newHelpers[helperIndex] = null;
       gameState = {
         ...result.newState,
@@ -237,7 +242,7 @@
 
   function checkWin() {
     isWon = isGameWon(gameState);
-    isLost = !isWon && isGameLost(gameState);
+    isLost = !isWon && isGameLost(gameState, recycleCount, activeMaxRecycles);
     
     if (isWon) {
       setTimeout(() => { showResultModal = true; }, 100);
@@ -712,6 +717,14 @@
   </div>
 </div>
 
+<GameResultModal 
+  isOpen={showResultModal}
+  isWon={isWon} 
+  moves={moves} 
+  onNewGame={initGame} 
+  onClose={() => { showResultModal = false; }} 
+/>
+
 <style>
   .napoleon {
     padding: 1rem;
@@ -966,14 +979,6 @@
     cursor: grabbing;
   }
 
-  {#if showResultModal}
-    <GameResultModal 
-      isWon={isWon} 
-      moves={moves} 
-      onNewGame={newGame} 
-      onClose={() => { showResultModal = false; }} 
-    />
-  {/if}
   .sixpile-card-wrapper:hover {
     transform: scale(1.05);
   }

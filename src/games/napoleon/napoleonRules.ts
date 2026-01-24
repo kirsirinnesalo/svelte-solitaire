@@ -131,18 +131,18 @@ export function tryAutoPlace(state: NapoleonState, card: Card): { success: boole
     }
   }
   
+  // If it's a 6, put it in six pile (before trying helpers)
+  if (canMoveToSixPile(card)) {
+    newState.sixPile.push(card);
+    return { success: true, newState, target: 'sixPile' };
+  }
+  
   // Try any helper pile
   for (let i = 0; i < 4; i++) {
     if (canMoveToHelper(newState.helpers[i])) {
       newState.helpers[i] = card;
       return { success: true, newState, target: `helper${i}` };
     }
-  }
-  
-  // If it's a 6, put it in six pile
-  if (canMoveToSixPile(card)) {
-    newState.sixPile.push(card);
-    return { success: true, newState, target: 'sixPile' };
   }
   
   return { success: false };
@@ -159,9 +159,9 @@ export function isGameWon(state: NapoleonState): boolean {
     pile.length === 7 && pile[pile.length - 1].rank === 'K'
   );
   
-  // All other cards should be in center (52 - 28 = 24 cards)
-  // And it should end with an Ace
-  const centerComplete = state.center.length >= 24 && 
+  // Center should have 24 cards (4 cycles of 6->A = 4*6 = 24 cards)
+  // And it should end with an Ace (last card of 4th cycle)
+  const centerComplete = state.center.length === 24 && 
                          state.center[state.center.length - 1].rank === 'A';
   
   // No cards left elsewhere
@@ -189,9 +189,18 @@ export function countCycles(centerPile: Card[]): number {
 /**
  * Check if the game is lost (no moves available)
  */
-export function isGameLost(state: NapoleonState): boolean {
+export function isGameLost(
+  state: NapoleonState, 
+  recycleCount: number = 0, 
+  maxRecycles: number | 'unlimited' = 'unlimited'
+): boolean {
   // Game can't be lost if stock still has cards
   if (state.stock.length > 0) return false;
+  
+  // If stock is empty but waste has cards and we can still recycle, game is not lost
+  if (state.waste.length > 0 && (maxRecycles === 'unlimited' || recycleCount < maxRecycles - 1)) {
+    return false;
+  }
   
   // Check if waste card can move
   if (state.waste.length > 0) {
@@ -231,13 +240,8 @@ export function isGameLost(state: NapoleonState): boolean {
   if (state.sixPile.length > 0) {
     const sixCard = state.sixPile[state.sixPile.length - 1];
     
-    // Check if can move to center
+    // 6s from sixPile can only go to center (not to helpers)
     if (canMoveToCenter(sixCard, state.center)) return false;
-    
-    // Check if can move to any helper
-    for (let i = 0; i < state.helpers.length; i++) {
-      if (canMoveToHelper(state.helpers[i])) return false;
-    }
   }
   
   return true;

@@ -3,6 +3,7 @@
   import type { Card } from '../../types/game';
   import CardComponent from '../../components/CardComponent.svelte';
   import GameHeader from '../../components/GameHeader.svelte';
+  import GameResultModal from '../../components/GameResultModal.svelte';
   import HighlightToggle from '../../components/settings/HighlightToggle.svelte';
   import { 
     dealCards, 
@@ -24,9 +25,13 @@
   let moves = $state(0);
   let isWon = $state(false);
   let isLost = $state(false);
+  let showResultModal = $state(false);
   let draggedPile: number | null = $state(null);
   let showHighlight = $state(false);
   let history: AcesUpState[] = $state([]);
+
+  // Derived state for undo button
+  let undoDisabled = $derived(history.length === 0 || isWon || isLost);
 
   function initGame() {
     const deck = shuffleDeck(createDeck());
@@ -143,9 +148,9 @@
     isLost = !isWon && isGameLost(gameState);
     
     if (isWon) {
-      setTimeout(() => alert('Voitit pelin! 🎉 Vain 4 ässää jäljellä!'), 100);
+      setTimeout(() => { showResultModal = true; }, 100);
     } else if (isLost) {
-      setTimeout(() => alert('Peli hävitty. Ei enää siirtoja. 😔'), 100);
+      setTimeout(() => { showResultModal = true; }, 100);
     }
   }
 
@@ -154,7 +159,7 @@
 
 <div class="acesup">
   <GameHeader
-    undoDisabled={history.length === 0 || isWon || isLost}
+    {undoDisabled}
     restartDisabled={true}
     hintDisabled={true}
     onNewGame={initGame}
@@ -370,3 +375,12 @@
     cursor: grabbing;
   }
 </style>
+
+{#if showResultModal}
+  <GameResultModal 
+    isWon={isWon} 
+    moves={moves} 
+    onNewGame={initGame} 
+    onClose={() => { showResultModal = false; }} 
+  />
+{/if}

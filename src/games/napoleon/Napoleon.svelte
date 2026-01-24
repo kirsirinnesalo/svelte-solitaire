@@ -3,6 +3,7 @@
   import type { Card } from '../../types/game';
   import CardComponent from '../../components/CardComponent.svelte';
   import GameHeader from '../../components/GameHeader.svelte';
+  import GameResultModal from '../../components/GameResultModal.svelte';
   import RecycleToggle from '../../components/settings/RecycleToggle.svelte';
   import CounterToggle from '../../components/settings/CounterToggle.svelte';
   import { 
@@ -30,6 +31,7 @@
   let moves = $state(0);
   let isWon = $state(false);
   let isLost = $state(false);
+  let showResultModal = $state(false);
   let recycleCount = $state(0);
   let maxRecycles: 1 | 2 | 'unlimited' = $state(1); // Setting for next game
   let activeMaxRecycles: 1 | 2 | 'unlimited' = $state(1); // Locked for current game
@@ -39,6 +41,9 @@
   let draggedFromHelper: number | null = $state(null);
   let draggedFromSixPile = $state(false);
   let dragOverTarget: string | null = $state(null);
+
+  // Derived state for undo button
+  let undoDisabled = $derived(history.length === 0 || isWon);
 
   function initGame() {
     const deck = shuffleDeck(createDeck());
@@ -235,9 +240,9 @@
     isLost = !isWon && isGameLost(gameState);
     
     if (isWon) {
-      setTimeout(() => alert('Napoleonin hauta on valmis! 🎉'), 100);
+      setTimeout(() => { showResultModal = true; }, 100);
     } else if (isLost) {
-      setTimeout(() => alert('Peli päättyi. Ei enää siirtoja. 😔'), 100);
+      setTimeout(() => { showResultModal = true; }, 100);
     }
   }
 
@@ -406,7 +411,7 @@
 
 <div class="napoleon">
   <GameHeader
-    undoDisabled={history.length === 0 || isWon || isLost}
+    {undoDisabled}
     restartDisabled={true}
     hintDisabled={true}
     onNewGame={initGame}
@@ -961,6 +966,14 @@
     cursor: grabbing;
   }
 
+  {#if showResultModal}
+    <GameResultModal 
+      isWon={isWon} 
+      moves={moves} 
+      onNewGame={newGame} 
+      onClose={() => { showResultModal = false; }} 
+    />
+  {/if}
   .sixpile-card-wrapper:hover {
     transform: scale(1.05);
   }

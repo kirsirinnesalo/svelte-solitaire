@@ -3,6 +3,7 @@
   import type { Card } from '../../types/game';
   import CardComponent from '../../components/CardComponent.svelte';
   import GameHeader from '../../components/GameHeader.svelte';
+  import GameResultModal from '../../components/GameResultModal.svelte';
   import { revealCard, moveRevealedCard, isGameWon, isGameLost, type ClockState } from './clockRules';
   import { allowDrop } from '../../lib/dragUtils';
   import '../../styles/shared.css';
@@ -13,6 +14,7 @@
   });
   let isWon = $state(false);
   let isLost = $state(false);
+  let showResultModal = $state(false);
   let gameStarted = $state(false);
   let draggedFromPileIndex: number | null = $state(null);
 
@@ -92,10 +94,10 @@
       
       if (result.isWon) {
         isWon = true;
-        setTimeout(() => alert('Voitit pelin! 🎉'), 100);
+        setTimeout(() => { showResultModal = true; }, 100);
       } else if (result.isLost) {
         isLost = true;
-        setTimeout(() => alert('Peli hävitty. Kaikki kuninkaat paljastettiin liian aikaisin. 😔'), 100);
+        setTimeout(() => { showResultModal = true; }, 100);
       }
     }
     
@@ -256,3 +258,12 @@
     font-size: 1.8rem;
   }
 </style>
+
+{#if showResultModal}
+  <GameResultModal 
+    isWon={isWon} 
+    moves={0} 
+    onNewGame={initGame} 
+    onClose={() => { showResultModal = false; }} 
+  />
+{/if}

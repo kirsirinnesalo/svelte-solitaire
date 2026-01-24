@@ -3,6 +3,7 @@
   import type { Card } from '../../types/game';
   import CardComponent from '../../components/CardComponent.svelte';
   import GameHeader from '../../components/GameHeader.svelte';
+  import GameResultModal from '../../components/GameResultModal.svelte';
   import DrawCountToggle from '../../components/settings/DrawCountToggle.svelte';
   import RecycleToggle from '../../components/settings/RecycleToggle.svelte';
   import { moveCard, isGameWon, isGameLost, type KlondikeState } from './klondikeRules';
@@ -18,6 +19,7 @@
   let moves = $state(0);
   let isWon = $state(false);
   let isLost = $state(false);
+  let showResultModal = $state(false);
   let gameStarted = $state(false);
   let firstGameStarted = $state(false); // Track if first game has been started
   let drawCount: 1 | 3 = $state(1); // Number of cards to draw from stock (setting)
@@ -27,6 +29,9 @@
   let activeMaxRecycles: 1 | 2 | 3 | 'unlimited' = $state(3); // Locked for current game
   let history: { gameState: KlondikeState; moves: number }[] = $state([]);
   let draggedCard: { type: 'tableau' | 'waste' | 'foundation', index: number, cardIndex?: number } | null = $state(null);
+
+  // Derived state for undo button
+  let undoDisabled = $derived(history.length === 0 || isWon || isLost || !gameStarted);
 
   // Automatically update maxRecycles when drawCount changes
   $effect(() => {
@@ -193,10 +198,8 @@
     isWon = isGameWon(gameState);
     isLost = !isWon && isGameLost(gameState, recycleCount, activeMaxRecycles);
     
-    if (isWon) {
-      setTimeout(() => alert('Voitit pelin! 🎉'), 100);
-    } else if (isLost) {
-      setTimeout(() => alert('Peli päättyi. Ei enää siirtoja. 😔'), 100);
+    if (isWon || isLost) {
+      setTimeout(() => { showResultModal = true; }, 100);
     }
   }
 
@@ -224,7 +227,7 @@
 
 <div class="klondike">
   <GameHeader
-    undoDisabled={history.length === 0 || isWon || isLost || !gameStarted}
+    undoDisabled={undoDisabled}
     restartDisabled={true}
     hintDisabled={true}
     onNewGame={initGame}
@@ -530,3 +533,11 @@
     border: 2px dashed rgba(255, 255, 255, 0.3);
   }
 </style>
+
+<GameResultModal
+  isOpen={showResultModal}
+  isWon={isWon}
+  moves={moves}
+  onNewGame={() => { showResultModal = false; initGame(); }}
+  onClose={() => showResultModal = false}
+/>

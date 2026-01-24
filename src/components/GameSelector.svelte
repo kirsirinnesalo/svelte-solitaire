@@ -1,34 +1,33 @@
 <script lang="ts">
-  import { createEventDispatcher } from 'svelte';
   import type { GameType } from '../types/game';
 
-  const dispatch = createEventDispatcher<{ selectGame: GameType }>();
+  let { onselectgame }: { onselectgame: (gameId: GameType) => void } = $props();
 
   const games: Array<{id: GameType, name: string, description: string, disabled?: boolean}> = [
     {
-      id: 'klondike' as GameType,
+      id: 'klondike',
       name: 'Klondike',
       description: 'Klassinen pasianssi: rakenna pinot ässästä kuninkaaseen'
     },
     {
-      id: 'napoleon' as GameType,
+      id: 'napoleon',
       name: 'Napoleonin hauta',
       description: 'Rakenna kulmapakat 7→K ja keskuspakka 6→A'
     },
     {
-      id: 'acesup' as GameType,
+      id: 'acesup',
       name: 'Aces Up',
       description: 'Poista kaikki kortit paitsi ässät'
     },
     {
-      id: 'clock' as GameType,
+      id: 'clock',
       name: 'Kellopasianssi',
       description: 'Käännä kortit kellotauluun: Q→klo 12, A→klo 1, kuningas→keskelle'
     }
   ];
 
   function selectGame(gameId: GameType) {
-    dispatch('selectGame', gameId);
+    onselectgame(gameId);
   }
 </script>
 

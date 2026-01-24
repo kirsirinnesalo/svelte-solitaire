@@ -9,7 +9,7 @@
   import { allowDrop } from '../../lib/dragUtils';
   import '../../styles/shared.css';
 
-  let state = $state<KlondikeState>({
+  let gameState: KlondikeState = $state({
     tableau: [],
     foundations: [[], [], [], []],
     stock: [],
@@ -20,13 +20,13 @@
   let isLost = $state(false);
   let gameStarted = $state(false);
   let firstGameStarted = $state(false); // Track if first game has been started
-  let drawCount = $state<1 | 3>(1); // Number of cards to draw from stock (setting)
-  let activeDrawCount = $state<1 | 3>(1); // Active draw count for current game
+  let drawCount: 1 | 3 = $state(1); // Number of cards to draw from stock (setting)
+  let activeDrawCount: 1 | 3 = $state(1); // Active draw count for current game
   let recycleCount = $state(0); // Track stock recycling
-  let maxRecycles = $state<1 | 2 | 3 | 'unlimited'>(3); // Setting for next game
-  let activeMaxRecycles = $state<1 | 2 | 3 | 'unlimited'>(3); // Locked for current game
-  let history = $state<{ state: KlondikeState; moves: number }[]>([]);
-  let draggedCard = $state<{ type: 'tableau' | 'waste' | 'foundation', index: number, cardIndex?: number } | null>(null);
+  let maxRecycles: 1 | 2 | 3 | 'unlimited' = $state(3); // Setting for next game
+  let activeMaxRecycles: 1 | 2 | 3 | 'unlimited' = $state(3); // Locked for current game
+  let history: { gameState: KlondikeState; moves: number }[] = $state([]);
+  let draggedCard: { type: 'tableau' | 'waste' | 'foundation', index: number, cardIndex?: number } | null = $state(null);
 
   // Automatically update maxRecycles when drawCount changes
   $effect(() => {
@@ -60,7 +60,7 @@
     }
     
     // Remaining cards go to stock
-    state = {
+    gameState = {
       tableau,
       stock: deck.slice(cardIndex).map(card => ({ ...card, faceUp: false })),
       waste: [],
@@ -75,7 +75,7 @@
 
   function saveState() {
     history = [...history, {
-      state: structuredClone(state),
+      gameState: JSON.parse(JSON.stringify(gameState)),
       moves
     }];
   }
@@ -83,7 +83,7 @@
   function undo() {
     if (history.length === 0 || isWon) return;
     const previous = history[history.length - 1];
-    state = structuredClone(previous.state);
+    gameState = JSON.parse(JSON.stringify(previous.gameState));
     moves = previous.moves;
     history = history.slice(0, -1);
     isWon = false;
@@ -91,25 +91,36 @@
 
   function drawFromStock() {
     saveState();
-    if (state.stock.length === 0) {
+    if (gameState.stock.length === 0) {
       // Check recycle limit
       if (activeMaxRecycles !== 'unlimited' && recycleCount >= activeMaxRecycles - 1) return; // Max recycles reached
-      if (state.waste.length === 0) return; // Nothing to recycle
+      if (gameState.waste.length === 0) return; // Nothing to recycle
       
       // Reset stock from waste
-      state.stock = state.waste.reverse().map(card => ({ ...card, faceUp: false }));
-      state.waste = [];
+      gameState = {
+        ...gameState,
+        stock: gameState.waste.reverse().map((card: Card) => ({ ...card, faceUp: false })),
+        waste: []
+      };
       recycleCount++;
     } else {
       // Draw 1 or 3 cards based on activeDrawCount setting
-      const cardsToDraw = Math.min(activeDrawCount, state.stock.length);
+      const cardsToDraw = Math.min(activeDrawCount, gameState.stock.length);
+      const newStock = [...gameState.stock];
+      const newWaste = [...gameState.waste];
+      
       for (let i = 0; i < cardsToDraw; i++) {
-        const card = state.stock.pop()!;
+        const card = newStock.pop()!;
         card.faceUp = true;
-        state.waste.push(card);
+        newWaste.push(card);
       }
+      
+      gameState = {
+        ...gameState,
+        stock: newStock,
+        waste: newWaste
+      };
     }
-    state = state; // Trigger reactivity
     moves++;
   }
 
@@ -126,11 +137,11 @@
     event.preventDefault();
     if (!draggedCard) return;
 
-    const result = moveCard(state, draggedCard, { type: toType, index: toIndex });
+    const result = moveCard(gameState, draggedCard, { type: toType, index: toIndex });
 
     if (result.valid && result.newState) {
       saveState();
-      state = result.newState;
+      gameState = result.newState;
       moves++;
       checkWin();
     }
@@ -143,14 +154,14 @@
     // Try to move card to foundation first (priority)
     for (let i = 0; i < 4; i++) {
       const result = moveCard(
-        state,
+        gameState,
         { type, index, cardIndex },
         { type: 'foundation', index: i }
       );
       
       if (result.valid && result.newState) {
         saveState();
-        state = result.newState;
+        gameState = result.newState;
         moves++;
         checkWin();
         return;
@@ -163,14 +174,14 @@
       if (type === 'tableau' && i === index) continue;
       
       const result = moveCard(
-        state,
+        gameState,
         { type, index, cardIndex },
         { type: 'tableau', index: i }
       );
       
       if (result.valid && result.newState) {
         saveState();
-        state = result.newState;
+        gameState = result.newState;
         moves++;
         checkWin();
         return;
@@ -179,8 +190,8 @@
   }
 
   function checkWin() {
-    isWon = isGameWon(state);
-    isLost = !isWon && isGameLost(state, recycleCount, activeMaxRecycles);
+    isWon = isGameWon(gameState);
+    isLost = !isWon && isGameLost(gameState, recycleCount, activeMaxRecycles);
     
     if (isWon) {
       setTimeout(() => alert('Voitit pelin! 🎉'), 100);
@@ -236,21 +247,21 @@
           <button
             class="stock-pile pile"
             onclick={drawFromStock}
-            disabled={state.stock.length === 0 && state.waste.length === 0 || isWon || isLost}
+            disabled={gameState.stock.length === 0 && gameState.waste.length === 0 || isWon || isLost}
           >
             {#if !firstGameStarted}
               <div class="empty-pile">↻</div>
-            {:else if state.stock.length === 0 && (state.waste.length === 0 || (activeMaxRecycles !== 'unlimited' && recycleCount >= activeMaxRecycles - 1))}
+            {:else if gameState.stock.length === 0 && (gameState.waste.length === 0 || (activeMaxRecycles !== 'unlimited' && recycleCount >= activeMaxRecycles - 1))}
               <div class="empty-pile no-more-draws">✕</div>
-            {:else if state.stock.length > 0}
-              {#if state.stock.length > 2}
+            {:else if gameState.stock.length > 0}
+              {#if gameState.stock.length > 2}
                 <div class="stack-card" style="top: 4px; left: -2px; z-index: 0;"></div>
               {/if}
-              {#if state.stock.length > 1}
+              {#if gameState.stock.length > 1}
                 <div class="stack-card" style="top: 2px; left: -1px; z-index: 1;"></div>
               {/if}
               <div style="position: relative; z-index: 2;">
-                <CardComponent card={state.stock[state.stock.length - 1]} />
+                <CardComponent card={gameState.stock[gameState.stock.length - 1]} />
               </div>
             {:else}
               <div class="empty-pile">↻</div>
@@ -260,11 +271,11 @@
         
         <!-- svelte-ignore a11y_no_static_element_interactions -->
         <div class="waste-pile pile">
-          {#if state.waste.length > 0}
+          {#if gameState.waste.length > 0}
             {#if activeDrawCount === 3}
               <!-- Show last 3 cards fanned out in 3-card mode -->
-              {#each state.waste.slice(-3) as card, i}
-                {@const isLast = i === state.waste.slice(-3).length - 1}
+              {#each gameState.waste.slice(-3) as card, i}
+                {@const isLast = i === gameState.waste.slice(-3).length - 1}
                 <!-- svelte-ignore a11y_click_events_have_key_events -->
                 <div
                   role="button"
@@ -281,10 +292,10 @@
               {/each}
             {:else}
               <!-- Show only top card in 1-card mode -->
-              {#if state.waste.length > 2}
+              {#if gameState.waste.length > 2}
                 <div class="stack-card" style="top: 4px; left: -2px; z-index: 0;"></div>
               {/if}
-              {#if state.waste.length > 1}
+              {#if gameState.waste.length > 1}
                 <div class="stack-card" style="top: 2px; left: -1px; z-index: 1;"></div>
               {/if}
               <!-- svelte-ignore a11y_click_events_have_key_events -->
@@ -298,7 +309,7 @@
                 class:draggable={!isWon && !isLost}
                 style="position: relative; z-index: 2;"
               >
-                <CardComponent card={state.waste[state.waste.length - 1]} />
+                <CardComponent card={gameState.waste[gameState.waste.length - 1]} />
               </div>
             {/if}
           {:else}
@@ -310,7 +321,7 @@
 
       <!-- Foundations -->
       <div class="foundations">
-        {#each state.foundations as foundation, i}
+        {#each gameState.foundations as foundation, i}
           <!-- svelte-ignore a11y_no_static_element_interactions -->
           <div
             class="foundation pile"
@@ -356,7 +367,7 @@
           </div>
         {/each}
       {:else}
-        {#each state.tableau as pile, i}
+        {#each gameState.tableau as pile, i}
           <!-- svelte-ignore a11y_no_static_element_interactions -->
           <div
             class="tableau-pile"

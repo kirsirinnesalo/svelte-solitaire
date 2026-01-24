@@ -16,7 +16,7 @@
   import { allowDrop } from '../../lib/dragUtils';
   import '../../styles/shared.css';
 
-  let state = $state<AcesUpState>({
+  let gameState: AcesUpState = $state({
     piles: [[], [], [], []],
     stock: [],
     discarded: []
@@ -24,15 +24,15 @@
   let moves = $state(0);
   let isWon = $state(false);
   let isLost = $state(false);
-  let draggedPile = $state<number | null>(null);
+  let draggedPile: number | null = $state(null);
   let showHighlight = $state(false);
-  let history = $state<AcesUpState[]>([]);
+  let history: AcesUpState[] = $state([]);
 
   function initGame() {
     const deck = shuffleDeck(createDeck());
     
     // All cards go to stock initially
-    state = {
+    gameState = {
       piles: [[], [], [], []],
       stock: deck.map(card => ({ ...card, faceUp: false })),
       discarded: []
@@ -46,36 +46,36 @@
   }
 
   function saveState() {
-    // Deep clone current state
+    // Deep clone current gameState
     history = [...history, {
-      piles: state.piles.map(pile => pile.map(card => ({ ...card }))),
-      stock: state.stock.map(card => ({ ...card })),
-      discarded: state.discarded.map(card => ({ ...card }))
+      piles: gameState.piles.map((pile: Card[]) => pile.map((card: Card) => ({ ...card }))),
+      stock: gameState.stock.map((card: Card) => ({ ...card })),
+      discarded: gameState.discarded.map((card: Card) => ({ ...card }))
     }];
   }
 
   function handleDeal() {
-    const result = dealCards(state);
+    const result = dealCards(gameState);
     if (result.valid && result.newState) {
       saveState();
-      state = result.newState;
+      gameState = result.newState;
       moves++;
       checkGameStatus();
     }
   }
 
   function handleRemoveCard(pileIndex: number) {
-    const result = removeCard(state, pileIndex);
+    const result = removeCard(gameState, pileIndex);
     if (result.valid && result.newState) {
       saveState();
-      state = result.newState;
+      gameState = result.newState;
       moves++;
       checkGameStatus();
     }
   }
 
   function handlePileClick(pileIndex: number) {
-    const pile = state.piles[pileIndex];
+    const pile = gameState.piles[pileIndex];
     
     if (pile.length === 0) {
       // Empty pile - do nothing on click
@@ -86,18 +86,18 @@
     const topCard = pile[pile.length - 1];
     
     // First priority: remove if possible
-    if (canRemoveCard(topCard, state.piles)) {
+    if (canRemoveCard(topCard, gameState.piles)) {
       handleRemoveCard(pileIndex);
       return;
     }
     
     // Second priority: move to empty pile if one exists
-    const emptyPileIndex = state.piles.findIndex((p, i) => p.length === 0 && i !== pileIndex);
+    const emptyPileIndex = gameState.piles.findIndex((p: Card[], i: number) => p.length === 0 && i !== pileIndex);
     if (emptyPileIndex !== -1) {
-      const result = moveCard(state, pileIndex, emptyPileIndex);
+      const result = moveCard(gameState, pileIndex, emptyPileIndex);
       if (result.valid && result.newState) {
         saveState();
-        state = result.newState;
+        gameState = result.newState;
         moves++;
         checkGameStatus();
       }
@@ -105,7 +105,7 @@
   }
 
   function handleDragStart(event: DragEvent, pileIndex: number) {
-    if (state.piles[pileIndex].length === 0) return;
+    if (gameState.piles[pileIndex].length === 0) return;
     draggedPile = pileIndex;
     if (event.dataTransfer) {
       event.dataTransfer.effectAllowed = 'move';
@@ -117,10 +117,10 @@
     event.preventDefault();
     if (draggedPile === null) return;
 
-    const result = moveCard(state, draggedPile, pileIndex);
+    const result = moveCard(gameState, draggedPile, pileIndex);
     if (result.valid && result.newState) {
       saveState();
-      state = result.newState;
+      gameState = result.newState;
       moves++;
       checkGameStatus();
     }
@@ -131,7 +131,7 @@
   function undo() {
     if (history.length === 0) return;
     
-    state = history[history.length - 1];
+    gameState = history[history.length - 1];
     history = history.slice(0, -1);
     moves = Math.max(0, moves - 1);
     isWon = false;
@@ -139,8 +139,8 @@
   }
 
   function checkGameStatus() {
-    isWon = isGameWon(state);
-    isLost = !isWon && isGameLost(state);
+    isWon = isGameWon(gameState);
+    isLost = !isWon && isGameLost(gameState);
     
     if (isWon) {
       setTimeout(() => alert('Voitit pelin! 🎉 Vain 4 ässää jäljellä!'), 100);
@@ -171,11 +171,11 @@
       <button
         class="stock-pile pile"
         onclick={handleDeal}
-        disabled={state.stock.length < 4}
+        disabled={gameState.stock.length < 4}
       >
-        {#if state.stock.length >= 4}
-          <CardComponent card={state.stock[state.stock.length - 1]} />
-          <div class="stock-count">{state.stock.length}</div>
+        {#if gameState.stock.length >= 4}
+          <CardComponent card={gameState.stock[gameState.stock.length - 1]} />
+          <div class="stock-count">{gameState.stock.length}</div>
         {:else}
           <div class="empty-pile stock-empty">✕</div>
         {/if}
@@ -184,7 +184,7 @@
 
     <!-- Piles -->
     <div class="piles-section">
-      {#each state.piles as pile, i}
+      {#each gameState.piles as pile, i}
         <div class="pile-container">
           <div
             role="button"
@@ -198,7 +198,7 @@
             {#if pile.length > 0}
               {#each pile as card, cardIndex}
                 {@const isLast = cardIndex === pile.length - 1}
-                {@const canRemove = isLast && canRemoveCard(card, state.piles)}
+                {@const canRemove = isLast && canRemoveCard(card, gameState.piles)}
                 <div
                   role="button"
                   tabindex="0"
@@ -223,15 +223,15 @@
     <!-- Discard pile (visual only) -->
     <div class="discard-section">
       <div class="discard-pile pile">
-        {#if state.discarded.length > 0}
-          {#if state.discarded.length > 2}
+        {#if gameState.discarded.length > 0}
+          {#if gameState.discarded.length > 2}
             <div class="stack-card" style="top: 4px; left: -2px; z-index: 0;"></div>
           {/if}
-          {#if state.discarded.length > 1}
+          {#if gameState.discarded.length > 1}
             <div class="stack-card" style="top: 2px; left: -1px; z-index: 1;"></div>
           {/if}
           <div style="position: relative; z-index: 2;">
-            <CardComponent card={{...state.discarded[state.discarded.length - 1], faceUp: false}} />
+            <CardComponent card={{...gameState.discarded[gameState.discarded.length - 1], faceUp: false}} />
           </div>
         {:else}
           <div class="empty-pile discard-icon">🗑️</div>

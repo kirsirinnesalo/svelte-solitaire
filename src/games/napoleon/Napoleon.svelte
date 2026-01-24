@@ -19,7 +19,7 @@
   import { allowDrop } from '../../lib/dragUtils';
   import '../../styles/shared.css';
 
-  let state = $state<NapoleonState>({
+  let gameState: NapoleonState = $state({
     center: [],
     corners: [[], [], [], []],
     helpers: [null, null, null, null],
@@ -31,21 +31,21 @@
   let isWon = $state(false);
   let isLost = $state(false);
   let recycleCount = $state(0);
-  let maxRecycles = $state<1 | 2 | 'unlimited'>(1); // Setting for next game
-  let activeMaxRecycles = $state<1 | 2 | 'unlimited'>(1); // Locked for current game
+  let maxRecycles: 1 | 2 | 'unlimited' = $state(1); // Setting for next game
+  let activeMaxRecycles: 1 | 2 | 'unlimited' = $state(1); // Locked for current game
   let showCounters = $state(false); // Toggle for counter badges
-  let history = $state<{ state: NapoleonState; recycleCount: number; moves: number }[]>([]);
+  let history: { gameState: NapoleonState; recycleCount: number; moves: number }[] = $state([]);
   let draggedFromWaste = $state(false);
-  let draggedFromHelper = $state<number | null>(null);
+  let draggedFromHelper: number | null = $state(null);
   let draggedFromSixPile = $state(false);
-  let dragOverTarget = $state<string | null>(null);
+  let dragOverTarget: string | null = $state(null);
 
   function initGame() {
     const deck = shuffleDeck(createDeck());
     
     activeMaxRecycles = maxRecycles; // Lock in the setting
     
-    state = {
+    gameState = {
       center: [],
       corners: [[], [], [], []],
       helpers: [null, null, null, null],
@@ -63,7 +63,7 @@
 
   function saveState() {
     history = [...history, {
-      state: structuredClone(state),
+      gameState: JSON.parse(JSON.stringify(gameState)),
       recycleCount,
       moves
     }];
@@ -72,7 +72,7 @@
   function undo() {
     if (history.length === 0 || isWon) return;
     const previous = history[history.length - 1];
-    state = structuredClone(previous.state);
+    gameState = JSON.parse(JSON.stringify(previous.gameState));
     recycleCount = previous.recycleCount;
     moves = previous.moves;
     history = history.slice(0, -1);
@@ -81,60 +81,88 @@
 
   function drawCard() {
     // If stock is empty, recycle waste back to stock
-    if (state.stock.length === 0) {
-      if (state.waste.length === 0) return; // Nothing to recycle
+    if (gameState.stock.length === 0) {
+      if (gameState.waste.length === 0) return; // Nothing to recycle
       if (activeMaxRecycles !== 'unlimited' && recycleCount >= activeMaxRecycles - 1) return; // Max recycles reached
       
       saveState();
       // Move all waste cards back to stock (face down)
-      while (state.waste.length > 0) {
-        const card = state.waste.pop()!;
-        card.faceUp = false;
-        state.stock.push(card);
-      }
+      const newStock = [...gameState.waste.reverse()].map(card => ({ ...card, faceUp: false }));
+      
+      gameState = {
+        ...gameState,
+        stock: newStock,
+        waste: []
+      };
       recycleCount++;
-      state = state;
       return;
     }
     
     saveState();
     // Normal draw: take one card from stock to waste
-    const card = state.stock.pop()!;
+    const newStock = [...gameState.stock];
+    const card = newStock.pop()!;
     card.faceUp = true;
-    state.waste.push(card);
-    state = state;
+    
+    gameState = {
+      ...gameState,
+      stock: newStock,
+      waste: [...gameState.waste, card]
+    };
   }
 
   function placeWasteCard(target: 'center' | 'corner' | 'helper' | 'sixPile', index?: number) {
-    if (state.waste.length === 0) return;
+    if (gameState.waste.length === 0) return;
     
-    const card = state.waste[state.waste.length - 1];
-    let placed = false;
+    const card = gameState.waste[gameState.waste.length - 1];
+    let newState = null;
     
-    if (target === 'center' && canMoveToCenter(card, state.center)) {
+    if (target === 'center' && canMoveToCenter(card, gameState.center)) {
       saveState();
-      state.center.push(state.waste.pop()!);
-      placed = true;
-    } else if (target === 'corner' && index !== undefined && canMoveToCorner(card, state.corners[index])) {
+      const newWaste = [...gameState.waste];
+      newWaste.pop();
+      newState = {
+        ...gameState,
+        center: [...gameState.center, card],
+        waste: newWaste
+      };
+    } else if (target === 'corner' && index !== undefined && canMoveToCorner(card, gameState.corners[index])) {
       saveState();
-      state.corners[index].push(state.waste.pop()!);
-      placed = true;
-    } else if (target === 'helper' && index !== undefined && canMoveToHelper(state.helpers[index])) {
+      const newWaste = [...gameState.waste];
+      newWaste.pop();
+      const newCorners = gameState.corners.map((c: Card[], i: number) => i === index ? [...c, card] : [...c]);
+      newState = {
+        ...gameState,
+        corners: newCorners,
+        waste: newWaste
+      };
+    } else if (target === 'helper' && index !== undefined && canMoveToHelper(gameState.helpers[index])) {
       saveState();
-      state.helpers[index] = state.waste.pop()!;
-      placed = true;
+      const newWaste = [...gameState.waste];
+      newWaste.pop();
+      const newHelpers = [...gameState.helpers];
+      newHelpers[index] = card;
+      newState = {
+        ...gameState,
+        helpers: newHelpers,
+        waste: newWaste
+      };
     } else if (target === 'sixPile' && canMoveToSixPile(card)) {
       saveState();
-      state.sixPile.push(state.waste.pop()!);
-      placed = true;
+      const newWaste = [...gameState.waste];
+      newWaste.pop();
+      newState = {
+        ...gameState,
+        sixPile: [...gameState.sixPile, card],
+        waste: newWaste
+      };
     }
     
-    if (placed) {
+    if (newState) {
+      gameState = newState;
       moves++;
       checkWin();
     }
-    
-    state = state;
   }
 
   function placeCurrentCard(target: 'center' | 'corner' | 'helper' | 'sixPile', index?: number) {
@@ -143,20 +171,22 @@
   }
 
   function moveFromHelper(helperIndex: number) {
-    const card = state.helpers[helperIndex];
+    const card = gameState.helpers[helperIndex];
     if (!card) return;
     
     // Try to place automatically
-    const result = tryAutoPlace(state, card);
+    const result = tryAutoPlace(gameState, card);
     if (result.success && result.newState) {
       saveState();
-      state = result.newState;
-      state.helpers[helperIndex] = null;
+      const newHelpers = [...gameState.helpers];
+      newHelpers[helperIndex] = null;
+      gameState = {
+        ...result.newState,
+        helpers: newHelpers
+      };
       moves++;
       checkWin();
     }
-    
-    state = state;
   }
 
   function placeHelperCard(target: 'center' | 'corner' | 'sixPile', index?: number) {
@@ -164,38 +194,45 @@
   }
 
   function moveFromSixPile() {
-    if (state.sixPile.length === 0) return;
-    const card = state.sixPile[state.sixPile.length - 1];
+    if (gameState.sixPile.length === 0) return;
+    const card = gameState.sixPile[gameState.sixPile.length - 1];
     
     // Only try to move to center (6s should primarily go to center)
-    if (canMoveToCenter(card, state.center)) {
+    if (canMoveToCenter(card, gameState.center)) {
       saveState();
-      state.center.push(card);
-      state.sixPile.pop();
+      const newSixPile = [...gameState.sixPile];
+      newSixPile.pop();
+      gameState = {
+        ...gameState,
+        center: [...gameState.center, card],
+        sixPile: newSixPile
+      };
       moves++;
       checkWin();
     }
-    
-    state = state;
   }
 
   function tryAutoPlaceCard() {
-    if (state.waste.length === 0) return;
+    if (gameState.waste.length === 0) return;
     
-    const card = state.waste[state.waste.length - 1];
-    const result = tryAutoPlace(state, card);
+    const card = gameState.waste[gameState.waste.length - 1];
+    const result = tryAutoPlace(gameState, card);
     if (result.success && result.newState) {
       saveState();
-      state = result.newState;
-      state.waste.pop();
+      const newWaste = [...gameState.waste];
+      newWaste.pop();
+      gameState = {
+        ...result.newState,
+        waste: newWaste
+      };
       moves++;
       checkWin();
     }
   }
 
   function checkWin() {
-    isWon = isGameWon(state);
-    isLost = !isWon && isGameLost(state);
+    isWon = isGameWon(gameState);
+    isLost = !isWon && isGameLost(gameState);
     
     if (isWon) {
       setTimeout(() => alert('Napoleonin hauta on valmis! 🎉'), 100);
@@ -205,9 +242,9 @@
   }
 
   function handleDragStart(e: DragEvent, source: 'waste' | 'helper' | 'sixPile' = 'waste', helperIndex?: number) {
-    if (source === 'waste' && state.waste.length === 0) return;
-    if (source === 'helper' && (helperIndex === undefined || !state.helpers[helperIndex])) return;
-    if (source === 'sixPile' && state.sixPile.length === 0) return;
+    if (source === 'waste' && gameState.waste.length === 0) return;
+    if (source === 'helper' && (helperIndex === undefined || !gameState.helpers[helperIndex])) return;
+    if (source === 'sixPile' && gameState.sixPile.length === 0) return;
     
     if (source === 'waste') {
       draggedFromWaste = true;
@@ -247,77 +284,118 @@
     e.preventDefault();
     dragOverTarget = null;
     
-    if (draggedFromWaste && state.waste.length > 0) {
-      const card = state.waste[state.waste.length - 1];
-      let placed = false;
+    if (draggedFromWaste && gameState.waste.length > 0) {
+      const card = gameState.waste[gameState.waste.length - 1];
+      let newState = null;
       
-      if (target === 'center' && canMoveToCenter(card, state.center)) {
-        state.center.push(card);
-        state.waste.pop();
-        placed = true;
-      } else if (target === 'corner' && index !== undefined && canMoveToCorner(card, state.corners[index])) {
-        state.corners[index].push(card);
-        state.waste.pop();
-        placed = true;
-      } else if (target === 'helper' && index !== undefined && canMoveToHelper(state.helpers[index])) {
-        state.helpers[index] = card;
-        state.waste.pop();
-        placed = true;
+      if (target === 'center' && canMoveToCenter(card, gameState.center)) {
+        const newWaste = [...gameState.waste];
+        newWaste.pop();
+        newState = {
+          ...gameState,
+          center: [...gameState.center, card],
+          waste: newWaste
+        };
+      } else if (target === 'corner' && index !== undefined && canMoveToCorner(card, gameState.corners[index])) {
+        const newWaste = [...gameState.waste];
+        newWaste.pop();
+        const newCorners = gameState.corners.map((c: Card[], i: number) => i === index ? [...c, card] : [...c]);
+        newState = {
+          ...gameState,
+          corners: newCorners,
+          waste: newWaste
+        };
+      } else if (target === 'helper' && index !== undefined && canMoveToHelper(gameState.helpers[index])) {
+        const newWaste = [...gameState.waste];
+        newWaste.pop();
+        const newHelpers = [...gameState.helpers];
+        newHelpers[index] = card;
+        newState = {
+          ...gameState,
+          helpers: newHelpers,
+          waste: newWaste
+        };
       } else if (target === 'sixPile' && canMoveToSixPile(card)) {
-        state.sixPile.push(card);
-        state.waste.pop();
-        placed = true;
+        const newWaste = [...gameState.waste];
+        newWaste.pop();
+        newState = {
+          ...gameState,
+          sixPile: [...gameState.sixPile, card],
+          waste: newWaste
+        };
       }
       
-      if (placed) {
+      if (newState) {
+        gameState = newState;
         moves++;
         checkWin();
-        state = state;
       }
       draggedFromWaste = false;
-    } else if (draggedFromHelper !== null && state.helpers[draggedFromHelper]) {
-      const card = state.helpers[draggedFromHelper];
+    } else if (draggedFromHelper !== null && gameState.helpers[draggedFromHelper]) {
+      const card = gameState.helpers[draggedFromHelper];
       if (!card) return; // Type guard
-      let placed = false;
+      let newState = null;
       
-      if (target === 'center' && canMoveToCenter(card, state.center)) {
-        state.center.push(card);
-        state.helpers[draggedFromHelper] = null;
-        placed = true;
-      } else if (target === 'corner' && index !== undefined && canMoveToCorner(card, state.corners[index])) {
-        state.corners[index].push(card);
-        state.helpers[draggedFromHelper] = null;
-        placed = true;
+      if (target === 'center' && canMoveToCenter(card, gameState.center)) {
+        const newHelpers = [...gameState.helpers];
+        newHelpers[draggedFromHelper] = null;
+        newState = {
+          ...gameState,
+          center: [...gameState.center, card],
+          helpers: newHelpers
+        };
+      } else if (target === 'corner' && index !== undefined && canMoveToCorner(card, gameState.corners[index])) {
+        const newHelpers = [...gameState.helpers];
+        newHelpers[draggedFromHelper] = null;
+        const newCorners = gameState.corners.map((c: Card[], i: number) => i === index ? [...c, card] : [...c]);
+        newState = {
+          ...gameState,
+          corners: newCorners,
+          helpers: newHelpers
+        };
       } else if (target === 'sixPile' && canMoveToSixPile(card)) {
-        state.sixPile.push(card);
-        state.helpers[draggedFromHelper] = null;
-        placed = true;
+        const newHelpers = [...gameState.helpers];
+        newHelpers[draggedFromHelper] = null;
+        newState = {
+          ...gameState,
+          sixPile: [...gameState.sixPile, card],
+          helpers: newHelpers
+        };
       }
       
-      if (placed) {
+      if (newState) {
+        gameState = newState;
         moves++;
         checkWin();
-        state = state;
       }
       draggedFromHelper = null;
-    } else if (draggedFromSixPile && state.sixPile.length > 0) {
-      const card = state.sixPile[state.sixPile.length - 1];
-      let placed = false;
+    } else if (draggedFromSixPile && gameState.sixPile.length > 0) {
+      const card = gameState.sixPile[gameState.sixPile.length - 1];
+      let newState = null;
       
-      if (target === 'center' && canMoveToCenter(card, state.center)) {
-        state.center.push(card);
-        state.sixPile.pop();
-        placed = true;
-      } else if (target === 'corner' && index !== undefined && canMoveToCorner(card, state.corners[index])) {
-        state.corners[index].push(card);
-        state.sixPile.pop();
-        placed = true;
+      if (target === 'center' && canMoveToCenter(card, gameState.center)) {
+        const newSixPile = [...gameState.sixPile];
+        newSixPile.pop();
+        newState = {
+          ...gameState,
+          center: [...gameState.center, card],
+          sixPile: newSixPile
+        };
+      } else if (target === 'corner' && index !== undefined && canMoveToCorner(card, gameState.corners[index])) {
+        const newSixPile = [...gameState.sixPile];
+        newSixPile.pop();
+        const newCorners = gameState.corners.map((c: Card[], i: number) => i === index ? [...c, card] : [...c]);
+        newState = {
+          ...gameState,
+          corners: newCorners,
+          sixPile: newSixPile
+        };
       }
       
-      if (placed) {
+      if (newState) {
+        gameState = newState;
         moves++;
         checkWin();
-        state = state;
       }
       draggedFromSixPile = false;
     }
@@ -349,15 +427,15 @@
            ondragover={(e) => handleDragOver(e, 'corner-0')}
            ondragleave={handleDragLeave}
            ondrop={(e) => handleDrop(e, 'corner', 0)}>
-        {#if state.corners[0].length > 0}
-          {#if state.corners[0].length > 2}
+        {#if gameState.corners[0].length > 0}
+          {#if gameState.corners[0].length > 2}
             <div class="stack-card" style="top: 4px; left: -2px; z-index: 0;"></div>
           {/if}
-          {#if state.corners[0].length > 1}
+          {#if gameState.corners[0].length > 1}
             <div class="stack-card" style="top: 2px; left: -1px; z-index: 1;"></div>
           {/if}
           <div style="position: relative; z-index: 2;">
-            <CardComponent card={state.corners[0][state.corners[0].length - 1]} />
+            <CardComponent card={gameState.corners[0][gameState.corners[0].length - 1]} />
           </div>
         {:else}
           <div class="empty-pile">7</div>
@@ -369,7 +447,7 @@
            ondragover={(e) => handleDragOver(e, 'helper-0')}
            ondragleave={handleDragLeave}
            ondrop={(e) => handleDrop(e, 'helper', 0)}>
-        {#if state.helpers[0]}
+        {#if gameState.helpers[0]}
           <!-- svelte-ignore a11y_no_static_element_interactions -->
           <!-- svelte-ignore a11y_click_events_have_key_events -->
           <div class="helper-card-wrapper" 
@@ -377,7 +455,7 @@
                ondragstart={(e) => handleDragStart(e, 'helper', 0)}
                ondragend={handleDragEnd}
                onclick={() => moveFromHelper(0)}>
-            <CardComponent card={state.helpers[0]} />
+            <CardComponent card={gameState.helpers[0]} />
           </div>
         {:else}
           <div class="empty-pile small"></div>
@@ -389,15 +467,15 @@
            ondragover={(e) => handleDragOver(e, 'corner-1')}
            ondragleave={handleDragLeave}
            ondrop={(e) => handleDrop(e, 'corner', 1)}>
-        {#if state.corners[1].length > 0}
-          {#if state.corners[1].length > 2}
+        {#if gameState.corners[1].length > 0}
+          {#if gameState.corners[1].length > 2}
             <div class="stack-card" style="top: 4px; left: -2px; z-index: 0;"></div>
           {/if}
-          {#if state.corners[1].length > 1}
+          {#if gameState.corners[1].length > 1}
             <div class="stack-card" style="top: 2px; left: -1px; z-index: 1;"></div>
           {/if}
           <div style="position: relative; z-index: 2;">
-            <CardComponent card={state.corners[1][state.corners[1].length - 1]} />
+            <CardComponent card={gameState.corners[1][gameState.corners[1].length - 1]} />
           </div>
         {:else}
           <div class="empty-pile">7</div>
@@ -412,7 +490,7 @@
            ondragover={(e) => handleDragOver(e, 'helper-1')}
            ondragleave={handleDragLeave}
            ondrop={(e) => handleDrop(e, 'helper', 1)}>
-        {#if state.helpers[1]}
+        {#if gameState.helpers[1]}
           <!-- svelte-ignore a11y_no_static_element_interactions -->
           <!-- svelte-ignore a11y_click_events_have_key_events -->
           <div class="helper-card-wrapper" 
@@ -420,7 +498,7 @@
                ondragstart={(e) => handleDragStart(e, 'helper', 1)}
                ondragend={handleDragEnd}
                onclick={() => moveFromHelper(1)}>
-            <CardComponent card={state.helpers[1]} />
+            <CardComponent card={gameState.helpers[1]} />
           </div>
         {:else}
           <div class="empty-pile small"></div>
@@ -432,18 +510,18 @@
            ondragover={(e) => handleDragOver(e, 'center')}
            ondragleave={handleDragLeave}
            ondrop={(e) => handleDrop(e, 'center')}>
-        {#if state.center.length > 0}
-          {#if state.center.length > 2}
+        {#if gameState.center.length > 0}
+          {#if gameState.center.length > 2}
             <div class="stack-card" style="top: 4px; left: -2px; z-index: 0;"></div>
           {/if}
-          {#if state.center.length > 1}
+          {#if gameState.center.length > 1}
             <div class="stack-card" style="top: 2px; left: -1px; z-index: 1;"></div>
           {/if}
           <div style="position: relative; z-index: 2;">
-            <CardComponent card={state.center[state.center.length - 1]} />
+            <CardComponent card={gameState.center[gameState.center.length - 1]} />
           </div>
           {#if showCounters}
-            <div class="cycle-count">{countCycles(state.center)}</div>
+            <div class="cycle-count">{countCycles(gameState.center)}</div>
           {/if}
         {:else}
           <div class="empty-pile">6</div>
@@ -455,7 +533,7 @@
            ondragover={(e) => handleDragOver(e, 'helper-2')}
            ondragleave={handleDragLeave}
            ondrop={(e) => handleDrop(e, 'helper', 2)}>
-        {#if state.helpers[2]}
+        {#if gameState.helpers[2]}
           <!-- svelte-ignore a11y_no_static_element_interactions -->
           <!-- svelte-ignore a11y_click_events_have_key_events -->
           <div class="helper-card-wrapper" 
@@ -463,7 +541,7 @@
                ondragstart={(e) => handleDragStart(e, 'helper', 2)}
                ondragend={handleDragEnd}
                onclick={() => moveFromHelper(2)}>
-            <CardComponent card={state.helpers[2]} />
+            <CardComponent card={gameState.helpers[2]} />
           </div>
         {:else}
           <div class="empty-pile small"></div>
@@ -478,15 +556,15 @@
            ondragover={(e) => handleDragOver(e, 'corner-2')}
            ondragleave={handleDragLeave}
            ondrop={(e) => handleDrop(e, 'corner', 2)}>
-        {#if state.corners[2].length > 0}
-          {#if state.corners[2].length > 2}
+        {#if gameState.corners[2].length > 0}
+          {#if gameState.corners[2].length > 2}
             <div class="stack-card" style="top: 4px; left: -2px; z-index: 0;"></div>
           {/if}
-          {#if state.corners[2].length > 1}
+          {#if gameState.corners[2].length > 1}
             <div class="stack-card" style="top: 2px; left: -1px; z-index: 1;"></div>
           {/if}
           <div style="position: relative; z-index: 2;">
-            <CardComponent card={state.corners[2][state.corners[2].length - 1]} />
+            <CardComponent card={gameState.corners[2][gameState.corners[2].length - 1]} />
           </div>
         {:else}
           <div class="empty-pile">7</div>
@@ -498,7 +576,7 @@
            ondragover={(e) => handleDragOver(e, 'helper-3')}
            ondragleave={handleDragLeave}
            ondrop={(e) => handleDrop(e, 'helper', 3)}>
-        {#if state.helpers[3]}
+        {#if gameState.helpers[3]}
           <!-- svelte-ignore a11y_no_static_element_interactions -->
           <!-- svelte-ignore a11y_click_events_have_key_events -->
           <div class="helper-card-wrapper" 
@@ -506,7 +584,7 @@
                ondragstart={(e) => handleDragStart(e, 'helper', 3)}
                ondragend={handleDragEnd}
                onclick={() => moveFromHelper(3)}>
-            <CardComponent card={state.helpers[3]} />
+            <CardComponent card={gameState.helpers[3]} />
           </div>
         {:else}
           <div class="empty-pile small"></div>
@@ -518,15 +596,15 @@
            ondragover={(e) => handleDragOver(e, 'corner-3')}
            ondragleave={handleDragLeave}
            ondrop={(e) => handleDrop(e, 'corner', 3)}>
-        {#if state.corners[3].length > 0}
-          {#if state.corners[3].length > 2}
+        {#if gameState.corners[3].length > 0}
+          {#if gameState.corners[3].length > 2}
             <div class="stack-card" style="top: 4px; left: -2px; z-index: 0;"></div>
           {/if}
-          {#if state.corners[3].length > 1}
+          {#if gameState.corners[3].length > 1}
             <div class="stack-card" style="top: 2px; left: -1px; z-index: 1;"></div>
           {/if}
           <div style="position: relative; z-index: 2;">
-            <CardComponent card={state.corners[3][state.corners[3].length - 1]} />
+            <CardComponent card={gameState.corners[3][gameState.corners[3].length - 1]} />
           </div>
         {:else}
           <div class="empty-pile">7</div>
@@ -544,11 +622,11 @@
              ondragover={(e) => handleDragOver(e, 'sixPile')}
              ondragleave={handleDragLeave}
              ondrop={(e) => handleDrop(e, 'sixPile')}>
-        {#if state.sixPile.length > 0}
-          {#if state.sixPile.length > 2}
+        {#if gameState.sixPile.length > 0}
+          {#if gameState.sixPile.length > 2}
             <div class="stack-card" style="top: 4px; left: -2px; z-index: 0;"></div>
           {/if}
-          {#if state.sixPile.length > 1}
+          {#if gameState.sixPile.length > 1}
             <div class="stack-card" style="top: 2px; left: -1px; z-index: 1;"></div>
           {/if}
           <!-- svelte-ignore a11y_no_static_element_interactions -->
@@ -559,7 +637,7 @@
                ondragend={handleDragEnd}
                onclick={moveFromSixPile}
                style="position: relative; z-index: 2;">
-            <CardComponent card={state.sixPile[state.sixPile.length - 1]} />
+            <CardComponent card={gameState.sixPile[gameState.sixPile.length - 1]} />
           </div>
         {:else}
           <div class="empty-pile">6★</div>
@@ -570,11 +648,11 @@
     <!-- Kääntöpakka keskellä -->
     <div class="control-group">
       <div class="current-card-slot">
-        {#if state.waste.length > 0}
-          {#if state.waste.length > 2}
+        {#if gameState.waste.length > 0}
+          {#if gameState.waste.length > 2}
             <div class="stack-card" style="top: 4px; left: -2px; z-index: 0;"></div>
           {/if}
-          {#if state.waste.length > 1}
+          {#if gameState.waste.length > 1}
             <div class="stack-card" style="top: 2px; left: -1px; z-index: 1;"></div>
           {/if}
           <!-- svelte-ignore a11y_no_static_element_interactions -->
@@ -585,9 +663,9 @@
                ondragend={handleDragEnd}
                onclick={tryAutoPlaceCard}
                style="position: relative; z-index: 2;">
-            <CardComponent card={state.waste[state.waste.length - 1]} />
+            <CardComponent card={gameState.waste[gameState.waste.length - 1]} />
             {#if showCounters}
-              <div class="waste-count">{state.waste.length}</div>
+              <div class="waste-count">{gameState.waste.length}</div>
             {/if}
           </div>
         {:else}
@@ -599,23 +677,23 @@
     <!-- Jakopakka alimpana -->
     <div class="control-group">
       <button class="stock-btn" 
-                aria-label="{state.stock.length > 0 ? 'Nosta kortti jakopakasta' : state.waste.length > 0 && (activeMaxRecycles === 'unlimited' || recycleCount < activeMaxRecycles - 1) ? 'Kierrätä kääntöpakka takaisin' : 'Jakopakka tyhjä'}"
+                aria-label="{gameState.stock.length > 0 ? 'Nosta kortti jakopakasta' : gameState.waste.length > 0 && (activeMaxRecycles === 'unlimited' || recycleCount < activeMaxRecycles - 1) ? 'Kierrätä kääntöpakka takaisin' : 'Jakopakka tyhjä'}"
                 onclick={drawCard} 
-                disabled={state.stock.length === 0 && (state.waste.length === 0 || (activeMaxRecycles !== 'unlimited' && recycleCount >= activeMaxRecycles - 1))}>
-        {#if state.stock.length > 0}
-          {#if state.stock.length > 2}
+                disabled={gameState.stock.length === 0 && (gameState.waste.length === 0 || (activeMaxRecycles !== 'unlimited' && recycleCount >= activeMaxRecycles - 1))}>
+        {#if gameState.stock.length > 0}
+          {#if gameState.stock.length > 2}
             <div class="stack-card" style="top: 4px; left: -2px; z-index: 0;"></div>
           {/if}
-          {#if state.stock.length > 1}
+          {#if gameState.stock.length > 1}
             <div class="stack-card" style="top: 2px; left: -1px; z-index: 1;"></div>
           {/if}
           <div style="position: relative; z-index: 2;">
-            <CardComponent card={state.stock[state.stock.length - 1]} />
+            <CardComponent card={gameState.stock[gameState.stock.length - 1]} />
           </div>
           {#if showCounters}
-            <div class="stock-count">{state.stock.length}</div>
+            <div class="stock-count">{gameState.stock.length}</div>
           {/if}
-        {:else if state.waste.length > 0 && (activeMaxRecycles === 'unlimited' || recycleCount < activeMaxRecycles - 1)}
+        {:else if gameState.waste.length > 0 && (activeMaxRecycles === 'unlimited' || recycleCount < activeMaxRecycles - 1)}
           <div class="empty-pile recycle">↻</div>
         {:else}
           <div class="empty-pile game-over">✕</div>

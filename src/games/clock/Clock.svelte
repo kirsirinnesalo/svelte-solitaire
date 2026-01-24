@@ -7,14 +7,14 @@
   import { allowDrop } from '../../lib/dragUtils';
   import '../../styles/shared.css';
 
-  let state = $state<ClockState>({
+  let gameState: ClockState = $state({
     piles: Array(13).fill([]).map(() => []),
     revealedCardPileIndex: null
   });
   let isWon = $state(false);
   let isLost = $state(false);
   let gameStarted = $state(false);
-  let draggedFromPileIndex = $state<number | null>(null);
+  let draggedFromPileIndex: number | null = $state(null);
 
   // Clock positions: angles for each hour (0=12 o'clock, going clockwise)
   const clockPositions = [
@@ -43,7 +43,7 @@
       piles[pileIndex].push({ ...deck[i], faceUp: false });
     }
     
-    state = {
+    gameState = {
       piles,
       revealedCardPileIndex: null
     };
@@ -57,19 +57,19 @@
     if (isWon || isLost || !gameStarted) return;
     
     // If there's already a revealed card, ignore clicks
-    if (state.revealedCardPileIndex !== null) return;
+    if (gameState.revealedCardPileIndex !== null) return;
     
-    const result = revealCard(state, pileIndex);
+    const result = revealCard(gameState, pileIndex);
     
     if (result.valid && result.newState) {
-      state = result.newState;
+      gameState = result.newState;
     }
   }
 
   function handleDragStart(event: DragEvent, pileIndex: number) {
     if (isWon || isLost) return;
     
-    const pile = state.piles[pileIndex];
+    const pile = gameState.piles[pileIndex];
     if (pile.length === 0 || !pile[pile.length - 1].faceUp) return;
     
     draggedFromPileIndex = pileIndex;
@@ -85,10 +85,10 @@
     
     if (draggedFromPileIndex === null) return;
     
-    const result = moveRevealedCard(state, toPileIndex);
+    const result = moveRevealedCard(gameState, toPileIndex);
     
     if (result.valid && result.newState) {
-      state = result.newState;
+      gameState = result.newState;
       
       if (result.isWon) {
         isWon = true;
@@ -138,7 +138,7 @@
       <!-- Clock face piles (12 positions) -->
       {#each clockPositions as pos, i}
         {@const position = getClockPosition(i)}
-        {@const pile = state.piles[i]}
+        {@const pile = gameState.piles[i]}
         {@const hasRevealedCard = pile.length > 0 && pile[pile.length - 1].faceUp}
         {@const rotation = i * 30}
         
@@ -177,8 +177,8 @@
       {/each}
 
       <!-- Center pile (Kings) -->
-      {#if state.piles[12]}
-        {@const centerPile = state.piles[12]}
+      {#if gameState.piles[12]}
+        {@const centerPile = gameState.piles[12]}
         {@const hasRevealedCard = centerPile.length > 0 && centerPile[centerPile.length - 1].faceUp}
         
         <!-- svelte-ignore a11y_click_events_have_key_events -->

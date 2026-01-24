@@ -5,12 +5,12 @@
   import AcesUp from './games/acesup/AcesUp.svelte';
   import Clock from './games/clock/Clock.svelte';
   import type { GameType } from './types/game';
-  import { cardBackType, type CardBackType } from './lib/cardBackStore';
+  import { cardBackType } from './lib/cardBackStore.svelte';
 
-  let selectedGame = $state<GameType | null>(null);
+  let selectedGame: GameType | null = $state(null);
 
-  function handleGameSelect(event: CustomEvent<GameType>) {
-    selectedGame = event.detail;
+  function handleGameSelect(gameId: GameType) {
+    selectedGame = gameId;
   }
 
   function handleBackToMenu() {
@@ -45,7 +45,7 @@
     </h1>
     <div class="card-back-selector">
       <label for="cardBack">Kortin tausta:</label>
-      <select id="cardBack" bind:value={$cardBackType}>
+      <select id="cardBack" bind:value={cardBackType.value}>
         <option value="classic-blue">Klassinen sininen</option>
         <option value="red-grid">Punainen ruudukko</option>
         <option value="green-ornament">Vihreä ornamentti</option>
@@ -72,15 +72,15 @@
   {/if}
   
   {#if selectedGame === null}
-    <GameSelector on:selectGame={handleGameSelect} />
+    <GameSelector onselectgame={handleGameSelect} />
   {:else if selectedGame === 'klondike'}
-    <Klondike on:back={handleBackToMenu} />
+    <Klondike />
   {:else if selectedGame === 'napoleon'}
-    <Napoleon on:back={handleBackToMenu} />
+    <Napoleon />
   {:else if selectedGame === 'acesup'}
-    <AcesUp on:back={handleBackToMenu} />
+    <AcesUp />
   {:else if selectedGame === 'clock'}
-    <Clock on:back={handleBackToMenu} />
+    <Clock />
   {/if}
 </main>
 

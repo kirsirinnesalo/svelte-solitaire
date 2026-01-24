@@ -1,7 +1,7 @@
 <script lang="ts">
   import type { Card } from '../types/game';
   import { isRed } from '../lib/cardUtils';
-  import { cardBackType } from '../lib/cardBackStore';
+  import { cardBackType } from '../lib/cardBackStore.svelte';
 
   let { card, draggable = false }: { card: Card; draggable?: boolean } = $props();
 
@@ -39,9 +39,9 @@
       </div>
     </div>
   {:else}
-    <div class="card-back" data-back-type={$cardBackType}>
+    <div class="card-back" data-back-type={cardBackType.value}>
       <div class="back-inner">
-        {#if $cardBackType === 'four-suits'}
+        {#if cardBackType.value === 'four-suits'}
           <div class="suits-grid">
             <span class="suit-black">♠</span>
             <span class="suit-red">♥</span>

@@ -51,6 +51,8 @@
     gameStarted = true;
     firstGameStarted = true;
     isLost = false;
+    showHighlight = false; // Reset hints
+    highlightedCards = new Set<string>(); // Clear highlighted cards
     const deck = shuffleDeck(createDeck());
     const tableau: Card[][] = [];
     

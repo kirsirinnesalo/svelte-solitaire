@@ -29,6 +29,8 @@
   let activeMaxRecycles: 1 | 2 | 3 | 'unlimited' = $state(3); // Locked for current game
   let history: { gameState: KlondikeState; moves: number }[] = $state([]);
   let draggedCard: { type: 'tableau' | 'waste' | 'foundation', index: number, cardIndex?: number } | null = $state(null);
+  let showHighlight = $state(false);
+  let highlightedCards = $state(new Set<string>());
 
   // Derived state for undo button
   let undoDisabled = $derived(history.length === 0 || isWon || isLost || !gameStarted);
@@ -95,6 +97,7 @@
   }
 
   function drawFromStock() {
+    showHighlight = false; // Hide hints when drawing
     saveState();
     if (gameState.stock.length === 0) {
       // Check recycle limit
@@ -152,6 +155,7 @@
     const result = moveCard(gameState, draggedCard, { type: toType, index: toIndex });
 
     if (result.valid && result.newState) {
+      showHighlight = false; // Hide hints when card is moved
       saveState();
       gameState = result.newState;
       moves++;
@@ -163,6 +167,7 @@
 
   function handleDoubleClick(type: 'tableau' | 'waste', index: number, cardIndex?: number) {
     if (isWon || isLost) return;
+    showHighlight = false; // Hide hints when card is moved
     // Try to move card to foundation first (priority)
     for (let i = 0; i < 4; i++) {
       const result = moveCard(
@@ -201,6 +206,72 @@
     }
   }
 
+  function showHint() {
+    // Find all possible moves and highlight them
+    highlightedCards = new Set<string>();
+    
+    // Check waste card moves
+    if (gameState.waste.length > 0) {
+      const wasteCard = gameState.waste[gameState.waste.length - 1];
+      
+      // Check if can move to any foundation
+      for (let i = 0; i < 4; i++) {
+        const result = moveCard(gameState, { type: 'waste', index: 0 }, { type: 'foundation', index: i });
+        if (result.valid) {
+          highlightedCards.add(wasteCard.id);
+          break;
+        }
+      }
+      
+      // Check if can move to any tableau
+      for (let i = 0; i < 7; i++) {
+        const result = moveCard(gameState, { type: 'waste', index: 0 }, { type: 'tableau', index: i });
+        if (result.valid) {
+          highlightedCards.add(wasteCard.id);
+          break;
+        }
+      }
+    }
+    
+    // Check tableau cards
+    for (let i = 0; i < gameState.tableau.length; i++) {
+      const pile = gameState.tableau[i];
+      if (pile.length === 0) continue;
+      
+      // Find first face-up card
+      const firstFaceUpIndex = pile.findIndex(card => card.faceUp);
+      if (firstFaceUpIndex === -1) continue;
+      
+      // Check each face-up card sequence
+      for (let j = firstFaceUpIndex; j < pile.length; j++) {
+        const card = pile[j];
+        
+        // Check if can move to foundation (only top card)
+        if (j === pile.length - 1) {
+          for (let k = 0; k < 4; k++) {
+            const result = moveCard(gameState, { type: 'tableau', index: i, cardIndex: j }, { type: 'foundation', index: k });
+            if (result.valid) {
+              highlightedCards.add(card.id);
+              break;
+            }
+          }
+        }
+        
+        // Check if can move to another tableau pile
+        for (let k = 0; k < 7; k++) {
+          if (k === i) continue;
+          const result = moveCard(gameState, { type: 'tableau', index: i, cardIndex: j }, { type: 'tableau', index: k });
+          if (result.valid) {
+            highlightedCards.add(card.id);
+            break;
+          }
+        }
+      }
+    }
+    
+    showHighlight = true;
+  }
+
   function checkWin() {
     isWon = isGameWon(gameState);
     isLost = !isWon && isGameLost(gameState, recycleCount, activeMaxRecycles);
@@ -236,9 +307,10 @@
   <GameHeader
     undoDisabled={undoDisabled}
     restartDisabled={true}
-    hintDisabled={true}
+    hintDisabled={false}
     onNewGame={initGame}
     onUndo={undo}
+    onHint={showHint}
   >
     {#snippet settings()}
       <DrawCountToggle bind:value={drawCount} />
@@ -295,6 +367,7 @@
                   onclick={() => isLast && handleDoubleClick('waste', 0)}
                   class="waste-card"
                   class:draggable={isLast && !isWon && !isLost}
+                  class:highlight={isLast && showHighlight && highlightedCards.has(card.id)}
                   style="left: {i * 15}px"
                 >
                   <CardComponent {card} />
@@ -317,6 +390,7 @@
                 onclick={() => handleDoubleClick('waste', 0)}
                 class="waste-card"
                 class:draggable={!isWon && !isLost}
+                class:highlight={showHighlight && highlightedCards.has(gameState.waste[gameState.waste.length - 1].id)}
                 style="position: relative; z-index: 2;"
               >
                 <CardComponent card={gameState.waste[gameState.waste.length - 1]} />
@@ -398,6 +472,7 @@
                     onclick={() => handleDoubleClick('tableau', i, j)}
                     class="draggable-wrapper"
                     class:draggable={card.faceUp && !isWon && !isLost}
+                    class:highlight={showHighlight && highlightedCards.has(card.id)}
                   >
                     <CardComponent {card} />
                   </div>
@@ -486,6 +561,8 @@
     position: absolute;
     top: 0;
     left: 0;
+    width: 70px;
+    height: 100px;
   }
 
   .waste-card.draggable {

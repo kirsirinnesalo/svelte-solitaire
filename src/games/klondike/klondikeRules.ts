@@ -144,9 +144,11 @@ export function isGameLost(state: KlondikeState, recycleCount: number, maxRecycl
   // Game can't be lost if stock still has cards
   if (state.stock.length > 0) return false;
   
-  // Game can't be lost if can still recycle
-  if (maxRecycles === 'unlimited') return false;
-  if (recycleCount < maxRecycles - 1) return false;
+  // Game can't be lost if can still recycle (waste has cards and not at limit)
+  if (state.waste.length > 0) {
+    if (maxRecycles === 'unlimited') return false;
+    if (recycleCount < maxRecycles - 1) return false;
+  }
   
   // Note: Face-down cards are NOT checked here because they can only be revealed
   // if the cards on top of them can be moved. If no cards can move (checked below),

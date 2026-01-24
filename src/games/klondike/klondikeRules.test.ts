@@ -214,7 +214,7 @@ describe('Klondike Rules - isGameLost', () => {
     expect(isGameLost(deadlockState, 0, 1)).toBe(true);
   });
 
-  it('should not be lost with unlimited recycles', () => {
+  it('should not be lost with unlimited recycles and waste has cards', () => {
     const state: KlondikeState = {
       ...emptyState,
       stock: [],
@@ -222,6 +222,32 @@ describe('Klondike Rules - isGameLost', () => {
     };
     
     expect(isGameLost(state, 999, 'unlimited')).toBe(false);
+  });
+
+  it('should be lost with unlimited recycles when no cards in waste/stock and no moves', () => {
+    const state: KlondikeState = {
+      ...emptyState,
+      stock: [],
+      waste: [], // NO cards in waste
+      tableau: [
+        [createCard('Q', 'hearts')],
+        [createCard('Q', 'diamonds')],
+        [createCard('10', 'hearts')],
+        [createCard('10', 'diamonds')],
+        [createCard('9', 'hearts')],
+        [createCard('9', 'diamonds')],
+        [createCard('8', 'hearts')]
+      ],
+      foundations: [
+        [createCard('A', 'spades')],
+        [createCard('A', 'clubs')],
+        [createCard('A', 'diamonds')],
+        [createCard('A', 'hearts')]
+      ]
+    };
+    
+    // Even with unlimited recycles, if waste is empty and no moves available, game is lost
+    expect(isGameLost(state, 0, 'unlimited')).toBe(true);
   });
 });
 

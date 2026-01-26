@@ -56,12 +56,10 @@
             <span class="stat-label">Siirtoja:</span>
             <span class="stat-value">{moves}</span>
           </div>
-          {#if elapsedTime !== undefined && elapsedTime > 0}
           <div class="stat-item">
             <span class="stat-label">Aika:</span>
             <span class="stat-value">{formatTime(elapsedTime)}</span>
           </div>
-          {/if}
         </div>
       </div>
       

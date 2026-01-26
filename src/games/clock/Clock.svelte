@@ -17,6 +17,7 @@
   let showResultModal = $state(false);
   let gameStarted = $state(false);
   let draggedFromPileIndex: number | null = $state(null);
+  let moves = $state(0);
   let startTime = $state<number>(0);
   let elapsedTime = $state<number>(0);
   let displayTime = $state<number>(0); // For live timer display
@@ -70,6 +71,7 @@
     isLost = false;
     showResultModal = false;
     gameStarted = true;
+    moves = 0;
     startTime = 0;
     elapsedTime = 0;
     displayTime = 0;
@@ -133,6 +135,7 @@
     
     if (result.valid && result.newState) {
       gameState = result.newState;
+      moves++;
       
       if (result.isWon) {
         isWon = true;
@@ -363,7 +366,7 @@
 <GameResultModal 
   isOpen={showResultModal}
   isWon={isWon} 
-  moves={0} 
+  moves={moves}
   elapsedTime={elapsedTime}
   onNewGame={initGame}
   onClose={() => { showResultModal = false; }} 

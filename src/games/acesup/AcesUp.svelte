@@ -3,7 +3,6 @@
   import type { Card } from '../../types/game';
   import CardComponent from '../../components/CardComponent.svelte';
   import GameHeader from '../../components/GameHeader.svelte';
-  import GameResultModal from '../../components/GameResultModal.svelte';
   import { 
     dealCards, 
     removeCard, 
@@ -24,7 +23,6 @@
   let moves = $state(0);
   let isWon = $state(false);
   let isLost = $state(false);
-  let showResultModal = $state(false);
   let draggedPile: number | null = $state(null);
   let showHighlight = $state(false);
   let history: AcesUpState[] = $state([]);
@@ -61,7 +59,6 @@
     moves = 0;
     isWon = false;
     isLost = false;
-    showResultModal = false;
     draggedPile = null;
     history = [];
     startTime = 0;
@@ -211,10 +208,8 @@
     
     if (isWon) {
       elapsedTime = Math.floor((Date.now() - startTime) / 1000);
-      setTimeout(() => { showResultModal = true; }, 100);
     } else if (isLost) {
       elapsedTime = Math.floor((Date.now() - startTime) / 1000);
-      setTimeout(() => { showResultModal = true; }, 100);
     }
   }
 
@@ -241,6 +236,19 @@
           <div class="pause-icon">⏸</div>
           <div>Peli tauolla</div>
           <button class="resume-btn" onclick={togglePause}>▶ Jatka</button>
+        </div>
+      </div>
+    {/if}
+    
+    {#if isWon || isLost}
+      <div class="game-over-overlay">
+        <div class="game-over-message">
+          <div class="game-over-icon">{isWon ? '🎉' : '😔'}</div>
+          <div class="game-over-title">{isWon ? 'Voitit pelin!' : 'Peli päättyi'}</div>
+          <div class="game-stats">
+            <div>⏱ {Math.floor(elapsedTime / 60)}:{String(elapsedTime % 60).padStart(2, '0')}</div>
+            <div>⇆ {moves} siirtoa</div>
+          </div>
         </div>
       </div>
     {/if}
@@ -348,15 +356,43 @@
     z-index: 1000;
     border-radius: 8px;
   }
-  
+
+  .game-over-overlay {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: rgba(0, 0, 0, 0.2);
+    backdrop-filter: blur(2px);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 1000;
+    border-radius: 8px;
+  }
+
   .pause-message {
     text-align: center;
     color: white;
     font-size: 2rem;
     font-weight: bold;
   }
+
+  .game-over-message {
+    text-align: center;
+    color: white;
+    font-size: 2rem;
+    font-weight: bold;
+    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.8), -2px -2px 4px rgba(0, 0, 0, 0.8), 2px -2px 4px rgba(0, 0, 0, 0.8), -2px 2px 4px rgba(0, 0, 0, 0.8);
+  }
   
   .pause-icon {
+    font-size: 4rem;
+    margin-bottom: 1rem;
+  }
+
+  .game-over-icon {
     font-size: 4rem;
     margin-bottom: 1rem;
   }
@@ -492,13 +528,18 @@
   .draggable-wrapper:active {
     cursor: grabbing;
   }
-</style>
 
-<GameResultModal 
-  isOpen={showResultModal}
-  isWon={isWon} 
-  moves={moves}
-  elapsedTime={elapsedTime}
-  onNewGame={initGame} 
-  onClose={() => { showResultModal = false; }} 
-/>
+  .game-over-title {
+    font-size: 1.5rem;
+    font-weight: bold;
+    margin: 1rem 0;
+  }
+
+  .game-stats {
+    display: flex;
+    gap: 2rem;
+    justify-content: center;
+    margin: 1.5rem 0;
+    font-size: 1.2rem;
+  }
+</style>

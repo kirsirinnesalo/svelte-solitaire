@@ -3,7 +3,6 @@
   import type { Card } from '../../types/game';
   import CardComponent from '../../components/CardComponent.svelte';
   import GameHeader from '../../components/GameHeader.svelte';
-  import GameResultModal from '../../components/GameResultModal.svelte';
   import DrawCountToggle from '../../components/settings/DrawCountToggle.svelte';
   import RecycleToggle from '../../components/settings/RecycleToggle.svelte';
   import { moveCard, isGameWon, isGameLost, type KlondikeState } from './klondikeRules';
@@ -19,7 +18,6 @@
   let moves = $state(0);
   let isWon = $state(false);
   let isLost = $state(false);
-  let showResultModal = $state(false);
   let gameStarted = $state(false);
   let firstGameStarted = $state(false); // Track if first game has been started
   let drawCount: 1 | 3 = $state(1); // Number of cards to draw from stock (setting)
@@ -355,7 +353,6 @@
     
     if (isWon || isLost) {
       elapsedTime = Math.floor((Date.now() - startTime) / 1000);
-      setTimeout(() => { showResultModal = true; }, 100);
     }
   }
 
@@ -419,6 +416,19 @@
           <div class="pause-icon">⏸</div>
           <div>Peli tauolla</div>
           <button class="resume-btn" onclick={togglePause}>▶ Jatka</button>
+        </div>
+      </div>
+    {/if}
+    
+    {#if isWon || isLost}
+      <div class="game-over-overlay">
+        <div class="game-over-message">
+          <div class="game-over-icon">{isWon ? '🎉' : '😔'}</div>
+          <div class="game-over-title">{isWon ? 'Voitit pelin!' : 'Peli päättyi'}</div>
+          <div class="game-stats">
+            <div>⏱ {Math.floor(elapsedTime / 60)}:{String(elapsedTime % 60).padStart(2, '0')}</div>
+            <div>⇆ {moves} siirtoa</div>
+          </div>
         </div>
       </div>
     {/if}
@@ -642,6 +652,21 @@
     z-index: 1000;
     border-radius: 8px;
   }
+
+  .game-over-overlay {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: rgba(0, 0, 0, 0.2);
+    backdrop-filter: blur(2px);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 1000;
+    border-radius: 8px;
+  }
   
   .pause-message {
     text-align: center;
@@ -649,8 +674,21 @@
     font-size: 2rem;
     font-weight: bold;
   }
+
+  .game-over-message {
+    text-align: center;
+    color: white;
+    font-size: 2rem;
+    font-weight: bold;
+    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.8), -2px -2px 4px rgba(0, 0, 0, 0.8), 2px -2px 4px rgba(0, 0, 0, 0.8), -2px 2px 4px rgba(0, 0, 0, 0.8);
+  }
   
   .pause-icon {
+    font-size: 4rem;
+    margin-bottom: 1rem;
+  }
+
+  .game-over-icon {
     font-size: 4rem;
     margin-bottom: 1rem;
   }
@@ -791,13 +829,18 @@
   .tableau-empty {
     border: 2px dashed rgba(255, 255, 255, 0.3);
   }
-</style>
 
-<GameResultModal
-  isOpen={showResultModal}
-  isWon={isWon}
-  moves={moves}
-  elapsedTime={elapsedTime}
-  onNewGame={() => { showResultModal = false; initGame(); }}
-  onClose={() => showResultModal = false}
-/>
+  .game-over-title {
+    font-size: 1.5rem;
+    font-weight: bold;
+    margin: 1rem 0;
+  }
+
+  .game-stats {
+    display: flex;
+    gap: 2rem;
+    justify-content: center;
+    margin: 1.5rem 0;
+    font-size: 1.2rem;
+  }
+</style>

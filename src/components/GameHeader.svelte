@@ -6,20 +6,28 @@
     restartDisabled = true, 
     hintDisabled = true,
     elapsedTime = 0,
+    isPaused = false,
+    gameStarted = false,
+    gameEnded = false,
     onNewGame,
     onRestart,
     onUndo,
     onHint,
+    onPause,
     settings
   }: { 
     undoDisabled?: boolean; 
     restartDisabled?: boolean; 
     hintDisabled?: boolean;
     elapsedTime?: number;
+    isPaused?: boolean;
+    gameStarted?: boolean;
+    gameEnded?: boolean;
     onNewGame: () => void;
     onRestart?: () => void;
     onUndo?: () => void;
     onHint?: () => void;
+    onPause?: () => void;
     settings?: Snippet;
   } = $props();
   
@@ -61,6 +69,17 @@
     <div class="timer">
       ⏱ {formatTime(elapsedTime)}
     </div>
+    {#if onPause}
+    <button 
+      class="pause-btn" 
+      class:disabled={!gameStarted || gameEnded}
+      disabled={!gameStarted || gameEnded}
+      onclick={onPause}
+      title={isPaused ? "Jatka peliä" : "Tauko"}
+    >
+      {isPaused ? '▶' : '⏸'}
+    </button>
+    {/if}
   </div>
   <div class="game-settings">
     {#if settings}
@@ -92,6 +111,27 @@
     background: rgba(255, 255, 255, 0.7);
     border-radius: 4px;
     font-variant-numeric: tabular-nums;
+  }
+  
+  .pause-btn {
+    padding: 0.5rem 0.75rem;
+    font-size: 1rem;
+    font-weight: bold;
+    background: #fff;
+    color: #333;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    cursor: pointer;
+  }
+  
+  .pause-btn:hover:not(:disabled) {
+    background: #f0f0f0;
+  }
+  
+  .pause-btn.disabled,
+  .pause-btn:disabled {
+    opacity: 0.4;
+    cursor: not-allowed;
   }
 
   .game-settings {

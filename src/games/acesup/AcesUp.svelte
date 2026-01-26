@@ -31,13 +31,15 @@
   let startTime = $state<number>(0);
   let elapsedTime = $state<number>(0);
   let displayTime = $state<number>(0); // For live timer display
+  let isPaused = $state<boolean>(false);
+  let pauseStartTime = $state<number>(0);
 
   // Derived state for undo button
   let undoDisabled = $derived(history.length === 0 || isWon || isLost);
   
   // Update display time every second when game is running
   $effect(() => {
-    if (startTime === 0 || isWon || isLost) return;
+    if (startTime === 0 || isWon || isLost || isPaused) return;
     
     const interval = setInterval(() => {
       displayTime = Math.floor((Date.now() - startTime) / 1000);
@@ -77,6 +79,8 @@
   }
 
   function handleDeal() {
+    if (isPaused) return;
+    
     // Start timer on first action
     if (startTime === 0) {
       startTime = Date.now();
@@ -93,6 +97,8 @@
   }
 
   function handleRemoveCard(pileIndex: number) {
+    if (isPaused) return;
+    
     // Start timer on first action
     if (startTime === 0) {
       startTime = Date.now();
@@ -108,6 +114,8 @@
   }
 
   function handlePileClick(pileIndex: number) {
+    if (isPaused) return;
+    
     const pile = gameState.piles[pileIndex];
     
     if (pile.length === 0) {
@@ -143,6 +151,7 @@
   }
 
   function handleDragStart(event: DragEvent, pileIndex: number) {
+    if (isPaused) return;
     if (gameState.piles[pileIndex].length === 0) return;
     draggedPile = pileIndex;
     if (event.dataTransfer) {
@@ -176,6 +185,21 @@
     isLost = false;
   }
 
+  function togglePause() {
+    if (isWon || isLost || startTime === 0) return;
+    
+    if (isPaused) {
+      // Resume: add pause duration to startTime
+      const pauseDuration = Date.now() - pauseStartTime;
+      startTime += pauseDuration;
+      isPaused = false;
+    } else {
+      // Pause: record pause start time
+      pauseStartTime = Date.now();
+      isPaused = true;
+    }
+  }
+
   function showHint() {
     // Show highlights temporarily - next deal will hide them
     showHighlight = true;
@@ -203,12 +227,24 @@
     restartDisabled={true}
     hintDisabled={false}
     elapsedTime={displayTime}
-    onNewGame={initGame}
+    {isPaused}    gameStarted={startTime > 0}
+    gameEnded={isWon || isLost}    onNewGame={initGame}
     onUndo={undo}
     onHint={showHint}
+    onPause={togglePause}
   />
 
   <div class="game-area">
+    {#if isPaused}
+      <div class="pause-overlay">
+        <div class="pause-message">
+          <div class="pause-icon">⏸</div>
+          <div>Peli tauolla</div>
+          <button class="resume-btn" onclick={togglePause}>▶ Jatka</button>
+        </div>
+      </div>
+    {/if}
+    
     <!-- Stock -->
     <div class="stock-section">
       <button
@@ -290,11 +326,55 @@
   }
 
   .game-area {
+    position: relative;
     min-height: 400px;
     display: flex;
     gap: 5rem;
     align-items: flex-start;
     justify-content: center;
+  }
+  
+  .pause-overlay {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: rgba(0, 0, 0, 0.8);
+    backdrop-filter: blur(10px);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 1000;
+    border-radius: 8px;
+  }
+  
+  .pause-message {
+    text-align: center;
+    color: white;
+    font-size: 2rem;
+    font-weight: bold;
+  }
+  
+  .pause-icon {
+    font-size: 4rem;
+    margin-bottom: 1rem;
+  }
+  
+  .resume-btn {
+    margin-top: 2rem;
+    padding: 1rem 2rem;
+    font-size: 1.2rem;
+    background: #4CAF50;
+    color: white;
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+    font-weight: bold;
+  }
+  
+  .resume-btn:hover {
+    background: #45a049;
   }
 
   .stock-section {

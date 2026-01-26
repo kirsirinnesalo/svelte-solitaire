@@ -36,6 +36,8 @@
   let startTime = $state<number>(0);
   let elapsedTime = $state<number>(0);
   let displayTime = $state<number>(0); // For live timer display
+  let isPaused = $state<boolean>(false);
+  let pauseStartTime = $state<number>(0);
 
   // Derived state for undo button
   let undoDisabled = $derived(history.length === 0 || isWon || isLost || !gameStarted);
@@ -51,7 +53,7 @@
   
   // Update display time every second when game is running
   $effect(() => {
-    if (startTime === 0 || isWon || isLost) return;
+    if (startTime === 0 || isWon || isLost || isPaused) return;
     
     const interval = setInterval(() => {
       displayTime = Math.floor((Date.now() - startTime) / 1000);
@@ -118,7 +120,24 @@
     isWon = false;
   }
 
+  function togglePause() {
+    if (isWon || isLost || startTime === 0) return;
+    
+    if (isPaused) {
+      // Resume: add pause duration to startTime
+      const pauseDuration = Date.now() - pauseStartTime;
+      startTime += pauseDuration;
+      isPaused = false;
+    } else {
+      // Pause: record pause start time
+      pauseStartTime = Date.now();
+      isPaused = true;
+    }
+  }
+
   function drawFromStock() {
+    if (isPaused) return;
+    
     // Start timer on first action
     if (startTime === 0) {
       startTime = Date.now();
@@ -178,7 +197,7 @@
 
   function handleDrop(event: DragEvent, toType: 'tableau' | 'foundation', toIndex: number) {
     event.preventDefault();
-    if (!draggedCard) return;
+    if (!draggedCard || isPaused) return;
 
     // Start timer on first action
     if (startTime === 0) {
@@ -199,7 +218,7 @@
   }
 
   function handleDoubleClick(type: 'tableau' | 'waste', index: number, cardIndex?: number) {
-    if (isWon || isLost) return;
+    if (isWon || isLost || isPaused) return;
     // Start timer on first action
     if (startTime === 0) {
       startTime = Date.now();
@@ -245,6 +264,8 @@
   }
 
   function showHint() {
+    if (isPaused) return;
+    
     // Find all possible moves and highlight them
     highlightedCards = new Set<string>();
     
@@ -366,9 +387,13 @@
     restartDisabled={true}
     hintDisabled={false}
     elapsedTime={displayTime}
+    isPaused={isPaused}
+    gameStarted={startTime > 0}
+    gameEnded={isWon || isLost}
     onNewGame={initGame}
     onUndo={undo}
     onHint={showHint}
+    onPause={togglePause}
   >
     {#snippet settings()}
       <DrawCountToggle bind:value={drawCount} />
@@ -388,6 +413,16 @@
   {/if}
 
   <div class="game-area">
+    {#if isPaused}
+      <div class="pause-overlay">
+        <div class="pause-message">
+          <div class="pause-icon">⏸</div>
+          <div>Peli tauolla</div>
+          <button class="resume-btn" onclick={togglePause}>▶ Jatka</button>
+        </div>
+      </div>
+    {/if}
+    
     <!-- Stock and Waste -->
     <div class="top-row">
       <div class="stock-waste-wrapper">
@@ -589,7 +624,51 @@
 
   /* Klondike-specific settings styles */
   .game-area {
+    position: relative;
     min-height: 650px;
+  }
+  
+  .pause-overlay {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: rgba(0, 0, 0, 0.8);
+    backdrop-filter: blur(10px);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 1000;
+    border-radius: 8px;
+  }
+  
+  .pause-message {
+    text-align: center;
+    color: white;
+    font-size: 2rem;
+    font-weight: bold;
+  }
+  
+  .pause-icon {
+    font-size: 4rem;
+    margin-bottom: 1rem;
+  }
+  
+  .resume-btn {
+    margin-top: 2rem;
+    padding: 1rem 2rem;
+    font-size: 1.2rem;
+    background: #4CAF50;
+    color: white;
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+    font-weight: bold;
+  }
+  
+  .resume-btn:hover {
+    background: #45a049;
   }
 
   .top-row {

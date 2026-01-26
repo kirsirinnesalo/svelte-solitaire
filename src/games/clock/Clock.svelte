@@ -20,10 +20,12 @@
   let startTime = $state<number>(0);
   let elapsedTime = $state<number>(0);
   let displayTime = $state<number>(0); // For live timer display
+  let isPaused = $state<boolean>(false);
+  let pauseStartTime = $state<number>(0);
   
   // Update display time every second when game is running
   $effect(() => {
-    if (startTime === 0 || isWon || isLost) return;
+    if (startTime === 0 || isWon || isLost || isPaused) return;
     
     const interval = setInterval(() => {
       displayTime = Math.floor((Date.now() - startTime) / 1000);
@@ -73,7 +75,23 @@
     displayTime = 0;
   }
 
+  function togglePause() {
+    if (isWon || isLost || startTime === 0) return;
+    
+    if (isPaused) {
+      // Resume: add pause duration to startTime
+      const pauseDuration = Date.now() - pauseStartTime;
+      startTime += pauseDuration;
+      isPaused = false;
+    } else {
+      // Pause: record pause start time
+      pauseStartTime = Date.now();
+      isPaused = true;
+    }
+  }
+
   function handlePileClick(pileIndex: number) {
+    if (isPaused) return;
     if (isWon || isLost || !gameStarted) return;
     
     // Start timer on first action
@@ -92,6 +110,7 @@
   }
 
   function handleDragStart(event: DragEvent, pileIndex: number) {
+    if (isPaused) return;
     if (isWon || isLost) return;
     
     const pile = gameState.piles[pileIndex];
@@ -154,7 +173,9 @@
     restartDisabled={true}
     hintDisabled={true}
     elapsedTime={displayTime}
-    onNewGame={initGame}
+    {isPaused}    gameStarted={startTime > 0}
+    gameEnded={isWon || isLost}    onNewGame={initGame}
+    onPause={togglePause}
   >
     {#snippet settings()}
       <!-- Ei asetuksia tällä hetkellä -->
@@ -162,6 +183,16 @@
   </GameHeader>
 
   <div class="game-area">
+    {#if isPaused}
+      <div class="pause-overlay">
+        <div class="pause-message">
+          <div class="pause-icon">⏸</div>
+          <div>Peli tauolla</div>
+          <button class="resume-btn" onclick={togglePause}>▶ Jatka</button>
+        </div>
+      </div>
+    {/if}
+    
     <div class="clock-container" style="position: relative; width: 500px; height: 500px; margin: 2rem auto;">
       <!-- Clock face piles (12 positions) -->
       {#each clockPositions as pos, i}
@@ -253,7 +284,51 @@
 
   /* Clock-specific styles */
   .game-area {
+    position: relative;
     min-height: 600px;
+  }
+  
+  .pause-overlay {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: rgba(0, 0, 0, 0.8);
+    backdrop-filter: blur(10px);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 1000;
+    border-radius: 8px;
+  }
+  
+  .pause-message {
+    text-align: center;
+    color: white;
+    font-size: 2rem;
+    font-weight: bold;
+  }
+  
+  .pause-icon {
+    font-size: 4rem;
+    margin-bottom: 1rem;
+  }
+  
+  .resume-btn {
+    margin-top: 2rem;
+    padding: 1rem 2rem;
+    font-size: 1.2rem;
+    background: #4CAF50;
+    color: white;
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+    font-weight: bold;
+  }
+  
+  .resume-btn:hover {
+    background: #45a049;
   }
 
   .clock-container {

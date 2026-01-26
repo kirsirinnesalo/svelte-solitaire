@@ -3,6 +3,8 @@
   import type { Card } from '../../types/game';
   import CardComponent from '../../components/CardComponent.svelte';
   import GameHeader from '../../components/GameHeader.svelte';
+  import GameOverOverlay from '../../components/GameOverOverlay.svelte';
+  import PauseOverlay from '../../components/PauseOverlay.svelte';
   import { revealCard, moveRevealedCard, isGameWon, isGameLost, type ClockState } from './clockRules';
   import { allowDrop } from '../../lib/dragUtils';
   import '../../styles/shared.css';
@@ -181,28 +183,8 @@
   </GameHeader>
 
   <div class="game-area">
-    {#if isPaused}
-      <div class="pause-overlay">
-        <div class="pause-message">
-          <div class="pause-icon">⏸</div>
-          <div>Peli tauolla</div>
-          <button class="resume-btn" onclick={togglePause}>▶ Jatka</button>
-        </div>
-      </div>
-    {/if}
-    
-    {#if isWon || isLost}
-      <div class="game-over-overlay">
-        <div class="game-over-message">
-          <div class="game-over-icon">{isWon ? '🎉' : '😔'}</div>
-          <div class="game-over-title">{isWon ? 'Voitit pelin!' : 'Peli päättyi'}</div>
-          <div class="game-stats">
-            <div>⏱ {Math.floor(elapsedTime / 60)}:{String(elapsedTime % 60).padStart(2, '0')}</div>
-            <div>⇆ {moves} siirtoa</div>
-          </div>
-        </div>
-      </div>
-    {/if}
+    <PauseOverlay {isPaused} onResume={togglePause} />
+    <GameOverOverlay {isWon} {isLost} {moves} {elapsedTime} />
     
     <div class="clock-container" style="position: relative; width: 500px; height: 500px; margin: 2rem auto;">
       <!-- Clock face piles (12 positions) -->
@@ -298,77 +280,6 @@
     position: relative;
     min-height: 600px;
   }
-  
-  .pause-overlay {
-    position: absolute;
-    top: 0;
-    left: 0;
-    right: 0;
-    bottom: 0;
-    background: rgba(0, 0, 0, 0.8);
-    backdrop-filter: blur(10px);
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    z-index: 1000;
-    border-radius: 8px;
-  }
-
-  .game-over-overlay {
-    position: absolute;
-    top: 0;
-    left: 0;
-    right: 0;
-    bottom: 0;
-    background: rgba(0, 0, 0, 0.2);
-    backdrop-filter: blur(2px);
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    z-index: 1000;
-    border-radius: 8px;
-  }
-
-  .pause-message {
-    text-align: center;
-    color: white;
-    font-size: 2rem;
-    font-weight: bold;
-  }
-
-  .game-over-message {
-    text-align: center;
-    color: white;
-    font-size: 2rem;
-    font-weight: bold;
-    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.8), -2px -2px 4px rgba(0, 0, 0, 0.8), 2px -2px 4px rgba(0, 0, 0, 0.8), -2px 2px 4px rgba(0, 0, 0, 0.8);
-  }
-  
-  .pause-icon {
-    font-size: 4rem;
-    margin-bottom: 1rem;
-  }
-
-  .game-over-icon {
-    font-size: 4rem;
-    margin-bottom: 1rem;
-  }
-  
-  .resume-btn {
-    margin-top: 2rem;
-    padding: 1rem 2rem;
-    font-size: 1.2rem;
-    background: #4CAF50;
-    color: white;
-    border: none;
-    border-radius: 8px;
-    cursor: pointer;
-    font-weight: bold;
-  }
-  
-  .resume-btn:hover {
-    background: #45a049;
-  }
 
   .clock-container {
     position: relative;
@@ -396,19 +307,5 @@
 
   .clock-label {
     font-size: 1.8rem;
-  }
-
-  .game-over-title {
-    font-size: 1.5rem;
-    font-weight: bold;
-    margin: 1rem 0;
-  }
-
-  .game-stats {
-    display: flex;
-    gap: 2rem;
-    justify-content: center;
-    margin: 1.5rem 0;
-    font-size: 1.2rem;
   }
 </style>

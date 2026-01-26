@@ -33,6 +33,9 @@
   let highlightedCards = $state(new Set<string>());
   let noMovesMessage = $state(false);
   let stockHighlight = $state(false);
+  let startTime = $state<number>(0);
+  let elapsedTime = $state<number>(0);
+  let displayTime = $state<number>(0); // For live timer display
 
   // Derived state for undo button
   let undoDisabled = $derived(history.length === 0 || isWon || isLost || !gameStarted);
@@ -45,6 +48,17 @@
       maxRecycles = 'unlimited';
     }
   });
+  
+  // Update display time every second when game is running
+  $effect(() => {
+    if (!gameStarted || isWon || isLost) return;
+    
+    const interval = setInterval(() => {
+      displayTime = Math.floor((Date.now() - startTime) / 1000);
+    }, 1000);
+    
+    return () => clearInterval(interval);
+  });
 
   function initGame() {
     activeDrawCount = drawCount; // Lock in the draw count for this game
@@ -56,6 +70,9 @@
     showHighlight = false; // Reset hints
     highlightedCards = new Set<string>(); // Clear highlighted cards
     stockHighlight = false; // Reset stock highlight
+    startTime = Date.now();
+    elapsedTime = 0;
+    displayTime = 0;
     const deck = shuffleDeck(createDeck());
     const tableau: Card[][] = [];
     
@@ -301,6 +318,7 @@
     isLost = !isWon && isGameLost(gameState, recycleCount, activeMaxRecycles);
     
     if (isWon || isLost) {
+      elapsedTime = Math.floor((Date.now() - startTime) / 1000);
       setTimeout(() => { showResultModal = true; }, 100);
     }
   }
@@ -332,6 +350,7 @@
     undoDisabled={undoDisabled}
     restartDisabled={true}
     hintDisabled={false}
+    elapsedTime={displayTime}
     onNewGame={initGame}
     onUndo={undo}
     onHint={showHint}
@@ -684,6 +703,7 @@
   isOpen={showResultModal}
   isWon={isWon}
   moves={moves}
+  elapsedTime={elapsedTime}
   onNewGame={() => { showResultModal = false; initGame(); }}
   onClose={() => showResultModal = false}
 />

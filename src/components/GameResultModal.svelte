@@ -3,15 +3,23 @@
     isOpen = false,
     isWon = false,
     moves = 0,
+    elapsedTime = 0,
     onNewGame,
     onClose
   }: {
     isOpen: boolean;
     isWon: boolean;
     moves: number;
+    elapsedTime?: number;
     onNewGame: () => void;
     onClose: () => void;
   } = $props();
+  
+  function formatTime(seconds: number): string {
+    const mins = Math.floor(seconds / 60);
+    const secs = seconds % 60;
+    return `${mins}:${secs.toString().padStart(2, '0')}`;
+  }
 </script>
 
 {#if isOpen}
@@ -48,6 +56,12 @@
             <span class="stat-label">Siirtoja:</span>
             <span class="stat-value">{moves}</span>
           </div>
+          {#if elapsedTime !== undefined && elapsedTime > 0}
+          <div class="stat-item">
+            <span class="stat-label">Aika:</span>
+            <span class="stat-value">{formatTime(elapsedTime)}</span>
+          </div>
+          {/if}
         </div>
       </div>
       

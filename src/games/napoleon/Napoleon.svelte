@@ -41,12 +41,17 @@
   let draggedFromHelper: number | null = $state(null);
   let draggedFromSixPile = $state(false);
   let dragOverTarget: string | null = $state(null);
+  let startTime = $state<number>(0);
+  let elapsedTime = $state<number>(0);
 
   // Derived state for undo button
   let undoDisabled = $derived(history.length === 0 || isWon || isLost);
 
   function initGame() {
     const deck = shuffleDeck(createDeck());
+    
+    startTime = Date.now();
+    elapsedTime = 0;
     
     activeMaxRecycles = maxRecycles; // Lock in the setting
     
@@ -245,8 +250,10 @@
     isLost = !isWon && isGameLost(gameState, recycleCount, activeMaxRecycles);
     
     if (isWon) {
+      elapsedTime = Math.floor((Date.now() - startTime) / 1000);
       setTimeout(() => { showResultModal = true; }, 100);
     } else if (isLost) {
+      elapsedTime = Math.floor((Date.now() - startTime) / 1000);
       setTimeout(() => { showResultModal = true; }, 100);
     }
   }
@@ -720,7 +727,8 @@
 <GameResultModal 
   isOpen={showResultModal}
   isWon={isWon} 
-  moves={moves} 
+  moves={moves}
+  elapsedTime={elapsedTime}
   onNewGame={initGame} 
   onClose={() => { showResultModal = false; }} 
 />

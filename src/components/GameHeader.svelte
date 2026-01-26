@@ -5,6 +5,7 @@
     undoDisabled = true, 
     restartDisabled = true, 
     hintDisabled = true,
+    elapsedTime = 0,
     onNewGame,
     onRestart,
     onUndo,
@@ -14,12 +15,19 @@
     undoDisabled?: boolean; 
     restartDisabled?: boolean; 
     hintDisabled?: boolean;
+    elapsedTime?: number;
     onNewGame: () => void;
     onRestart?: () => void;
     onUndo?: () => void;
     onHint?: () => void;
     settings?: Snippet;
   } = $props();
+  
+  function formatTime(seconds: number): string {
+    const mins = Math.floor(seconds / 60);
+    const secs = seconds % 60;
+    return `${mins}:${secs.toString().padStart(2, '0')}`;
+  }
 </script>
 
 <div class="game-header">
@@ -50,6 +58,9 @@
     >
       💡 Vihje
     </button>
+    <div class="timer">
+      ⏱ {formatTime(elapsedTime)}
+    </div>
   </div>
   <div class="game-settings">
     {#if settings}
@@ -71,6 +82,16 @@
     display: flex;
     gap: 0.5rem;
     align-items: center;
+  }
+
+  .timer {
+    font-size: 1rem;
+    font-weight: 500;
+    color: #333;
+    padding: 0.5rem 1rem;
+    background: rgba(255, 255, 255, 0.7);
+    border-radius: 4px;
+    font-variant-numeric: tabular-nums;
   }
 
   .game-settings {

@@ -28,6 +28,8 @@
   let draggedPile: number | null = $state(null);
   let showHighlight = $state(false);
   let history: AcesUpState[] = $state([]);
+  let startTime = $state<number>(0);
+  let elapsedTime = $state<number>(0);
 
   // Derived state for undo button
   let undoDisabled = $derived(history.length === 0 || isWon || isLost);
@@ -48,6 +50,8 @@
     showResultModal = false;
     draggedPile = null;
     history = [];
+    startTime = Date.now();
+    elapsedTime = 0;
   }
 
   function saveState() {
@@ -154,8 +158,10 @@
     isLost = !isWon && isGameLost(gameState);
     
     if (isWon) {
+      elapsedTime = Math.floor((Date.now() - startTime) / 1000);
       setTimeout(() => { showResultModal = true; }, 100);
     } else if (isLost) {
+      elapsedTime = Math.floor((Date.now() - startTime) / 1000);
       setTimeout(() => { showResultModal = true; }, 100);
     }
   }
@@ -382,7 +388,8 @@
 <GameResultModal 
   isOpen={showResultModal}
   isWon={isWon} 
-  moves={moves} 
+  moves={moves}
+  elapsedTime={elapsedTime}
   onNewGame={initGame} 
   onClose={() => { showResultModal = false; }} 
 />

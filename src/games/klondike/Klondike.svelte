@@ -51,7 +51,7 @@
   
   // Update display time every second when game is running
   $effect(() => {
-    if (!gameStarted || isWon || isLost) return;
+    if (startTime === 0 || isWon || isLost) return;
     
     const interval = setInterval(() => {
       displayTime = Math.floor((Date.now() - startTime) / 1000);
@@ -70,7 +70,7 @@
     showHighlight = false; // Reset hints
     highlightedCards = new Set<string>(); // Clear highlighted cards
     stockHighlight = false; // Reset stock highlight
-    startTime = Date.now();
+    startTime = 0;
     elapsedTime = 0;
     displayTime = 0;
     const deck = shuffleDeck(createDeck());
@@ -119,6 +119,11 @@
   }
 
   function drawFromStock() {
+    // Start timer on first action
+    if (startTime === 0) {
+      startTime = Date.now();
+    }
+    
     showHighlight = false; // Hide hints when drawing
     stockHighlight = false; // Hide stock highlight
     saveState();
@@ -175,6 +180,11 @@
     event.preventDefault();
     if (!draggedCard) return;
 
+    // Start timer on first action
+    if (startTime === 0) {
+      startTime = Date.now();
+    }
+
     const result = moveCard(gameState, draggedCard, { type: toType, index: toIndex });
 
     if (result.valid && result.newState) {
@@ -190,6 +200,11 @@
 
   function handleDoubleClick(type: 'tableau' | 'waste', index: number, cardIndex?: number) {
     if (isWon || isLost) return;
+    // Start timer on first action
+    if (startTime === 0) {
+      startTime = Date.now();
+    }
+    
     showHighlight = false; // Hide hints when card is moved
     // Try to move card to foundation first (priority)
     for (let i = 0; i < 4; i++) {

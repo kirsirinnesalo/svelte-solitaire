@@ -43,15 +43,28 @@
   let dragOverTarget: string | null = $state(null);
   let startTime = $state<number>(0);
   let elapsedTime = $state<number>(0);
+  let displayTime = $state<number>(0); // For live timer display
 
   // Derived state for undo button
   let undoDisabled = $derived(history.length === 0 || isWon || isLost);
+  
+  // Update display time every second when game is running
+  $effect(() => {
+    if (startTime === 0 || isWon || isLost) return;
+    
+    const interval = setInterval(() => {
+      displayTime = Math.floor((Date.now() - startTime) / 1000);
+    }, 1000);
+    
+    return () => clearInterval(interval);
+  });
 
   function initGame() {
     const deck = shuffleDeck(createDeck());
     
-    startTime = Date.now();
+    startTime = 0;
     elapsedTime = 0;
+    displayTime = 0;
     
     activeMaxRecycles = maxRecycles; // Lock in the setting
     
@@ -91,6 +104,11 @@
   }
 
   function drawCard() {
+    // Start timer on first action
+    if (startTime === 0) {
+      startTime = Date.now();
+    }
+    
     // If stock is empty, recycle waste back to stock
     if (gameState.stock.length === 0) {
       if (gameState.waste.length === 0) return; // Nothing to recycle
@@ -128,8 +146,18 @@
   function placeWasteCard(target: 'center' | 'corner' | 'helper' | 'sixPile', index?: number) {
     if (gameState.waste.length === 0) return;
     
+    // Start timer on first action
+    if (startTime === 0) {
+      startTime = Date.now();
+    }
+    
     const card = gameState.waste[gameState.waste.length - 1];
     let newState = null;
+    
+    // Start timer on first action
+    if (startTime === 0) {
+      startTime = Date.now();
+    }
     
     if (target === 'center' && canMoveToCenter(card, gameState.center)) {
       saveState();
@@ -426,6 +454,7 @@
     {undoDisabled}
     restartDisabled={true}
     hintDisabled={true}
+    elapsedTime={displayTime}
     onNewGame={initGame}
     onUndo={undo}
   >

@@ -30,9 +30,21 @@
   let history: AcesUpState[] = $state([]);
   let startTime = $state<number>(0);
   let elapsedTime = $state<number>(0);
+  let displayTime = $state<number>(0); // For live timer display
 
   // Derived state for undo button
   let undoDisabled = $derived(history.length === 0 || isWon || isLost);
+  
+  // Update display time every second when game is running
+  $effect(() => {
+    if (startTime === 0 || isWon || isLost) return;
+    
+    const interval = setInterval(() => {
+      displayTime = Math.floor((Date.now() - startTime) / 1000);
+    }, 1000);
+    
+    return () => clearInterval(interval);
+  });
 
   function initGame() {
     const deck = shuffleDeck(createDeck());
@@ -50,8 +62,9 @@
     showResultModal = false;
     draggedPile = null;
     history = [];
-    startTime = Date.now();
+    startTime = 0;
     elapsedTime = 0;
+    displayTime = 0;
   }
 
   function saveState() {
@@ -64,6 +77,11 @@
   }
 
   function handleDeal() {
+    // Start timer on first action
+    if (startTime === 0) {
+      startTime = Date.now();
+    }
+    
     const result = dealCards(gameState);
     if (result.valid && result.newState) {
       saveState();
@@ -75,6 +93,11 @@
   }
 
   function handleRemoveCard(pileIndex: number) {
+    // Start timer on first action
+    if (startTime === 0) {
+      startTime = Date.now();
+    }
+    
     const result = removeCard(gameState, pileIndex);
     if (result.valid && result.newState) {
       saveState();
@@ -104,6 +127,11 @@
     // Second priority: move to empty pile if one exists
     const emptyPileIndex = gameState.piles.findIndex((p: Card[], i: number) => p.length === 0 && i !== pileIndex);
     if (emptyPileIndex !== -1) {
+      // Start timer on first action
+      if (startTime === 0) {
+        startTime = Date.now();
+      }
+      
       const result = moveCard(gameState, pileIndex, emptyPileIndex);
       if (result.valid && result.newState) {
         saveState();
@@ -174,6 +202,7 @@
     {undoDisabled}
     restartDisabled={true}
     hintDisabled={false}
+    elapsedTime={displayTime}
     onNewGame={initGame}
     onUndo={undo}
     onHint={showHint}

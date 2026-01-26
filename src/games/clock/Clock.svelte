@@ -17,6 +17,20 @@
   let showResultModal = $state(false);
   let gameStarted = $state(false);
   let draggedFromPileIndex: number | null = $state(null);
+  let startTime = $state<number>(0);
+  let elapsedTime = $state<number>(0);
+  let displayTime = $state<number>(0); // For live timer display
+  
+  // Update display time every second when game is running
+  $effect(() => {
+    if (startTime === 0 || isWon || isLost) return;
+    
+    const interval = setInterval(() => {
+      displayTime = Math.floor((Date.now() - startTime) / 1000);
+    }, 1000);
+    
+    return () => clearInterval(interval);
+  });
 
   // Clock positions: angles for each hour (0=12 o'clock, going clockwise)
   const clockPositions = [
@@ -54,10 +68,18 @@
     isLost = false;
     showResultModal = false;
     gameStarted = true;
+    startTime = 0;
+    elapsedTime = 0;
+    displayTime = 0;
   }
 
   function handlePileClick(pileIndex: number) {
     if (isWon || isLost || !gameStarted) return;
+    
+    // Start timer on first action
+    if (startTime === 0) {
+      startTime = Date.now();
+    }
     
     // If there's already a revealed card, ignore clicks
     if (gameState.revealedCardPileIndex !== null) return;
@@ -95,9 +117,11 @@
       
       if (result.isWon) {
         isWon = true;
+        elapsedTime = Math.floor((Date.now() - startTime) / 1000);
         setTimeout(() => { showResultModal = true; }, 100);
       } else if (result.isLost) {
         isLost = true;
+        elapsedTime = Math.floor((Date.now() - startTime) / 1000);
         setTimeout(() => { showResultModal = true; }, 100);
       }
     }
@@ -129,6 +153,7 @@
     undoDisabled={true}
     restartDisabled={true}
     hintDisabled={true}
+    elapsedTime={displayTime}
     onNewGame={initGame}
   >
     {#snippet settings()}
@@ -264,6 +289,7 @@
   isOpen={showResultModal}
   isWon={isWon} 
   moves={0} 
-  onNewGame={initGame} 
+  elapsedTime={elapsedTime}
+  onNewGame={initGame}
   onClose={() => { showResultModal = false; }} 
 />

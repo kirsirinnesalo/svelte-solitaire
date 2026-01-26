@@ -191,7 +191,14 @@ export function isGameLost(state: KlondikeState, recycleCount: number, maxRecycl
       // Check other tableau piles
       for (let k = 0; k < state.tableau.length; k++) {
         if (k === i) continue;
-        if (canMoveToTableau(card, state.tableau[k])) return false;
+        const targetPile = state.tableau[k];
+        if (canMoveToTableau(card, targetPile)) {
+          // Skip if moving a king from bottom of pile to an empty tableau (pointless move)
+          if (card.rank === 'K' && j === 0 && targetPile.length === 0) {
+            continue;
+          }
+          return false;
+        }
       }
     }
   }

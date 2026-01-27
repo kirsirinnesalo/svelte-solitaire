@@ -7,10 +7,10 @@ Welcome to the Svelte Solitaire development team! This document contains everyth
 ## 📋 Quick Reference
 
 - **Tech Stack**: Svelte 5, TypeScript 5, Vite 7
-- **Development**: TDD-first, feature branches, Conventional Commits
-- **Language**: Finnish UI text, English code and docs
-- **Testing**: Vitest, 90%+ coverage target
-- **Tasks**: See [agents/tasks/backlog.md](agents/tasks/backlog.md) and [agents/tasks/README.md](agents/tasks/README.md)
+- **Development**: TDD-first, feature branches, ONE task at a time, Conventional Commits
+- **Language**: Finnish UI, English code/docs
+- **Tasks**: [backlog.md](agents/tasks/backlog.md) | [Task Guide](agents/tasks/README.md)
+- **Commits**: `feat(TASK-ID): description`
 
 ## 🎯 Project Structure
 
@@ -110,21 +110,17 @@ This enables:
 
 ## 📝 Task Management
 
-**See [agents/tasks/README.md](agents/tasks/README.md) for complete task management guide.**
+**See [agents/tasks/README.md](agents/tasks/README.md) for complete guide.**
 
-Quick summary:
-- Tasks tracked in [agents/tasks/backlog.md](agents/tasks/backlog.md)
-- Priority = order in Ready section (top = next)
-- ONE task at a time - complete before starting next
-- Use template from tasks/README.md
-- Follow TDD workflow for all tasks
-- Move completed tasks to `agents/tasks/completed/`
+**Critical Rules:**
+- **Priority**: Physical order in Ready section (first = next)
+- **Ready**: USER-MANAGED ONLY - agents take first, never add/reorder
+- **ONE task at a time** - complete before starting next
+- **Types**: FEAT (features), TECH (technical/testing/docs), BUG (bugs)
+- **Workflow**: Ready → In Progress → Completed → `completed/` directory
+- **TDD**: Test first for all tasks
 
-**Task types**: FEAT (features), TECH (technical), BUG (bugs)
-
-Note: Documentation updates are part of FEAT/TECH tasks, not separate DOC tasks.
-
-**Conventional Commits**: `feat(FEAT-001): add feature description`
+**Commits**: `feat(TASK-ID): description`
 
 ## 🎨 Svelte 5 Runes Patterns
 
@@ -280,28 +276,27 @@ Every task is complete when:
 - [ ] TypeScript strict mode compliance
 - [ ] Finnish UI text, English code
 - [ ] No console warnings/errors
-- [ ] Committed with task ID in message
-- [ ] ADR created for architectural changes
-- [ ] README.md updated if user-visible features changed
+- [ ] Committed with task ID
+- [ ] ADR created if architectural change
+- [ ] README.md updated if user-visible
 
+**Task completion**: Move to Completed in backlog.md, archive to `completed/` with original filename.
 
-**For task completion workflow, see [agents/tasks/README.md](agents/tasks/README.md).**
+**See [agents/tasks/README.md](agents/tasks/README.md) for complete workflow.**
 
-- [Svelte 5 Runes](https://svelte.dev/docs/svelte/what-are-runes)
-- Project ADRs: `agents/adrs/`
-- Task Backlog: `agents/tasks/backlog.md`
-- Task Guide: `agents/tasks/README.md`
-- Copilot Instructions: `.github/copilot-instructions.md`
+- [Svelte 5 Runes Docs](https://svelte.dev/docs/svelte/what-are-runes)
+- [Project ADRs](agents/adrs/) | [ADR Index](agents/adrs/README.md)
+- [Task Backlog](agents/tasks/backlog.md) | [Task Guide](agents/tasks/README.md)
 
 ## 🤝 Contributing
 
-1. Check `agents/tasks/backlog.md` for next task
-2. Read related ADRs before starting
+1. Check [agents/tasks/backlog.md](agents/tasks/backlog.md) for next task
+2. Read related ADRs and task file before starting
 3. Follow TDD workflow (red-green-refactor)
 4. Update task status when complete
 5. Create ADR for architectural decisions
-6. Keep this guide updated
+6. Keep documentation updated
 
 ---
 
-**Remember**: This project values simplicity, testability, and modern Svelte 5 patterns. When in doubt, check the ADRs and existing game implementations.
+**Project values**: Simplicity, testability, modern Svelte 5 patterns. When in doubt, check ADRs and existing implementations.

@@ -1,54 +1,128 @@
-# Task Management
+# Task Management Guide
 
-## How It Works
-
-Tasks are tracked in [backlog.md](backlog.md) with simple status sections:
-- **Ready** - Prioritized by order (top = next)
-- **In Progress** - Currently being worked on
-- **Blocked** - Waiting on something
-- **Backlog** - Not yet ready to start
-
-Completed tasks are moved to `completed/` directory to keep backlog clean.
-
-## Task Files
-
-Each task has its own markdown file: `TASK-ID-short-description.md`
-
-**Task types:**
-- `FEAT-001` - User-facing features
-- `TECH-001` - Technical improvements, refactoring
-- `BUG-001` - Bug fixes
-
-## Creating a Task
-
-1. Copy the template below
-2. Create file: `TASK-ID-description.md`
-3. Fill in: Title, Summary, Acceptance Criteria, References
-4. Add to [backlog.md](backlog.md)
+Complete guide for managing development tasks in this project.
 
 ---
 
-## Template
+## 🎯 Quick Reference
+
+- **Priority**: Physical order in Ready section (first = next)
+- **Workflow**: Ready → In Progress (ONE at a time) → Completed
+- **Task Types**: FEAT (features), TECH (technical), BUG (bugs)
+- **Agent Rule**: Take FIRST task from Ready, work on ONE, complete fully
+- **User Role**: Prioritize tasks by ordering Ready section
+
+---
+
+## ⚠️ Critical Agent Rules
+
+### 1. Ready Section is USER-MANAGED ONLY
+
+**Agents MUST NOT modify the Ready section.**
+
+✅ **Allowed:**
+- Take FIRST task from Ready to In Progress
+- Work on that ONE task to completion
+
+❌ **FORBIDDEN:**
+- Add, remove, or reorder tasks in Ready
+- Skip tasks or work on non-first task
+- Start tasks from other sections without user instruction
+
+**Why?** Ready = user-prioritized work queue.
+
+### 2. ONE Task at a Time
+
+**No parallel work. No multitasking.**
+
+1. Take FIRST task from Ready
+2. Move to In Progress in backlog.md
+3. Work on this task ONLY until completion
+4. Move to Completed, archive file to `completed/`
+5. Repeat
+
+### 3. Priority = Physical Order
+
+Priority is determined by **order in Ready section only**.
+
+- First task in Ready = highest priority = next task
+- Metadata like `priority: high` is informational only
+- Agents MUST NOT reorder sections
+
+### 4. Task Types Are Fixed
+
+Only three types allowed:
+- **FEAT** - User-facing features
+- **TECH** - Technical improvements, refactoring, testing
+- **BUG** - Bug fixes
+
+**Agents MUST NOT:**
+- ❌ Add new task types
+- ❌ Change task type (FEAT → TECH)
+- ❌ Merge or split tasks without permission
+
+---
+
+## 📋 Backlog Structure
+
+Tasks tracked in [backlog.md](backlog.md) with these sections:
+
+### Main Workflow
+1. **Ready** - USER prioritized (agents take FIRST only)
+2. **In Progress** - Currently active (max 1)
+3. **Blocked** - Waiting on dependencies
+4. **Completed** - Done (then archived to `completed/`)
+
+### Discovery Sections (Agent-Managed)
+5. **Features** - New feature ideas
+6. **Technical** - Technical debt, refactoring, testing, documentation
+7. **Bugs** - Discovered bugs
+
+**Flow**: User moves tasks from discovery sections → Ready. Agent takes from Ready → In Progress → Completed.
+
+---
+
+## 📝 Task Files
+
+Each task = one markdown file: `TASK-ID-description.md`
+
+**Examples:**
+- `FEAT-003-game-instructions.md`
+- `TECH-010-undo-manager.md`
+- `BUG-001-cardback-persistence.md`
+
+**Naming:**
+- Use next available number for type
+- Kebab-case
+- Short but descriptive (3-5 words)
+
+---
+
+## ✍️ Creating Tasks
+
+### 1. Choose Task ID
+Use next available number: `FEAT-009`, `TECH-020`, `BUG-002`
+
+### 2. Create File
+`TASK-ID-short-description.md` in `agents/tasks/`
+
+### 3. Use Template
 
 ```markdown
 # TASK-ID: Title
 
-Brief one-line summary of what this task accomplishes.
+One-line summary of what this accomplishes.
 
 ## Summary
 
 1-2 paragraphs describing:
 - What needs to be done
 - Why it's needed
-- Context that helps understand the task
+- Relevant context
 
 ## Acceptance Criteria
 
-Specific, testable criteria that define "done":
-
-- [ ] Criterion 1
-- [ ] Criterion 2
-- [ ] Criterion 3
+- [ ] Specific testable criteria
 - [ ] Tests written and passing (TDD)
 - [ ] No TypeScript errors
 - [ ] No console warnings
@@ -63,104 +137,96 @@ Specific, testable criteria that define "done":
 
 **External:**
 - [Documentation](https://example.com)
-- [Issue/Discussion](https://github.com/...)
 
 ## Notes
 
-Space for implementation notes, decisions, and discoveries during work.
-
----
-
-**Completion**: When done, add completion metadata and move to Completed in backlog.md. Never modify completed tasks - create new task instead.
+Implementation notes, decisions, discoveries.
 ```
 
----
-
-## Example
+### 4. Add to backlog.md
 
 ```markdown
-# FEAT-012: Card flip animations
-
-Add smooth flip animation when cards are turned face-up.
-
-## Summary
-
-Cards currently appear instantly when flipped. This breaks immersion and makes
-the game feel less polished. Adding a CSS-based flip animation will make the
-game feel more tactile and professional.
-
-Target 200ms duration with ease-out timing.
-
-## Acceptance Criteria
-
-- [ ] Card flips smoothly when clicked/revealed
-- [ ] Animation duration is 200ms
-- [ ] No animation jank or flicker
-- [ ] Works in all supported games
-- [ ] Tests verify animation class is applied
-- [ ] Performance: 60fps on mid-range devices
-
-## References
-
-**Related ADRs:**
-- [ADR-002](../adrs/ADR-002-svelte-5-runes-only.md) - Use Svelte transitions
-
-**External:**
-- [CSS 3D Transforms](https://developer.mozilla.org/en-US/docs/Web/CSS/transform)
+1. [TASK-ID](TASK-ID-filename.md) - One-line description
 ```
 
+Add to appropriate section (Features/Technical/Bugs/etc.).
+
 ---
 
-## Task Lifecycle
+## 🔄 Task Lifecycle
 
 ### Before Starting
-1. Read task file
+1. Read task file thoroughly
 2. Plan implementation approach
-3. Add notes to task file
-4. Move to **In Progress** in backlog.md
-5. Create feature branch
+3. Create feature branch
+4. Move task to **In Progress** in backlog.md
 
 ### During Work
-- Follow TDD (test first)
-- Commit often with task ID: `feat(FEAT-012): add flip animation`
-- Update task notes with decisions/discoveries
-- Create new tasks for discovered work
-
-### Completion
-1. Validate: `npm run check && npm run test && npm run build`
-2. Add completion metadata to task file
-3. Move task file to `completed/` directory
-4. Remove from backlog.md (or move to archive section at bottom)
-5. Update README.md if user-visible feature
-6. Merge with `--no-ff`
-7. Delete feature branch
+- Follow TDD workflow (ADR-001)
+- Commit often: `feat(TASK-ID): description`
+- Update task notes with decisions
+- Create NEW tasks for discovered work (add to discovery sections)
 
 ### After Completion
-**Never modify completed task files.** If changes needed:
-- Bug: Create `BUG-XXX` that references original
-- Enhancement: Create `FEAT-XXX-v2` that supersedes original
-- Refactor: Create `TECH-XXX` that refactors original
+1. Verify all acceptance criteria met
+2. Add completion notes to task file
+3. Move task file to `completed/` directory (**keep original filename**)
+4. Update backlog.md: move to Completed section
+5. Update README.md if user-visible feature
+6. Merge feature branch with `--no-ff`
+7. Delete feature branch
 
-This preserves history and keeps test annotations accurate.
-
----
-
-## Best Practices
-
-✅ **Do:**
-- Keep tasks small and focused (< 1 day)
-- Write clear, testable acceptance criteria
-- Link related tasks and ADRs
-- Update notes during implementation
-- Create new tasks for scope creep
-
-❌ **Don't:**
-- Mix multiple features in one task
-- Skip acceptance criteria
-- Modify completed tasks
-- Work on multiple tasks simultaneously
-- Commit without task ID in message
+**Completed tasks are archived and NEVER modified.**
 
 ---
 
-For complete workflow, see [../../AGENTS.md](../../AGENTS.md)
+## 🔍 Discovering New Work
+
+When finding new work during implementation:
+
+1. **Create task file**: `TECH-XXX-description.md` or `FEAT-XXX` or `BUG-XXX`
+2. **Add to backlog.md**: Appropriate discovery section
+3. **Link in current task**: Add to References
+4. **Commit**: `feat(CURRENT-ID): discover TECH-XXX`
+5. **Continue current task** - don't context switch
+
+Discovery sections for new tasks:
+- **Features** - New feature ideas
+- **Technical** - Technical debt, refactoring, testing, documentation
+- **Bugs** - Discovered bugs
+
+**User will prioritize these to Ready when appropriate.**
+
+---
+
+## ✅ Best Practices
+
+### Do:
+- ✅ Keep tasks focused and scoped (single module/feature/component)
+- ✅ Take FIRST task from Ready only
+- ✅ Work on ONE task at a time
+- ✅ Follow TDD (ADR-001)
+- ✅ Commit with task ID
+- ✅ Complete all acceptance criteria
+- ✅ Create new tasks for discovered work
+- ✅ Keep task checklist inside task file
+
+### Don't:
+- ❌ Modify Ready section (user-managed)
+- ❌ Work on multiple tasks simultaneously
+- ❌ Skip tasks or start from Blocked/Completed
+- ❌ Change task types or merge tasks
+- ❌ Reorder backlog sections
+- ❌ Modify completed tasks (create new instead)
+- ❌ Add work not in acceptance criteria
+- ❌ Skip tests (TDD mandatory)
+- ❌ Treat metadata priority as actual priority
+
+---
+
+## 📚 Related Documentation
+
+- [AGENTS.md](../../AGENTS.md) - Complete development guide
+- [backlog.md](backlog.md) - Task backlog
+- [ADR-001](../adrs/ADR-001-test-driven-development.md) - TDD workflow
+- [ADR-000](../adrs/ADR-000-agent-guidance.md) - Project DNA

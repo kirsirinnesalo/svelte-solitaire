@@ -34,16 +34,17 @@ Don't create an ADR for:
 - **[ADR-002](ADR-002-svelte-5-runes-only.md)**: Svelte 5 runes-only approach
 - **[ADR-003](ADR-003-callback-props-over-event-dispatchers.md)**: Callback props pattern
 - **[ADR-004](ADR-004-json-parse-for-state-cloning.md)**: JSON.parse for state cloning
-- **[ADR-005](ADR-005-game-over-overlay-refactor.md)**: Overlay component refactoring- **[ADR-006](ADR-006-localstorage-for-game-statistics.md)**: LocalStorage for game statistics
+- **[ADR-005](ADR-005-game-over-overlay-refactor.md)**: Overlay component refactoring
+- **[ADR-006](ADR-006-localstorage-for-game-statistics.md)**: LocalStorage for game statistics
+
 ## Creating a New ADR
 
-1. **Choose the next number**: Look at existing ADRs and use the next available number
-2. **Copy template**: Use [template.md](template.md) as starting point
-3. **Fill in all sections**: Context, Decision, Consequences, Alternatives, Examples
-4. **Be specific**: Include code examples and concrete details
-5. **Link related items**: Reference related ADRs, tasks, and external resources
-6. **Add to this list**: Update the "Current ADRs" section above
-7. **Commit**: `docs: add ADR-XXX for [decision]`
+1. Use next available number (ADR-007, etc.)
+2. Copy [template.md](template.md)
+3. Fill all sections with concrete details and code examples
+4. Link related ADRs/tasks/resources
+5. Update list above
+6. Commit: `docs: add ADR-XXX for [decision]`
 
 ## ADR Lifecycle
 
@@ -61,27 +62,12 @@ Don't create an ADR for:
 - **Do update Notes section** - for clarifications or minor corrections
 - **Do update Status** - when circumstances change
 
-## Tips for Writing ADRs
+## Writing Tips
 
-### Context Section
-- Write for someone who wasn't there
-- Explain why this decision matters
-- Include constraints and forces at play
-
-### Decision Section
-- Be specific: "We will use X" not "We should consider X"
-- Include implementation details
-- Show code examples
-
-### Consequences Section
-- Be honest about trade-offs
-- List both positives and negatives
-- Describe mitigation strategies for downsides
-
-### Alternatives Section
-- List all serious options considered
-- Explain why each was rejected
-- Show you did your homework
+- **Context**: Write for someone who wasn't there; explain constraints
+- **Decision**: Be specific ("We will use X"); include code examples
+- **Consequences**: Honest trade-offs (positives AND negatives)
+- **Alternatives**: List options considered and why rejected
 
 ## Example Good ADR
 

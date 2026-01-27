@@ -10,43 +10,21 @@
 4. **Feature branches** - Task per branch, merge with `--no-ff`
 5. **Conventional Commits** - `feat(FEAT-001): description`
 
-## 📚 Where to Find Information
+## 📚 Documentation
 
-- **[../AGENTS.md](../AGENTS.md)** - Complete development guide
-  - TDD workflow
-  - Architecture patterns
-  - Definition of Done
-  - Test annotations
-  - Common workflows
-
-- **[tasks/README.md](tasks/README.md)** - Task management
-  - Task lifecycle (10 steps)
-  - Template and examples
-  - Completion tracking
-  - Best practices
-
-- **[tasks/backlog.md](tasks/backlog.md)** - Current work
-  - Ready (prioritized)
-  - In Progress
-  - Blocked
-  - Backlog
-
-- **[adrs/ADR-000-agent-guidance.md](adrs/ADR-000-agent-guidance.md)** - Project DNA
-  - Conventions
-  - File naming
-  - Code style
-  - Architecture patterns
-
-- **[../README.md](../README.md)** - Current app state
-  - Features (update when changed)
-  - Technologies
-  - Getting started
+| Document | Contents |
+|----------|----------|
+| **[../AGENTS.md](../AGENTS.md)** | Complete guide: TDD, patterns, workflows |
+| **[tasks/README.md](tasks/README.md)** | Task management: lifecycle, template, rules |
+| **[tasks/backlog.md](tasks/backlog.md)** | Current work: Ready, In Progress, Discovery |
+| **[adrs/ADR-000](adrs/ADR-000-agent-guidance.md)** | Project DNA: conventions, style, architecture |
+| **[../README.md](../README.md)** | App state: features, tech, getting started |
 
 ## 📝 Task Types
 
-- **FEAT-XXX** - User features
-- **TECH-XXX** - Technical work
-- **BUG-XXX** - Bug fixes
+- **FEAT** - User-facing features
+- **TECH** - Technical work (tests, refactoring, docs)
+- **BUG** - Bug fixes
 
 ## 🚦 Critical Rules
 

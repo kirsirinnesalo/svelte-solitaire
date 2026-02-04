@@ -2,9 +2,11 @@
 
 ## Ready
 
-_(Empty - User prioritizes tasks here from sections below)_
-
 **Priority**: First task in this section = next task to work on. Physical order defines priority.
+
+- [FEAT-009](FEAT-009-auto-complete-klondike.md) - Add auto-complete when all cards are face-up in Klondike
+
+
 
 ## In Progress
 
@@ -24,7 +26,6 @@ _(None)_
 - [FEAT-006](FEAT-006-screen-reader-support.md) - Add ARIA labels and screen reader support
 - [FEAT-007](FEAT-007-focus-styles.md) - Add visible focus styles for keyboard navigation
 - [FEAT-008](FEAT-008-dark-mode.md) - Implement dark mode theme
-- [FEAT-009](FEAT-009-auto-complete-klondike.md) - Add auto-complete when all cards are face-up in Klondike
 
 ## Technical
 

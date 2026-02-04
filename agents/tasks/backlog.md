@@ -4,7 +4,11 @@
 
 **Priority**: First task in this section = next task to work on. Physical order defines priority.
 
-_(Empty - Product Owner prioritizes tasks here)_
+- [TECH-001](TECH-001-vitest-setup.md) - Set up Vitest testing infrastructure
+- [TECH-005](TECH-005-test-klondike-rules.md) - Add comprehensive tests for klondikeRules.ts
+- [TECH-006](TECH-006-test-napoleon-rules.md) - Add tests for napoleonRules.ts
+- [FEAT-010](FEAT-010-show-card-underneath-drag.md) - Show card underneath when dragging from tableau
+- [FEAT-001](FEAT-001-card-animations.md) - Add card movement animations
 
 ## In Progress
 
@@ -16,7 +20,6 @@ _(None)_
 
 ## Features
 
-- [FEAT-001](FEAT-001-card-animations.md) - Add card movement animations
 - [FEAT-002](FEAT-002-settings-live-preview.md) - Add live preview to card back settings modal
 - [FEAT-003](FEAT-003-game-instructions.md) - Add instructions/help for each game
 - [FEAT-004](FEAT-004-statistics-display.md) - Display game statistics in game selector
@@ -24,17 +27,12 @@ _(None)_
 - [FEAT-006](FEAT-006-screen-reader-support.md) - Add ARIA labels and screen reader support
 - [FEAT-007](FEAT-007-focus-styles.md) - Add visible focus styles for keyboard navigation
 - [FEAT-008](FEAT-008-dark-mode.md) - Implement dark mode theme
-- [FEAT-009](FEAT-009-auto-complete-klondike.md) - Add auto-complete when all cards are face-up in Klondike
-- [FEAT-010](FEAT-010-show-card-underneath-drag.md) - Show card underneath when dragging from tableau
 
 ## Technical
 
-- [TECH-001](TECH-001-vitest-setup.md) - Set up Vitest testing infrastructure
 - [TECH-002](TECH-002-stats-storage.md) - Implement game statistics with LocalStorage (ADR-006)
 - [TECH-003](TECH-003-derived-undo-state.md) - Use $derived for undo button state
 - [TECH-004](TECH-004-unify-state-naming.md) - Rename `state` → `gameState` in AcesUp and Clock
-- [TECH-005](TECH-005-test-klondike-rules.md) - Add comprehensive tests for klondikeRules.ts
-- [TECH-006](TECH-006-test-napoleon-rules.md) - Add tests for napoleonRules.ts
 - [TECH-007](TECH-007-test-acesup-rules.md) - Add tests for acesUpRules.ts
 - [TECH-008](TECH-008-test-clock-rules.md) - Add tests for clockRules.ts
 - [TECH-009](TECH-009-test-card-utils.md) - Add tests for cardUtils.ts

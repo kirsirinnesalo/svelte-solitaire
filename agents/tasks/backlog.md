@@ -14,7 +14,11 @@
 
 ## In Progress
 
-- [TECH-006](TECH-006-test-napoleon-rules.md) - Add tests for napoleonRules.ts
+_(None)_
+
+## Completed
+
+- [TECH-006](TECH-006-test-napoleon-rules.md) - Add tests for napoleonRules.ts (49 tests, 94% coverage)
 
 ## Blocked
 

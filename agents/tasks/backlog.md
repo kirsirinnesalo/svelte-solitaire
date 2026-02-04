@@ -4,13 +4,11 @@
 
 **Priority**: First task in this section = next task to work on. Physical order defines priority.
 
-- [FEAT-009](FEAT-009-auto-complete-klondike.md) - Add auto-complete when all cards are face-up in Klondike
-
-
+_(Empty - Product Owner prioritizes tasks here)_
 
 ## In Progress
 
-_(None - Agent works on ONE task at a time)_
+- [FEAT-009](FEAT-009-auto-complete-klondike.md) - Add auto-complete when all cards are face-up in Klondike
 
 ## Blocked
 

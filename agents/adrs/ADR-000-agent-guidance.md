@@ -80,6 +80,13 @@ We will maintain comprehensive AI agent guidance through:
 
 See [ADR-001](ADR-001-test-driven-development.md) for full TDD workflow.
 
+### Mandatory Quality Gates (Agent)
+
+Before every commit, agent MUST:
+- run `npm run test` (Vitest)
+- run `npm run build`
+- run `npm run lint` (if configured)
+
 ### Task Management
 
 Tasks in `agents/tasks/backlog.md` with structure:
@@ -109,7 +116,7 @@ Tasks in `agents/tasks/backlog.md` with structure:
 cp agents/tasks/TEMPLATE.md agents/tasks/BUG-003-animation-flicker.md
 # Edit BUG-003 with details
 git add agents/tasks/BUG-003-animation-flicker.md agents/tasks/backlog.md
-git commit -m "FEAT-001: Discover BUG-003 animation flicker issue"
+git commit -m "feat(FEAT-001): discover BUG-003 animation flicker issue"
 ```
 
 **Task types**:
@@ -138,7 +145,10 @@ describe('Card animations', () => {
 5. **TDD**: Red (test) → Green (code) → Refactor (improve)
 6. **Document**: Update task file with decisions/notes
 7. **Validate**: Verify all DoD criteria before completing
-8. **Complete**: Move to Completed, merge to main
+8. **Complete**:
+   - Agent marks task ready for integration
+   - User merges to main and deletes branch
+   - Task is moved to Completed and archived
 
 **IMPORTANT**: Work on ONE task at a time. Complete it fully (including tests, documentation, merge) before starting another. Half-finished tasks create confusion and merge conflicts.
 
@@ -158,7 +168,38 @@ describe('Card animations', () => {
 - [ ] No console warnings
 - [ ] Committed with task ID
 
+## Agent vs User Responsibilities (CRITICAL)
+
+### Agent Responsibilities
+Agent is responsible for:
+- implementing task code and tests
+- running TDD workflow (red → green → refactor)
+- creating feature branches
+- committing changes to feature branches
+- keeping branch up to date locally
+- reporting branch name and readiness for integration
+
+### User Responsibilities
+User is responsible for:
+- pushing branches to remote
+- merging feature branches to main
+- resolving merge conflicts
+- deleting branches
+- release and deployment decisions
+
+Agent MUST NOT:
+- git push
+- git pull
+- git merge
+- git rebase
+- git reset
+- delete branches on local or remote
+
 ### Git Workflow
+
+**IMPORTANT**: Agent must never push to remote repositories.
+All remote operations are user-controlled.
+
 **Feature branches**: Each task is developed in its own feature branch:
 ```bash
 # Create feature branch
@@ -168,10 +209,24 @@ git checkout -b bug/001-cardback-fix         # For BUG-001
 git checkout -b doc/001-update-readme        # For DOC-001
 
 # Work on feature, commit regularly with task ID
-git commit -m "FEAT-001: Add animation framework"
-git commit -m "FEAT-001: Implement card movement transitions"
+git commit -m "feat(FEAT-001): add animation framework"
+git commit -m "feat(FEAT-001): implement card movement transitions"
+```
 
-# When complete, merge to main with --no-ff
+## Integration and Merge (USER-ONLY)
+
+When a task is complete:
+
+1. Agent completes feature branch and final commit
+2. Agent reports branch name and readiness in chat
+3. User performs:
+   - push to remote
+   - merge to main with --no-ff
+   - branch deletion
+
+Example (USER only):
+
+```bash
 git checkout main
 git merge --no-ff feat/001-card-animations
 git branch -d feat/001-card-animations
@@ -185,10 +240,15 @@ git branch -d feat/001-card-animations
 - Can revert entire feature if needed
 
 **Commit message format** (Conventional Commits):
-```
-<type>(<task-id>): <description>
 
-Types (matches task types):
+**Agent MUST use Conventional Commits format:**
+```
+<type>(<task-id>): <short summary>
+
+format: feat(FEAT-001): short summary
+```
+
+**Types** (matches task types):
 - feat: New feature (FEAT-XXX)
 - fix: Bug fix (BUG-XXX)
 - chore: Technical/maintenance (TECH-XXX, task management)
@@ -213,11 +273,12 @@ chore(tasks): complete FEAT-XXX
 - `tech/XXX-description` for technical tasks
 - `bug/XXX-description` for bug fixes
 - `doc/XXX-description` for documentation
-**Commit messages**:
+
+**Commit message examples**:
 ```
-FEAT-001: Add card movement animations
-TECH-002: Extract undo manager to shared utility
-BUG-001: Fix cardBack localStorage persistence
+feat(FEAT-001): add card movement animations
+chore(TECH-002): extract undo manager to shared utility
+fix(BUG-001): fix cardBack localStorage persistence
 ```
 
 **ADR creation**: Any architectural decision gets documented:

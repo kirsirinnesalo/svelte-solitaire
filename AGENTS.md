@@ -10,7 +10,7 @@ Welcome to the Svelte Solitaire development team! This document contains everyth
 - **Development**: TDD-first, feature branches, ONE task at a time, Conventional Commits
 - **Language**: Finnish UI, English code/docs
 - **Tasks**: [backlog.md](agents/tasks/backlog.md) | [Task Guide](agents/tasks/README.md)
-- **Commits**: `feat(TASK-ID): description`
+- **Commits**: `feat(TASK-ID): short summary`
 
 ## ✈️ Pre-flight Checklist
 
@@ -18,12 +18,12 @@ Welcome to the Svelte Solitaire development team! This document contains everyth
 
 1. [ ] Read task file completely (`agents/tasks/TASK-ID.md`)
 2. [ ] Review related ADRs listed in task
-3. [ ] Create feature branch: `git checkout -b feat/TASK-ID-description`
-4. [ ] Add "Create feature branch" as first todo in manage_todo_list
+3. [ ] Create feature branch (agent may do this): `git checkout -b feat/TASK-ID-description`
+4. [ ] Add "Create feature branch" as first todo using `manage_todo_list` tool
 
 **Then follow Task Workflow below.**
 
-## 🔄 Task Workflow
+## 🔄 Task Workflow (Agent Responsibilities)
 
 Complete workflow for every task:
 
@@ -36,12 +36,20 @@ Complete workflow for every task:
    - Simplify structure (reduce complexity)
    - Follow project patterns (ADRs, conventions)
    - **No technical debt**: Code must be production-ready
-5. **Commit**: Commit frequently with `feat(TASK-ID): description`
-6. **Validate**: All tests pass, no TypeScript errors, no warnings
-7. **Document**: Update docs if user-facing, create ADR if architectural
-8. **Complete**: Merge with `--no-ff`, delete branch, archive task to `completed/`
+5. **Quality Gates (MANDATORY before commit)**:
+   - Run unit tests: `npm run test` (Vitest)
+   - Run lint: `npm run lint` (if configured)
+   - Run build: `npm run build`
+6. **Commit**: Commit frequently with `feat(TASK-ID): short summary` (Conventional Commits)
+7. **Validate**: All tests pass, no TypeScript errors, no warnings
+8. **Document**: Update docs if user-facing, create ADR if architectural
+9. **Complete**:
+   - Agent marks task ready for integration
+   - User merges to main with `--no-ff`
+   - User deletes branch
+   - Agent archives task to `completed/`
 
-**One task at a time**: Never start a new task before completing the current one fully (steps 1-8).
+**One task at a time**: Never start a new task before completing the current one fully (steps 1-9).
 
 ## 🎯 Project Structure
 
@@ -69,6 +77,27 @@ src/
 - UI: `src/games/klondike/Klondike.svelte`
 - Logic: `src/games/klondike/klondikeRules.ts`
 - Tests: `src/games/klondike/klondikeRules.test.ts`
+
+## 🔐 Agent vs User Responsibilities (CRITICAL)
+
+### Agent MAY:
+- create feature branches
+- stage and commit changes
+- run tests, lint, and build locally
+
+### Agent MUST NOT:
+- git push
+- git pull
+- git merge
+- git rebase
+- git reset
+- delete branches
+
+### User DOES:
+- push branches
+- merge to main
+- delete branches
+- resolve merge conflicts
 
 ## 🏗️ Architecture Decisions
 

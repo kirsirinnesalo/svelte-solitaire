@@ -146,7 +146,7 @@ Implementation notes, decisions, discoveries.
 ### 4. Add to backlog.md
 
 ```markdown
-1. [TASK-ID](TASK-ID-filename.md) - One-line description
+- [TASK-ID](TASK-ID-filename.md) - One-line description
 ```
 
 Add to appropriate section (Features/Technical/Bugs/etc.).

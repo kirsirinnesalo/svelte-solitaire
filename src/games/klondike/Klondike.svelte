@@ -7,7 +7,7 @@
   import PauseOverlay from '../../components/PauseOverlay.svelte';
   import DrawCountToggle from '../../components/settings/DrawCountToggle.svelte';
   import RecycleToggle from '../../components/settings/RecycleToggle.svelte';
-  import { moveCard, isGameWon, isGameLost, type KlondikeState } from './klondikeRules';
+  import { moveCard, isGameWon, isGameLost, canAutoComplete, findNextAutoMove, type KlondikeState } from './klondikeRules';
   import { allowDrop } from '../../lib/dragUtils';
   import '../../styles/shared.css';
 
@@ -38,6 +38,7 @@
   let displayTime = $state<number>(0); // For live timer display
   let isPaused = $state<boolean>(false);
   let pauseStartTime = $state<number>(0);
+  let isAutoCompleting = $state<boolean>(false); // Track auto-complete state
 
   // Derived state for undo button
   let undoDisabled = $derived(history.length === 0 || isWon || isLost || !gameStarted);
@@ -62,6 +63,44 @@
     return () => clearInterval(interval);
   });
 
+  // Auto-complete when all cards are face-up
+  $effect(() => {
+    if (isAutoCompleting || isWon || isLost || !gameStarted || isPaused) return;
+    if (!canAutoComplete(gameState)) return;
+
+    isAutoCompleting = true;
+    
+    // Execute auto-complete sequence
+    const executeAutoMove = () => {
+      const nextMove = findNextAutoMove(gameState);
+      
+      if (!nextMove) {
+        // No more moves - game should be won
+        isAutoCompleting = false;
+        checkWin();
+        return;
+      }
+
+      // Execute the move
+      const result = moveCard(gameState, nextMove.from, nextMove.to);
+      
+      if (result.valid && result.newState) {
+        gameState = result.newState;
+        moves++;
+        
+        // Continue with next move after delay
+        setTimeout(executeAutoMove, 200); // 200ms delay between moves
+      } else {
+        // Shouldn't happen, but stop if move fails
+        isAutoCompleting = false;
+        checkWin();
+      }
+    };
+
+    // Start auto-move sequence
+    executeAutoMove();
+  });
+
   function initGame() {
     activeDrawCount = drawCount; // Lock in the draw count for this game
     activeMaxRecycles = maxRecycles; // Lock in the setting
@@ -69,6 +108,7 @@
     gameStarted = true;
     firstGameStarted = true;
     isLost = false;
+    isAutoCompleting = false; // Reset auto-complete
     showHighlight = false; // Reset hints
     highlightedCards = new Set<string>(); // Clear highlighted cards
     stockHighlight = false; // Reset stock highlight

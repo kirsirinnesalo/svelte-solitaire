@@ -4,14 +4,14 @@
 
 **Priority**: First task in this section = next task to work on. Physical order defines priority.
 
-- [TECH-005](TECH-005-test-klondike-rules.md) - Add comprehensive tests for klondikeRules.ts
+- [ ] pitää lisätä ohjeistus backlogin commitille, kun tehtävä otetaan työn alle
 - [TECH-006](TECH-006-test-napoleon-rules.md) - Add tests for napoleonRules.ts
 - [FEAT-010](FEAT-010-show-card-underneath-drag.md) - Show card underneath when dragging from tableau
 - [FEAT-001](FEAT-001-card-animations.md) - Add card movement animations
 
 ## In Progress
 
-_(None - Agent works on ONE task at a time)_
+- [TECH-005](TECH-005-test-klondike-rules.md) - Add comprehensive tests for klondikeRules.ts
 
 ## Blocked
 

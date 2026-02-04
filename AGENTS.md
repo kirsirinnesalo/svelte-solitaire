@@ -44,10 +44,11 @@ Complete workflow for every task:
 7. **Validate**: All tests pass, no TypeScript errors, no warnings
 8. **Document**: Update docs if user-facing, create ADR if architectural
 9. **Complete**:
-   - Agent marks task ready for integration
+   - Agent moves task to Completed in `backlog.md`
+   - Agent archives task file to `completed/` (keep original filename)
+   - Agent reports branch name and readiness for integration
    - User merges to main with `--no-ff`
    - User deletes branch
-   - Agent archives task to `completed/`
 
 **One task at a time**: Never start a new task before completing the current one fully (steps 1-9).
 

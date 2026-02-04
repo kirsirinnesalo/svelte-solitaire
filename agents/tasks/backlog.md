@@ -4,7 +4,6 @@
 
 **Priority**: First task in this section = next task to work on. Physical order defines priority.
 
-- [TECH-001](TECH-001-vitest-setup.md) - Set up Vitest testing infrastructure
 - [TECH-005](TECH-005-test-klondike-rules.md) - Add comprehensive tests for klondikeRules.ts
 - [TECH-006](TECH-006-test-napoleon-rules.md) - Add tests for napoleonRules.ts
 - [FEAT-010](FEAT-010-show-card-underneath-drag.md) - Show card underneath when dragging from tableau
@@ -53,6 +52,7 @@ _(None)_
 
 ## Completed
 
+- [TECH-001](completed/TECH-001-vitest-setup.md) - Set up Vitest testing infrastructure
 - [FEAT-009](completed/FEAT-009-auto-complete-klondike.md) - Add auto-complete when all cards are face-up in Klondike
 
 _(Archive completed tasks to completed/ directory)_

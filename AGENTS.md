@@ -19,7 +19,9 @@ Welcome to the Svelte Solitaire development team! This document contains everyth
 1. [ ] Read task file completely (`agents/tasks/TASK-ID.md`)
 2. [ ] Review related ADRs listed in task
 3. [ ] Create feature branch (agent may do this): `git checkout -b feat/TASK-ID-description`
-4. [ ] Add "Create feature branch" as first todo using `manage_todo_list` tool
+4. [ ] Move task to In Progress in `backlog.md`
+5. [ ] Commit backlog change: `git add agents/tasks/backlog.md && git commit -m "chore: start TASK-ID"`
+6. [ ] Add "Create feature branch" as first todo using `manage_todo_list` tool
 
 **Then follow Task Workflow below.**
 

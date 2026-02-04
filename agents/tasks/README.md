@@ -160,6 +160,9 @@ Add to appropriate section (Features/Technical/Bugs/etc.).
 2. Plan implementation approach
 3. Create feature branch
 4. Move task to **In Progress** in backlog.md
+5. **Commit backlog immediately**: `git add agents/tasks/backlog.md && git commit -m "chore: start TASK-ID"`
+
+**Why commit backlog?** Makes task status visible to other repo users immediately.
 
 ### During Work
 - Follow TDD workflow (ADR-001)

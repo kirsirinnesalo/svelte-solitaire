@@ -4,14 +4,17 @@
 
 **Priority**: First task in this section = next task to work on. Physical order defines priority.
 
-- [ ] pitää lisätä ohjeistus backlogin commitille, kun tehtävä otetaan työn alle
-- [TECH-006](TECH-006-test-napoleon-rules.md) - Add tests for napoleonRules.ts
-- [FEAT-010](FEAT-010-show-card-underneath-drag.md) - Show card underneath when dragging from tableau
-- [FEAT-001](FEAT-001-card-animations.md) - Add card movement animations
+- [TECH-007](TECH-007-test-acesup-rules.md) - Add tests for acesUpRules.ts
+- [TECH-008](TECH-008-test-clock-rules.md) - Add tests for clockRules.ts
+- [TECH-009](TECH-009-test-card-utils.md) - Add tests for cardUtils.ts
+- [FEAT-003](FEAT-003-game-instructions.md) - Add instructions/help for each game
+- [TECH-004](TECH-004-unify-state-naming.md) - Rename `state` → `gameState` in AcesUp and Clock
+- [TECH-011](TECH-011-document-json-parse.md) - Add comments explaining JSON.parse usage
+- [TECH-012](TECH-012-document-effect-usage.md) - Add documentation for $effect usage in Klondike
 
 ## In Progress
 
-_(None - Agent works on ONE task at a time)_
+- [TECH-006](TECH-006-test-napoleon-rules.md) - Add tests for napoleonRules.ts
 
 ## Blocked
 
@@ -19,25 +22,20 @@ _(None)_
 
 ## Features
 
+- [FEAT-001](FEAT-001-card-animations.md) - Add card movement animations
 - [FEAT-002](FEAT-002-settings-live-preview.md) - Add live preview to card back settings modal
-- [FEAT-003](FEAT-003-game-instructions.md) - Add instructions/help for each game
 - [FEAT-004](FEAT-004-statistics-display.md) - Display game statistics in game selector
 - [FEAT-005](FEAT-005-keyboard-navigation.md) - Implement keyboard navigation for cards
 - [FEAT-006](FEAT-006-screen-reader-support.md) - Add ARIA labels and screen reader support
 - [FEAT-007](FEAT-007-focus-styles.md) - Add visible focus styles for keyboard navigation
 - [FEAT-008](FEAT-008-dark-mode.md) - Implement dark mode theme
+- [FEAT-010](FEAT-010-show-card-underneath-drag.md) - Show card underneath when dragging from tableau
 
 ## Technical
 
 - [TECH-002](TECH-002-stats-storage.md) - Implement game statistics with LocalStorage (ADR-006)
 - [TECH-003](TECH-003-derived-undo-state.md) - Use $derived for undo button state
-- [TECH-004](TECH-004-unify-state-naming.md) - Rename `state` → `gameState` in AcesUp and Clock
-- [TECH-007](TECH-007-test-acesup-rules.md) - Add tests for acesUpRules.ts
-- [TECH-008](TECH-008-test-clock-rules.md) - Add tests for clockRules.ts
-- [TECH-009](TECH-009-test-card-utils.md) - Add tests for cardUtils.ts
 - [TECH-010](TECH-010-undo-manager.md) - Create shared undo manager utility
-- [TECH-011](TECH-011-document-json-parse.md) - Add comments explaining JSON.parse usage
-- [TECH-012](TECH-012-document-effect-usage.md) - Add documentation for $effect usage in Klondike
 - [TECH-013](TECH-013-auto-start-games.md) - Fix initGame() auto-start for Klondike, Napoleon, Clock
 - [TECH-014](TECH-014-constants-file.md) - Create constants.ts for repeated values
 - [TECH-015](TECH-015-unify-drag-logic.md) - Unify drag & drop logic across games

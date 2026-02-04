@@ -11,7 +11,7 @@
 
 ## In Progress
 
-- [TECH-005](TECH-005-test-klondike-rules.md) - Add comprehensive tests for klondikeRules.ts
+_(None - Agent works on ONE task at a time)_
 
 ## Blocked
 
@@ -52,6 +52,7 @@ _(None)_
 
 ## Completed
 
+- [TECH-005](completed/TECH-005-test-klondike-rules.md) - Add comprehensive tests for klondikeRules.ts
 - [TECH-001](completed/TECH-001-vitest-setup.md) - Set up Vitest testing infrastructure
 - [FEAT-009](completed/FEAT-009-auto-complete-klondike.md) - Add auto-complete when all cards are face-up in Klondike
 

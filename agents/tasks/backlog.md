@@ -4,7 +4,7 @@
 
 **Priority**: First task in this section = next task to work on. Physical order defines priority.
 
-- [TECH-005](TECH-005-test-klondike-rules.md) - Add comprehensive tests for klondikeRules.ts
+- [ ] pitää lisätä ohjeistus backlogin commitille, kun tehtävä otetaan työn alle
 - [TECH-006](TECH-006-test-napoleon-rules.md) - Add tests for napoleonRules.ts
 - [FEAT-010](FEAT-010-show-card-underneath-drag.md) - Show card underneath when dragging from tableau
 - [FEAT-001](FEAT-001-card-animations.md) - Add card movement animations
@@ -52,6 +52,7 @@ _(None)_
 
 ## Completed
 
+- [TECH-005](completed/TECH-005-test-klondike-rules.md) - Add comprehensive tests for klondikeRules.ts
 - [TECH-001](completed/TECH-001-vitest-setup.md) - Set up Vitest testing infrastructure
 - [FEAT-009](completed/FEAT-009-auto-complete-klondike.md) - Add auto-complete when all cards are face-up in Klondike
 

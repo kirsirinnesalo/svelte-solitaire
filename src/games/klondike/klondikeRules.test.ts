@@ -1,5 +1,19 @@
+/**
+ * @covers TECH-005
+ * @description Comprehensive tests for Klondike game rules
+ * @constrainedBy ADR-001
+ */
 import { describe, it, expect } from 'vitest';
-import { isGameLost, isGameWon, canMoveToTableau, canMoveToFoundation, canAutoComplete, findNextAutoMove, type KlondikeState } from './klondikeRules';
+import { 
+  isGameLost, 
+  isGameWon, 
+  canMoveToTableau, 
+  canMoveToFoundation, 
+  canAutoComplete, 
+  findNextAutoMove,
+  moveCard,
+  type KlondikeState 
+} from './klondikeRules';
 import type { Card } from '../../types/game';
 
 describe('Klondike Rules - isGameLost', () => {
@@ -250,7 +264,406 @@ describe('Klondike Rules - isGameLost', () => {
     expect(isGameLost(state, 0, 'unlimited')).toBe(true);
   });
 });
+describe('Klondike Rules - canMoveToTableau', () => {
+  const createCard = (rank: Card['rank'], suit: Card['suit'] = 'hearts', faceUp = true): Card => ({
+    rank,
+    suit,
+    faceUp,
+    id: `${rank}-${suit}`
+  });
 
+  it('should allow King on empty pile', () => {
+    const king = createCard('K', 'spades');
+    expect(canMoveToTableau(king, [])).toBe(true);
+  });
+
+  it('should not allow non-King on empty pile', () => {
+    const queen = createCard('Q', 'hearts');
+    expect(canMoveToTableau(queen, [])).toBe(false);
+  });
+
+  it('should allow alternating color with descending rank', () => {
+    const pile = [createCard('Q', 'hearts')]; // Red Q
+    const jack = createCard('J', 'spades'); // Black J
+    expect(canMoveToTableau(jack, pile)).toBe(true);
+  });
+
+  it('should not allow same color cards', () => {
+    const pile = [createCard('Q', 'hearts')]; // Red Q
+    const jack = createCard('J', 'diamonds'); // Red J
+    expect(canMoveToTableau(jack, pile)).toBe(false);
+  });
+
+  it('should not allow non-descending rank', () => {
+    const pile = [createCard('Q', 'hearts')]; // Red Q
+    const ten = createCard('10', 'spades'); // Black 10 (skip J)
+    expect(canMoveToTableau(ten, pile)).toBe(false);
+  });
+
+  it('should not allow ascending rank', () => {
+    const pile = [createCard('J', 'hearts')]; // Red J
+    const queen = createCard('Q', 'spades'); // Black Q
+    expect(canMoveToTableau(queen, pile)).toBe(false);
+  });
+
+  it('should work with low ranks', () => {
+    const pile = [createCard('2', 'diamonds')]; // Red 2
+    const ace = createCard('A', 'spades'); // Black A
+    expect(canMoveToTableau(ace, pile)).toBe(true);
+  });
+});
+
+describe('Klondike Rules - canMoveToFoundation', () => {
+  const createCard = (rank: Card['rank'], suit: Card['suit'] = 'hearts', faceUp = true): Card => ({
+    rank,
+    suit,
+    faceUp,
+    id: `${rank}-${suit}`
+  });
+
+  it('should allow Ace on empty foundation', () => {
+    const ace = createCard('A', 'hearts');
+    expect(canMoveToFoundation(ace, [])).toBe(true);
+  });
+
+  it('should not allow non-Ace on empty foundation', () => {
+    const two = createCard('2', 'hearts');
+    expect(canMoveToFoundation(two, [])).toBe(false);
+  });
+
+  it('should allow same suit with ascending rank', () => {
+    const pile = [createCard('A', 'hearts')];
+    const two = createCard('2', 'hearts');
+    expect(canMoveToFoundation(two, pile)).toBe(true);
+  });
+
+  it('should not allow different suit', () => {
+    const pile = [createCard('A', 'hearts')];
+    const two = createCard('2', 'diamonds');
+    expect(canMoveToFoundation(two, pile)).toBe(false);
+  });
+
+  it('should not allow skipping ranks', () => {
+    const pile = [createCard('A', 'hearts')];
+    const three = createCard('3', 'hearts');
+    expect(canMoveToFoundation(three, pile)).toBe(false);
+  });
+
+  it('should not allow descending rank', () => {
+    const pile = [createCard('2', 'hearts')];
+    const ace = createCard('A', 'hearts');
+    expect(canMoveToFoundation(ace, pile)).toBe(false);
+  });
+
+  it('should work up to King', () => {
+    const pile = [
+      createCard('A', 'spades'),
+      createCard('2', 'spades'),
+      createCard('3', 'spades'),
+      createCard('4', 'spades'),
+      createCard('5', 'spades'),
+      createCard('6', 'spades'),
+      createCard('7', 'spades'),
+      createCard('8', 'spades'),
+      createCard('9', 'spades'),
+      createCard('10', 'spades'),
+      createCard('J', 'spades'),
+      createCard('Q', 'spades')
+    ];
+    const king = createCard('K', 'spades');
+    expect(canMoveToFoundation(king, pile)).toBe(true);
+  });
+});
+
+describe('Klondike Rules - moveCard', () => {
+  const createCard = (rank: Card['rank'], suit: Card['suit'] = 'hearts', faceUp = true): Card => ({
+    rank,
+    suit,
+    faceUp,
+    id: `${rank}-${suit}`
+  });
+
+  const createEmptyState = (): KlondikeState => ({
+    tableau: [[], [], [], [], [], [], []],
+    foundations: [[], [], [], []],
+    stock: [],
+    waste: []
+  });
+
+  describe('from waste', () => {
+    it('should move card from waste to tableau', () => {
+      const state = createEmptyState();
+      state.waste = [createCard('J', 'spades')];
+      state.tableau[0] = [createCard('Q', 'hearts')];
+
+      const result = moveCard(state, { type: 'waste', index: 0 }, { type: 'tableau', index: 0 });
+
+      expect(result.valid).toBe(true);
+      expect(result.newState?.waste).toHaveLength(0);
+      expect(result.newState?.tableau[0]).toHaveLength(2);
+      expect(result.newState?.tableau[0][1].rank).toBe('J');
+    });
+
+    it('should move card from waste to foundation', () => {
+      const state = createEmptyState();
+      state.waste = [createCard('A', 'hearts')];
+
+      const result = moveCard(state, { type: 'waste', index: 0 }, { type: 'foundation', index: 0 });
+
+      expect(result.valid).toBe(true);
+      expect(result.newState?.waste).toHaveLength(0);
+      expect(result.newState?.foundations[0]).toHaveLength(1);
+      expect(result.newState?.foundations[0][0].rank).toBe('A');
+    });
+
+    it('should fail when waste is empty', () => {
+      const state = createEmptyState();
+      state.tableau[0] = [createCard('Q', 'hearts')];
+
+      const result = moveCard(state, { type: 'waste', index: 0 }, { type: 'tableau', index: 0 });
+
+      expect(result.valid).toBe(false);
+      expect(result.message).toBe('Waste is empty');
+    });
+
+    it('should fail invalid tableau move from waste', () => {
+      const state = createEmptyState();
+      state.waste = [createCard('J', 'hearts')];
+      state.tableau[0] = [createCard('Q', 'hearts')]; // Same color
+
+      const result = moveCard(state, { type: 'waste', index: 0 }, { type: 'tableau', index: 0 });
+
+      expect(result.valid).toBe(false);
+      expect(result.message).toBe('Invalid tableau move');
+    });
+
+    it('should fail invalid foundation move from waste', () => {
+      const state = createEmptyState();
+      state.waste = [createCard('2', 'hearts')];
+
+      const result = moveCard(state, { type: 'waste', index: 0 }, { type: 'foundation', index: 0 });
+
+      expect(result.valid).toBe(false);
+      expect(result.message).toBe('Invalid foundation move');
+    });
+  });
+
+  describe('from tableau', () => {
+    it('should move single card from tableau to tableau', () => {
+      const state = createEmptyState();
+      state.tableau[0] = [createCard('J', 'spades')];
+      state.tableau[1] = [createCard('Q', 'hearts')];
+
+      const result = moveCard(state, { type: 'tableau', index: 0 }, { type: 'tableau', index: 1 });
+
+      expect(result.valid).toBe(true);
+      expect(result.newState?.tableau[0]).toHaveLength(0);
+      expect(result.newState?.tableau[1]).toHaveLength(2);
+      expect(result.newState?.tableau[1][1].rank).toBe('J');
+    });
+
+    it('should move multiple cards from tableau to tableau', () => {
+      const state = createEmptyState();
+      state.tableau[0] = [
+        createCard('K', 'spades'),
+        createCard('Q', 'hearts'),
+        createCard('J', 'spades')
+      ];
+      state.tableau[1] = [createCard('K', 'hearts')]; // Red K, Q hearts (red) can't go. Fix: use black card
+
+      const result = moveCard(
+        state, 
+        { type: 'tableau', index: 0, cardIndex: 1 }, // Start from Q hearts (red)
+        { type: 'tableau', index: 1 } // Goes on K hearts (red) - INVALID!
+      );
+
+      expect(result.valid).toBe(false); // Same color doesn't work
+    });
+
+    it('should move multiple cards from tableau to tableau - valid', () => {
+      const state = createEmptyState();
+      state.tableau[0] = [
+        createCard('K', 'hearts'),  // Red K
+        createCard('Q', 'spades'),  // Black Q
+        createCard('J', 'hearts')   // Red J
+      ];
+      state.tableau[1] = [createCard('K', 'spades')]; // Black K, Q spades (black) on red K works!
+
+      const result = moveCard(
+        state, 
+        { type: 'tableau', index: 0, cardIndex: 1 }, // Start from Q spades (black)
+        { type: 'tableau', index: 1 } // Goes on K spades (black) - STILL INVALID (same color)
+      );
+
+      expect(result.valid).toBe(false); // Same color
+    });
+
+    it('should move multiple face-up cards as sequence', () => {
+      const state = createEmptyState();
+      state.tableau[0] = [
+        createCard('K', 'hearts'),  // Red K
+        createCard('Q', 'spades'),  // Black Q
+        createCard('J', 'hearts')   // Red J
+      ];
+      state.tableau[1] = []; // Empty - only K can go here
+
+      const result = moveCard(
+        state,
+        { type: 'tableau', index: 0, cardIndex: 0 }, // Move all from K
+        { type: 'tableau', index: 1 } // To empty pile
+      );
+
+      expect(result.valid).toBe(true);
+      expect(result.newState?.tableau[0]).toHaveLength(0);
+      expect(result.newState?.tableau[1]).toHaveLength(3); // K, Q, J
+    });
+
+    it('should flip face-down card after moving from tableau', () => {
+      const state = createEmptyState();
+      state.tableau[0] = [
+        createCard('K', 'hearts', false), // Face down
+        createCard('Q', 'spades', true)
+      ];
+      state.tableau[1] = [createCard('K', 'hearts')];
+
+      const result = moveCard(state, { type: 'tableau', index: 0 }, { type: 'tableau', index: 1 });
+
+      expect(result.valid).toBe(true);
+      expect(result.newState?.tableau[0]).toHaveLength(1);
+      expect(result.newState?.tableau[0][0].faceUp).toBe(true); // Flipped!
+    });
+
+    it('should move King to empty tableau', () => {
+      const state = createEmptyState();
+      state.tableau[0] = [createCard('K', 'spades')];
+
+      const result = moveCard(state, { type: 'tableau', index: 0 }, { type: 'tableau', index: 1 });
+
+      expect(result.valid).toBe(true);
+      expect(result.newState?.tableau[0]).toHaveLength(0);
+      expect(result.newState?.tableau[1]).toHaveLength(1);
+    });
+
+    it('should move card from tableau to foundation', () => {
+      const state = createEmptyState();
+      state.tableau[0] = [createCard('A', 'hearts')];
+
+      const result = moveCard(state, { type: 'tableau', index: 0 }, { type: 'foundation', index: 0 });
+
+      expect(result.valid).toBe(true);
+      expect(result.newState?.tableau[0]).toHaveLength(0);
+      expect(result.newState?.foundations[0]).toHaveLength(1);
+    });
+
+    it('should fail when tableau pile is empty', () => {
+      const state = createEmptyState();
+      state.tableau[1] = [createCard('Q', 'hearts')];
+
+      const result = moveCard(state, { type: 'tableau', index: 0 }, { type: 'tableau', index: 1 });
+
+      expect(result.valid).toBe(false);
+      expect(result.message).toBe('Tableau pile is empty');
+    });
+
+    it('should fail when cardIndex is invalid', () => {
+      const state = createEmptyState();
+      state.tableau[0] = [createCard('K', 'spades')];
+      state.tableau[1] = [createCard('Q', 'hearts')];
+
+      const result = moveCard(
+        state,
+        { type: 'tableau', index: 0, cardIndex: 5 }, // Invalid index
+        { type: 'tableau', index: 1 }
+      );
+
+      expect(result.valid).toBe(false);
+      expect(result.message).toBe('Invalid card index');
+    });
+
+    it('should fail when moving face-down card', () => {
+      const state = createEmptyState();
+      state.tableau[0] = [
+        createCard('K', 'spades', false), // Face down
+        createCard('Q', 'hearts', true)
+      ];
+      state.tableau[1] = [createCard('J', 'spades')];
+
+      const result = moveCard(
+        state,
+        { type: 'tableau', index: 0, cardIndex: 0 }, // Try to move face-down K
+        { type: 'tableau', index: 1 }
+      );
+
+      expect(result.valid).toBe(false);
+      expect(result.message).toBe('Cannot move face-down cards');
+    });
+
+    it('should fail when multiple cards to foundation', () => {
+      const state = createEmptyState();
+      state.tableau[0] = [
+        createCard('2', 'hearts'),
+        createCard('A', 'hearts')
+      ];
+      state.foundations[0] = [];
+
+      const result = moveCard(
+        state,
+        { type: 'tableau', index: 0, cardIndex: 0 }, // Try to move both cards
+        { type: 'foundation', index: 0 }
+      );
+
+      expect(result.valid).toBe(false);
+      expect(result.message).toBe('Can only move one card to foundation at a time');
+    });
+
+    it('should fail invalid tableau move', () => {
+      const state = createEmptyState();
+      state.tableau[0] = [createCard('J', 'hearts')];
+      state.tableau[1] = [createCard('Q', 'hearts')]; // Same color
+
+      const result = moveCard(state, { type: 'tableau', index: 0 }, { type: 'tableau', index: 1 });
+
+      expect(result.valid).toBe(false);
+      expect(result.message).toBe('Invalid tableau move');
+    });
+  });
+
+  describe('from foundation', () => {
+    it('should move card from foundation to tableau', () => {
+      const state = createEmptyState();
+      state.foundations[0] = [createCard('A', 'spades')];
+      state.tableau[0] = [createCard('2', 'hearts')];
+
+      const result = moveCard(state, { type: 'foundation', index: 0 }, { type: 'tableau', index: 0 });
+
+      expect(result.valid).toBe(true);
+      expect(result.newState?.foundations[0]).toHaveLength(0);
+      expect(result.newState?.tableau[0]).toHaveLength(2);
+      expect(result.newState?.tableau[0][1].rank).toBe('A');
+    });
+
+    it('should fail when foundation pile is empty', () => {
+      const state = createEmptyState();
+      state.tableau[0] = [createCard('2', 'hearts')];
+
+      const result = moveCard(state, { type: 'foundation', index: 0 }, { type: 'tableau', index: 0 });
+
+      expect(result.valid).toBe(false);
+      expect(result.message).toBe('Foundation pile is empty');
+    });
+  });
+
+  it('should maintain state immutability', () => {
+    const state = createEmptyState();
+    state.waste = [createCard('A', 'hearts')];
+    const originalWasteLength = state.waste.length;
+
+    moveCard(state, { type: 'waste', index: 0 }, { type: 'foundation', index: 0 });
+
+    // Original state should not be modified
+    expect(state.waste.length).toBe(originalWasteLength);
+  });
+});
 describe('Klondike Rules - isGameWon', () => {
   const createCard = (rank: Card['rank'], suit: Card['suit'] = 'hearts'): Card => ({
     rank,

@@ -1,5 +1,5 @@
 import { describe, it, expect } from 'vitest';
-import { isGameLost, isGameWon, canMoveToTableau, canMoveToFoundation, canAutoComplete, type KlondikeState } from './klondikeRules';
+import { isGameLost, isGameWon, canMoveToTableau, canMoveToFoundation, canAutoComplete, findNextAutoMove, type KlondikeState } from './klondikeRules';
 import type { Card } from '../../types/game';
 
 describe('Klondike Rules - isGameLost', () => {
@@ -451,6 +451,99 @@ describe('Klondike Rules - canAutoComplete', () => {
     
     const result = canAutoComplete(state);
     expect(result).toBe(false);
+  });
+});
+
+describe('Klondike Rules - findNextAutoMove', () => {
+  const createCard = (rank: Card['rank'], suit: Card['suit'] = 'hearts', faceUp = true): Card => ({
+    rank,
+    suit,
+    faceUp,
+    id: `${rank}-${suit}`
+  });
+
+  it('should find ace to move to empty foundation', () => {
+    const state: KlondikeState = {
+      tableau: [
+        [createCard('A', 'hearts')],
+        [], [], [], [], [], []
+      ],
+      foundations: [[], [], [], []],
+      stock: [],
+      waste: []
+    };
+    
+    const result = findNextAutoMove(state);
+    expect(result).not.toBeNull();
+    expect(result?.card.rank).toBe('A');
+    expect(result?.from.type).toBe('tableau');
+    expect(result?.to.type).toBe('foundation');
+  });
+
+  it('should find card from waste to move to foundation', () => {
+    const state: KlondikeState = {
+      tableau: [[], [], [], [], [], [], []],
+      foundations: [[createCard('A', 'hearts')], [], [], []],
+      stock: [],
+      waste: [createCard('2', 'hearts')]
+    };
+    
+    const result = findNextAutoMove(state);
+    expect(result).not.toBeNull();
+    expect(result?.card.rank).toBe('2');
+    expect(result?.from.type).toBe('waste');
+    expect(result?.to.type).toBe('foundation');
+    expect(result?.to.index).toBe(0);
+  });
+
+  it('should prioritize lower rank cards', () => {
+    const state: KlondikeState = {
+      tableau: [
+        [createCard('2', 'hearts')],
+        [createCard('3', 'hearts')],
+        [], [], [], [], []
+      ],
+      foundations: [[createCard('A', 'hearts')], [], [], []],
+      stock: [],
+      waste: []
+    };
+    
+    const result = findNextAutoMove(state);
+    expect(result).not.toBeNull();
+    expect(result?.card.rank).toBe('2'); // Lower rank first
+  });
+
+  it('should return null when no moves available', () => {
+    const state: KlondikeState = {
+      tableau: [[], [], [], [], [], [], []],
+      foundations: [[], [], [], []],
+      stock: [],
+      waste: []
+    };
+    
+    const result = findNextAutoMove(state);
+    expect(result).toBeNull();
+  });
+
+  it('should find card from deep in tableau pile', () => {
+    const state: KlondikeState = {
+      tableau: [
+        [
+          createCard('K', 'spades'),
+          createCard('Q', 'hearts'),
+          createCard('A', 'diamonds') // This should be found
+        ],
+        [], [], [], [], [], []
+      ],
+      foundations: [[], [], [], []],
+      stock: [],
+      waste: []
+    };
+    
+    const result = findNextAutoMove(state);
+    expect(result).not.toBeNull();
+    expect(result?.card.rank).toBe('A');
+    expect(result?.from.cardIndex).toBe(2);
   });
 });
 

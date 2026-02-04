@@ -222,3 +222,63 @@ export function canAutoComplete(state: KlondikeState): boolean {
   return allTableauFaceUp && allStockFaceUp;
 }
 
+/**
+ * Find the next card that can be auto-moved to foundation
+ * @covers FEAT-009
+ */
+export function findNextAutoMove(state: KlondikeState): {
+  card: Card;
+  from: { type: 'tableau' | 'waste'; index: number; cardIndex?: number };
+  to: { type: 'foundation'; index: number };
+} | null {
+  let lowestRank = Infinity;
+  let bestMove: ReturnType<typeof findNextAutoMove> = null;
+
+  // Check waste pile
+  if (state.waste.length > 0) {
+    const card = state.waste[state.waste.length - 1];
+    const rankValue = getRankValue(card.rank);
+    
+    for (let i = 0; i < state.foundations.length; i++) {
+      if (canMoveToFoundation(card, state.foundations[i])) {
+        if (rankValue < lowestRank) {
+          lowestRank = rankValue;
+          bestMove = {
+            card,
+            from: { type: 'waste', index: 0 },
+            to: { type: 'foundation', index: i }
+          };
+        }
+      }
+    }
+  }
+
+  // Check tableau piles
+  for (let i = 0; i < state.tableau.length; i++) {
+    const pile = state.tableau[i];
+    
+    for (let j = 0; j < pile.length; j++) {
+      const card = pile[j];
+      if (!card.faceUp) continue;
+      
+      const rankValue = getRankValue(card.rank);
+      
+      for (let k = 0; k < state.foundations.length; k++) {
+        if (canMoveToFoundation(card, state.foundations[k])) {
+          if (rankValue < lowestRank) {
+            lowestRank = rankValue;
+            bestMove = {
+              card,
+              from: { type: 'tableau', index: i, cardIndex: j },
+              to: { type: 'foundation', index: k }
+            };
+          }
+        }
+      }
+    }
+  }
+
+  return bestMove;
+}
+
+

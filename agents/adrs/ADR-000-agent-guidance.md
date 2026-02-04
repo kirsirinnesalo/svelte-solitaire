@@ -188,20 +188,25 @@ git branch -d feat/001-card-animations
 ```
 <type>(<task-id>): <description>
 
-Types:
+Types (matches task types):
 - feat: New feature (FEAT-XXX)
 - fix: Bug fix (BUG-XXX)
-- refactor: Code refactoring (TECH-XXX)
-- test: Adding/updating tests
-- docs: Documentation (DOC-XXX)
-- chore: Maintenance tasks
+- chore: Technical/maintenance (TECH-XXX, task management)
 
 Examples:
-feat(FEAT-001): add card animation framework
-test(FEAT-001): add animation unit tests
-refactor(TECH-002): extract undo manager
-fix(BUG-001): fix localStorage persistence
+feat(FEAT-XXX): add card animation framework
+fix(BUG-XXX): fix localStorage persistence
+chore(TECH-XXX): extract undo manager
+chore(tasks): complete FEAT-XXX
 ```
+
+**Commit guidelines**:
+- Keep description short and clear (one line)
+- Focus on WHAT changed, not why it meets criteria
+- DO NOT repeat acceptance criteria or DoD
+- DO NOT list test counts (e.g., "43 tests passing")
+- DO NOT enumerate implementation details
+- Let git diff show the details
 
 **Branch naming convention**:
 - `feat/XXX-description` for features

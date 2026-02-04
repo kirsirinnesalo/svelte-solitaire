@@ -119,8 +119,9 @@ This enables:
 - **Types**: FEAT (features), TECH (technical/testing/docs), BUG (bugs)
 - **Workflow**: Ready → In Progress → Completed → `completed/` directory
 - **TDD**: Test first for all tasks
-
-**Commits**: `feat(TASK-ID): description`
+- **Commits**: Short and focused - `feat(TASK-ID): what changed`
+  - Don't repeat acceptance criteria (DoD is implicit)
+  - Don't list test counts or implementation details
 
 ## 🎨 Svelte 5 Runes Patterns
 
@@ -253,6 +254,9 @@ See [ADR-004](agents/adrs/ADR-004-json-parse-for-state-cloning.md) for rationale
 ## 🛠️ Development Commands
 
 ```bash
+# Check Node version (minimum Node 20 required)
+node -v
+
 # Development server (port 5173)
 npm run dev
 

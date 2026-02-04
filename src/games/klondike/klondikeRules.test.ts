@@ -1,5 +1,5 @@
 import { describe, it, expect } from 'vitest';
-import { isGameLost, isGameWon, canMoveToTableau, canMoveToFoundation, type KlondikeState } from './klondikeRules';
+import { isGameLost, isGameWon, canMoveToTableau, canMoveToFoundation, canAutoComplete, type KlondikeState } from './klondikeRules';
 import type { Card } from '../../types/game';
 
 describe('Klondike Rules - isGameLost', () => {
@@ -342,3 +342,115 @@ describe('Klondike Rules - isGameWon', () => {
     expect(isGameWon(state)).toBe(false);
   });
 });
+
+describe('Klondike Rules - canAutoComplete', () => {
+  const createCard = (rank: Card['rank'], suit: Card['suit'] = 'hearts', faceUp = true): Card => ({
+    rank,
+    suit,
+    faceUp,
+    id: `${rank}-${suit}`
+  });
+
+  const emptyState: KlondikeState = {
+    tableau: [[], [], [], [], [], [], []],
+    foundations: [[], [], [], []],
+    stock: [],
+    waste: []
+  };
+
+  it('should detect when all cards are face-up', () => {
+    const state: KlondikeState = {
+      ...emptyState,
+      tableau: [
+        [createCard('K', 'hearts', true)],
+        [createCard('Q', 'diamonds', true)],
+        [], [], [], [], []
+      ],
+      waste: [createCard('A', 'spades', true)],
+      stock: []
+    };
+    
+    const result = canAutoComplete(state);
+    expect(result).toBe(true);
+  });
+
+  it('should return false when any tableau card is face-down', () => {
+    const state: KlondikeState = {
+      ...emptyState,
+      tableau: [
+        [createCard('K', 'hearts', false), createCard('Q', 'hearts', true)],
+        [createCard('J', 'diamonds', true)],
+        [], [], [], [], []
+      ],
+      waste: [],
+      stock: []
+    };
+    
+    const result = canAutoComplete(state);
+    expect(result).toBe(false);
+  });
+
+  it('should return false when stock has face-down cards', () => {
+    const state: KlondikeState = {
+      ...emptyState,
+      tableau: [
+        [createCard('K', 'hearts', true)],
+        [], [], [], [], [], []
+      ],
+      waste: [],
+      stock: [createCard('A', 'spades', false)]
+    };
+    
+    const result = canAutoComplete(state);
+    expect(result).toBe(false);
+  });
+
+  it('should return true when all tableau and stock cards are face-up', () => {
+    const state: KlondikeState = {
+      ...emptyState,
+      tableau: [
+        [createCard('K', 'hearts', true), createCard('Q', 'hearts', true)],
+        [createCard('J', 'diamonds', true)],
+        [], [], [], [], []
+      ],
+      waste: [createCard('10', 'spades', true)],
+      stock: []
+    };
+    
+    const result = canAutoComplete(state);
+    expect(result).toBe(true);
+  });
+
+  it('should return true when tableau is empty and stock is empty', () => {
+    const state: KlondikeState = {
+      ...emptyState,
+      tableau: [[], [], [], [], [], [], []],
+      waste: [],
+      stock: []
+    };
+    
+    const result = canAutoComplete(state);
+    expect(result).toBe(true);
+  });
+
+  it('should return false when even one tableau card in deep pile is face-down', () => {
+    const state: KlondikeState = {
+      ...emptyState,
+      tableau: [
+        [
+          createCard('K', 'hearts', true),
+          createCard('Q', 'hearts', true),
+          createCard('J', 'hearts', false), // Hidden in middle
+          createCard('10', 'hearts', true)
+        ],
+        [], [], [], [], [], []
+      ],
+      waste: [],
+      stock: []
+    };
+    
+    const result = canAutoComplete(state);
+    expect(result).toBe(false);
+  });
+});
+

@@ -205,3 +205,20 @@ export function isGameLost(state: KlondikeState, recycleCount: number, maxRecycl
   
   return true;
 }
+
+/**
+ * Check if auto-complete is possible (all cards are face-up)
+ * @covers FEAT-009
+ */
+export function canAutoComplete(state: KlondikeState): boolean {
+  // Check that all tableau cards are face-up
+  const allTableauFaceUp = state.tableau.every(pile => 
+    pile.every(card => card.faceUp)
+  );
+  
+  // Check that all stock cards are face-up (or stock is empty)
+  const allStockFaceUp = state.stock.every(card => card.faceUp);
+  
+  return allTableauFaceUp && allStockFaceUp;
+}
+

@@ -2,7 +2,24 @@
 
 A single-page app featuring a collection of classic solitaire card games, built with Svelte 5.
 
-> **For AI Agents & Maintainers**: See [AGENTS.md](AGENTS.md) for complete development guide, [agents/adrs/](agents/adrs/) for architectural decisions, and [agents/tasks/backlog.md](agents/tasks/backlog.md) for task management.
+---
+
+## 🤖 For AI Agents
+
+**Read these first before starting any task:**
+
+1. [AGENTS.md](AGENTS.md) - Complete development guide
+2. [ADR-000](agents/adrs/ADR-000-agent-guidance.md) - Project DNA and conventions
+3. [Pre-flight Checklist](AGENTS.md#️-pre-flight-checklist) - Before starting any task
+4. [Task Backlog](agents/tasks/backlog.md) - Available tasks
+
+**Core workflow:**
+- ONE task at a time (complete fully before starting next)
+- Create feature branch for each task (`feat/TASK-ID-description`)
+- TDD workflow (tests first, red-green-refactor)
+- Merge with `--no-ff` when complete
+
+---
 
 ## 🎮 Current Features
 

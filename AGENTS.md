@@ -12,6 +12,37 @@ Welcome to the Svelte Solitaire development team! This document contains everyth
 - **Tasks**: [backlog.md](agents/tasks/backlog.md) | [Task Guide](agents/tasks/README.md)
 - **Commits**: `feat(TASK-ID): description`
 
+## ✈️ Pre-flight Checklist
+
+**CRITICAL**: Before starting ANY task:
+
+1. [ ] Read task file completely (`agents/tasks/TASK-ID.md`)
+2. [ ] Review related ADRs listed in task
+3. [ ] Create feature branch: `git checkout -b feat/TASK-ID-description`
+4. [ ] Add "Create feature branch" as first todo in manage_todo_list
+
+**Then follow Task Workflow below.**
+
+## 🔄 Task Workflow
+
+Complete workflow for every task:
+
+1. **Prepare**: Complete Pre-flight Checklist above
+2. **Red**: Write failing tests (TDD red phase)
+3. **Green**: Implement minimum code to pass tests
+4. **Refactor**: Improve code quality while keeping tests green
+   - Remove duplication (DRY principle)
+   - Improve naming (clear, descriptive)
+   - Simplify structure (reduce complexity)
+   - Follow project patterns (ADRs, conventions)
+   - **No technical debt**: Code must be production-ready
+5. **Commit**: Commit frequently with `feat(TASK-ID): description`
+6. **Validate**: All tests pass, no TypeScript errors, no warnings
+7. **Document**: Update docs if user-facing, create ADR if architectural
+8. **Complete**: Merge with `--no-ff`, delete branch, archive task to `completed/`
+
+**One task at a time**: Never start a new task before completing the current one fully (steps 1-8).
+
 ## 🎯 Project Structure
 
 ```

@@ -89,86 +89,15 @@ Before every commit, agent MUST:
 
 ### Task Management
 
-Tasks in `agents/tasks/backlog.md` with structure:
+See [agents/tasks/README.md](../tasks/README.md) for complete task workflow.
 
-```markdown
-## Ready
+**Key points**:
+- Tasks in `agents/tasks/backlog.md`, priority = order in Ready section
+- Task types: FEAT (features), TECH (technical), BUG (bugs)
+- ONE task at a time - complete fully before starting next
+- TDD: Test first for all tasks
 
-1. [FEAT-001](FEAT-001-card-animations.md) - Card movement animations
-2. [TECH-002](TECH-002-undo-manager.md) - Unified undo manager
-3. [BUG-001](BUG-001-cardback-persistence.md) - Fix cardBack persistence
-```
-
-**Priority = order in list**. Top item is next to implement.
-
-**Discovering new work during implementation**:
-
-1. Create task file immediately when discovered
-2. Add to Backlog in `backlog.md`
-3. Link in current task's "Related Tasks"
-4. Note in current task's "Implementation Notes"
-5. Assess if blocker (pause current) or can wait
-6. Commit: `CURRENT-TASK-ID: Discover NEW-TASK-ID`
-
-**Example**:
-```bash
-# During FEAT-001, discover a bug
-cp agents/tasks/TEMPLATE.md agents/tasks/BUG-003-animation-flicker.md
-# Edit BUG-003 with details
-git add agents/tasks/BUG-003-animation-flicker.md agents/tasks/backlog.md
-git commit -m "feat(FEAT-001): discover BUG-003 animation flicker issue"
-```
-
-**Task types**:
-- **FEAT**: User-facing features (includes documentation updates)
-- **TECH**: Technical improvements, refactoring
-- **BUG**: Bug fixes (includes regression tests)
-
-**Test traceability**: Annotate tests with task coverage and ADR constraints:
-
-```typescript
-/**
- * @covers FEAT-001
- * @description Tests for card animations feature
- * @constrainedBy ADR-001, ADR-004
- */
-describe('Card animations', () => {
-  // test code
-});
-```
-
-**Task workflow**:
-1. **Pick ONE**: Select single task from Ready (top = highest priority)
-2. **Plan**: Read task details, update with implementation approach
-3. **Status**: Move to In Progress in `index.md`
-4. **Branch**: Create feature branch
-5. **TDD**: Red (test) → Green (code) → Refactor (improve)
-6. **Document**: Update task file with decisions/notes
-7. **Validate**: Verify all DoD criteria before completing
-8. **Complete**:
-   - Agent marks task ready for integration
-   - User merges to main and deletes branch
-   - Task is moved to Completed and archived
-
-**IMPORTANT**: Work on ONE task at a time. Complete it fully (including tests, documentation, merge) before starting another. Half-finished tasks create confusion and merge conflicts.
-
-**Validation checklist** (before marking complete):
-- [ ] All acceptance criteria met
-- [ ] Tests written and passing (`npm run test`)
-- [ ] TypeScript strict compliance (`npm run check`)
-- [ ] No console warnings/errors
-- [ ] Task file updated with completion info
-- [ ] ADR created for architectural changes
-- [ ] Code follows Svelte 5 patterns
-
-**Definition of Done**:
-- [ ] Tests written and passing (TDD)
-- [ ] Follows Svelte 5 patterns
-- [ ] TypeScript strict compliance
-- [ ] No console warnings
-- [ ] Committed with task ID
-
-## Agent vs User Responsibilities (CRITICAL)
+## Agent vs User Responsibilities
 
 ### Agent Responsibilities
 Agent is responsible for:
@@ -193,101 +122,17 @@ Agent MUST NOT:
 - git merge
 - git rebase
 - git reset
-- delete branches on local or remote
+- delete branches
 
 ### Git Workflow
 
-**IMPORTANT**: Agent must never push to remote repositories.
-All remote operations are user-controlled.
+See [AGENTS.md](../../AGENTS.md) for complete Git workflow details.
 
-**Feature branches**: Each task is developed in its own feature branch:
-```bash
-# Create feature branch
-git checkout -b feat/001-card-animations     # For FEAT-001
-git checkout -b tech/002-undo-manager        # For TECH-002
-git checkout -b bug/001-cardback-fix         # For BUG-001
-git checkout -b doc/001-update-readme        # For DOC-001
-
-# Work on feature, commit regularly with task ID
-git commit -m "feat(FEAT-001): add animation framework"
-git commit -m "feat(FEAT-001): implement card movement transitions"
-```
-
-## Integration and Merge (USER-ONLY)
-
-When a task is complete:
-
-1. Agent completes feature branch and final commit
-2. Agent reports branch name and readiness in chat
-3. User performs:
-   - push to remote
-   - merge to main with --no-ff
-   - branch deletion
-
-Example (USER only):
-
-```bash
-git checkout main
-git merge --no-ff feat/001-card-animations
-git branch -d feat/001-card-animations
-```
-
-**Merge strategy**: Always use `--no-ff` (no fast-forward) to create merge commit:
-- Preserves feature development history
-- Shows clear feature boundaries in git log
-- Agent commit steps remain visible (not squashed)
-- Easier to understand feature evolution
-- Can revert entire feature if needed
-
-**Commit message format** (Conventional Commits):
-
-**Agent MUST use Conventional Commits format:**
-```
-<type>(<task-id>): <short summary>
-
-format: feat(FEAT-001): short summary
-```
-
-**Types** (matches task types):
-- feat: New feature (FEAT-XXX)
-- fix: Bug fix (BUG-XXX)
-- chore: Technical/maintenance (TECH-XXX, task management)
-
-Examples:
-feat(FEAT-XXX): add card animation framework
-fix(BUG-XXX): fix localStorage persistence
-chore(TECH-XXX): extract undo manager
-chore(tasks): complete FEAT-XXX
-```
-
-**Commit guidelines**:
-- Keep description short and clear (one line)
-- Focus on WHAT changed, not why it meets criteria
-- DO NOT repeat acceptance criteria or DoD
-- DO NOT list test counts (e.g., "43 tests passing")
-- DO NOT enumerate implementation details
-- Let git diff show the details
-
-**Branch naming convention**:
-- `feat/XXX-description` for features
-- `tech/XXX-description` for technical tasks
-- `bug/XXX-description` for bug fixes
-- `doc/XXX-description` for documentation
-
-**Commit message examples**:
-```
-feat(FEAT-001): add card movement animations
-chore(TECH-002): extract undo manager to shared utility
-fix(BUG-001): fix cardBack localStorage persistence
-```
-
-**ADR creation**: Any architectural decision gets documented:
-```bash
-# Create new ADR
-cp agents/adrs/template.md agents/adrs/ADR-006-my-decision.md
-# Edit and commit
-git commit -m "docs: add ADR-006 for database choice"
-```
+**Key points**:
+- Feature branches: `feat/TASK-ID-description`
+- Conventional Commits: `feat(TASK-ID): short summary`
+- Agent commits on feature branch, user merges to main
+- Merge with `--no-ff` to preserve history
 
 ## Consequences
 

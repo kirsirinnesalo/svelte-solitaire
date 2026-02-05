@@ -2,6 +2,8 @@
 
 Welcome to the Svelte Solitaire development team! This document contains everything needed to understand the project architecture, practices, and workflow.
 
+> **Document roles**: AGENTS.md focuses on operational workflow. ADR-000 defines architectural and cultural rules. In case of conflict, ADRs take precedence.
+
 > **Quick Start**: Read [agents/adrs/ADR-000](agents/adrs/ADR-000-agent-guidance.md) first (project DNA), then this guide. For a quick scan, see [agents/README.md](agents/README.md).
 
 ## 📋 Quick Reference
@@ -14,14 +16,14 @@ Welcome to the Svelte Solitaire development team! This document contains everyth
 
 ## ✈️ Pre-flight Checklist
 
-**CRITICAL**: Before starting ANY task:
+Before starting ANY task:
 
 1. [ ] Read task file completely (`agents/tasks/TASK-ID.md`)
 2. [ ] Review related ADRs listed in task
-3. [ ] Move task to In Progress in `backlog.md` (on main branch)
-4. [ ] Commit backlog change: `git add agents/tasks/backlog.md && git commit -m "chore: start TASK-ID"`
+3. [ ] On main: Move task to In Progress in `backlog.md`
+4. [ ] On main: Commit `git commit -m "chore(TASK-ID): start task"`
 5. [ ] Create feature branch: `git checkout -b feat/TASK-ID-description`
-6. [ ] Add "Create feature branch" as first todo using `manage_todo_list` tool
+6. [ ] Create todo list (VS Code Copilot: use `manage_todo_list` tool)
 
 **Then follow Task Workflow below.**
 
@@ -45,17 +47,29 @@ Complete workflow for every task:
 6. **Commit**: Commit frequently with `feat(TASK-ID): short summary` (Conventional Commits)
 7. **Validate**: All tests pass, no TypeScript errors, no warnings
 8. **Document**: Update docs if user-facing, create ADR if architectural
-9. **Complete** (ALL on feature branch):
-   - Agent moves task to Completed in `backlog.md`
-   - Agent archives task file to `completed/` (keep original filename)
-   - Agent commits: `git commit -m "chore: complete TASK-ID"`
-   - Agent reports branch name and readiness for integration
-   - User merges to main with `--no-ff` (brings completion + code changes)
-   - User deletes branch
+9. **Complete**:
+   - **Agent** (on feature branch):
+     - Moves task to Completed in `backlog.md`
+     - Archives task file to `completed/`
+     - Commits: `git commit -m "chore: complete TASK-ID"`
+     - Reports branch name and readiness
+   - **User** (integration):
+     - Merges to main with `--no-ff`
+     - Deletes branch
 
-**One task at a time**: Never start a new task before completing the current one fully (steps 1-9).
+**One task at a time**: Complete fully before starting next.
 
-**CRITICAL**: Task completion (backlog update, archival) happens on feature branch, NOT on main. Main only gets "start" commits. Merge brings everything together.
+**Scope control**:
+- Only implement what is required by the current task
+- If improvement is desirable but not required:
+  - Create a separate TECH/FEAT task
+  - Do NOT implement it under current task
+
+**If merge is delayed**:
+- Agent must not continue new tasks on the same feature branch
+- Wait for user merge before starting next task
+
+**Note**: Task completion happens on feature branch. Main only gets "start" commits.
 
 ## 🎯 Project Structure
 
@@ -84,7 +98,7 @@ src/
 - Logic: `src/games/klondike/klondikeRules.ts`
 - Tests: `src/games/klondike/klondikeRules.test.ts`
 
-## 🔐 Agent vs User Responsibilities (CRITICAL)
+## 🔐 Agent vs User Responsibilities
 
 ### Agent MAY:
 - create feature branches
@@ -121,7 +135,7 @@ All architectural decisions are documented in `agents/adrs/`. Key decisions:
 
 ## 🔴 Test-Driven Development Workflow
 
-**CRITICAL**: Always follow TDD workflow for new features and bug fixes.
+Always follow TDD workflow for new features and bug fixes.
 
 ### 1. Red Phase - Write Failing Test
 ```bash

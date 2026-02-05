@@ -16,10 +16,6 @@
 
 _(None)_
 
-## Completed
-
-- [TECH-006](TECH-006-test-napoleon-rules.md) - Add tests for napoleonRules.ts (49 tests, 94% coverage)
-
 ## Blocked
 
 _(None)_
@@ -55,6 +51,7 @@ _(None)_
 
 ## Completed
 
+- [TECH-006](completed/TECH-006-test-napoleon-rules.md) - Add tests for napoleonRules.ts
 - [TECH-005](completed/TECH-005-test-klondike-rules.md) - Add comprehensive tests for klondikeRules.ts
 - [TECH-001](completed/TECH-001-vitest-setup.md) - Set up Vitest testing infrastructure
 - [FEAT-009](completed/FEAT-009-auto-complete-klondike.md) - Add auto-complete when all cards are face-up in Klondike

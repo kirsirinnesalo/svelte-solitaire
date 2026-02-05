@@ -2,6 +2,7 @@
   "name": "svelte-solitaire",
   "version": "0.1.0",
   "description": "A collection of solitaire card games built with Svelte",
+  "license": "MIT",
   "type": "module",
   "scripts": {
     "dev": "vite",

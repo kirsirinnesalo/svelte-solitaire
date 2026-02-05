@@ -176,4 +176,4 @@ For detailed architectural decisions, see [agents/adrs/](agents/adrs/).
 
 ## 📝 License
 
-[Add license information]
+MIT License - see [LICENSE](LICENSE) for details.

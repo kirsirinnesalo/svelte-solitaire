@@ -35,11 +35,14 @@ Complete guide for managing development tasks in this project.
 
 **No parallel work. No multitasking.**
 
-1. Take FIRST task from Ready
-2. Move to In Progress in backlog.md
-3. Work on this task ONLY until completion
-4. Move to Completed, archive file to `completed/`
-5. Repeat
+1. Take FIRST task from Ready (on main branch)
+2. Move to In Progress in backlog.md, commit to main
+3. Create feature branch
+4. Work on this task ONLY until completion
+5. Move to Completed, archive file to `completed/` (on feature branch)
+6. Commit completion (on feature branch)
+7. Report branch readiness for user merge
+8. Repeat after merge
 
 ### 3. Priority = Physical Order
 
@@ -69,9 +72,9 @@ Tasks tracked in [backlog.md](backlog.md) with these sections:
 
 ### Main Workflow
 1. **Ready** - USER prioritized (agents take FIRST only)
-2. **In Progress** - Currently active (max 1)
+2. **In Progress** - Currently active (max 1, on main branch)
 3. **Blocked** - Waiting on dependencies
-4. **Completed** - Done (then archived to `completed/`)
+4. **Completed** - Done on feature branch (then archived, merged to main)
 
 ### Discovery Sections (Agent-Managed)
 5. **Features** - New feature ideas
@@ -158,11 +161,11 @@ Add to appropriate section (Features/Technical/Bugs/etc.).
 ### Before Starting
 1. Read task file thoroughly
 2. Plan implementation approach
-3. Create feature branch
-4. Move task to **In Progress** in backlog.md
-5. **Commit backlog immediately**: `git add agents/tasks/backlog.md && git commit -m "chore: start TASK-ID"`
+3. Move task to **In Progress** in backlog.md (on main branch)
+4. **Commit backlog immediately**: `git add agents/tasks/backlog.md && git commit -m "chore: start TASK-ID"`
+5. Create feature branch: `git checkout -b feat/TASK-ID-description`
 
-**Why commit backlog?** Makes task status visible to other repo users immediately.
+**Why commit to main?** Makes task status visible immediately. Only "start" commits go to main - all work happens on feature branch.
 
 ### During Work
 - Follow TDD workflow (ADR-001)
@@ -170,16 +173,17 @@ Add to appropriate section (Features/Technical/Bugs/etc.).
 - Update task notes with decisions
 - Create NEW tasks for discovered work (add to discovery sections)
 
-### After Completion
+### After Completion (on feature branch)
 1. Verify all acceptance criteria met
 2. Add completion notes to task file
 3. Move task file to `completed/` directory (**keep original filename**)
 4. Update backlog.md: move to Completed section
-5. Update README.md if user-visible feature
-6. Merge feature branch with `--no-ff`
-7. Delete feature branch
+5. **Commit completion**: `git commit -m "chore: complete TASK-ID"`
+6. Report branch readiness for merge
+7. **User merges** to main with `--no-ff` (brings completion + code)
+8. **User deletes** feature branch
 
-**Completed tasks are archived and NEVER modified.**
+**CRITICAL**: Task completion happens on feature branch, NOT main. Merge brings everything together atomically.
 
 ---
 

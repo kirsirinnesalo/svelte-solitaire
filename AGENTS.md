@@ -18,9 +18,9 @@ Welcome to the Svelte Solitaire development team! This document contains everyth
 
 1. [ ] Read task file completely (`agents/tasks/TASK-ID.md`)
 2. [ ] Review related ADRs listed in task
-3. [ ] Create feature branch (agent may do this): `git checkout -b feat/TASK-ID-description`
-4. [ ] Move task to In Progress in `backlog.md`
-5. [ ] Commit backlog change: `git add agents/tasks/backlog.md && git commit -m "chore: start TASK-ID"`
+3. [ ] Move task to In Progress in `backlog.md` (on main branch)
+4. [ ] Commit backlog change: `git add agents/tasks/backlog.md && git commit -m "chore: start TASK-ID"`
+5. [ ] Create feature branch: `git checkout -b feat/TASK-ID-description`
 6. [ ] Add "Create feature branch" as first todo using `manage_todo_list` tool
 
 **Then follow Task Workflow below.**
@@ -45,14 +45,17 @@ Complete workflow for every task:
 6. **Commit**: Commit frequently with `feat(TASK-ID): short summary` (Conventional Commits)
 7. **Validate**: All tests pass, no TypeScript errors, no warnings
 8. **Document**: Update docs if user-facing, create ADR if architectural
-9. **Complete**:
+9. **Complete** (ALL on feature branch):
    - Agent moves task to Completed in `backlog.md`
    - Agent archives task file to `completed/` (keep original filename)
+   - Agent commits: `git commit -m "chore: complete TASK-ID"`
    - Agent reports branch name and readiness for integration
-   - User merges to main with `--no-ff`
+   - User merges to main with `--no-ff` (brings completion + code changes)
    - User deletes branch
 
 **One task at a time**: Never start a new task before completing the current one fully (steps 1-9).
+
+**CRITICAL**: Task completion (backlog update, archival) happens on feature branch, NOT on main. Main only gets "start" commits. Merge brings everything together.
 
 ## 🎯 Project Structure
 

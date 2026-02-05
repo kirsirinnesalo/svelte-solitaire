@@ -47,6 +47,7 @@ _(None)_
 - [TECH-017](TECH-017-bundle-analysis.md) - Analyze and optimize bundle size
 - [TECH-018](TECH-018-component-tests.md) - Add component tests with Testing Library
 - [TECH-019](TECH-019-e2e-tests.md) - Add E2E tests for game scenarios
+- [TECH-020](TECH-020-card-bounds-collision.md) - Improve drag collision detection using card bounds
 
 ## Bugs
 

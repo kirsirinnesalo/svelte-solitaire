@@ -12,7 +12,7 @@
 
 ## In Progress
 
-- [TECH-008](TECH-008-test-clock-rules.md) - Add tests for clockRules.ts
+_(None)_
 
 ## Blocked
 
@@ -51,6 +51,7 @@ _(None)_
 
 ## Completed
 
+- [TECH-008](completed/TECH-008-test-clock-rules.md) - Add tests for clockRules.ts
 - [TECH-007](completed/TECH-007-test-acesup-rules.md) - Add tests for acesUpRules.ts
 - [TECH-006](completed/TECH-006-test-napoleon-rules.md) - Add tests for napoleonRules.ts
 - [TECH-005](completed/TECH-005-test-klondike-rules.md) - Add comprehensive tests for klondikeRules.ts

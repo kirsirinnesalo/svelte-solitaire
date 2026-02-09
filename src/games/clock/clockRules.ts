@@ -96,13 +96,14 @@ export function moveRevealedCard(state: ClockState, toPileIndex: number): ClockM
     }
   }
   
-  // Check if 4th king just went to center pile
+  // Check if 4th king just went to center pile (game-ending condition)
   const kingsInCenter = newPiles[12].filter(c => c.rank === 'K').length;
   
   if (movedCard.rank === 'K' && toPileIndex === 12 && kingsInCenter === 4) {
     // Game ends when 4th king is placed in center
     // Check if all cards are face up (win) or if there are still face-down cards (loss)
     const allFaceUp = newPiles.every(pile => pile.every(c => c.faceUp));
+    const hasAnyCards = newPiles.some(pile => pile.length > 0);
     
     return {
       valid: true,
@@ -110,8 +111,8 @@ export function moveRevealedCard(state: ClockState, toPileIndex: number): ClockM
         piles: newPiles,
         revealedCardPileIndex: null
       },
-      isWon: allFaceUp,
-      isLost: !allFaceUp
+      isWon: allFaceUp && hasAnyCards,
+      isLost: !allFaceUp && hasAnyCards
     };
   }
   
@@ -126,7 +127,14 @@ export function moveRevealedCard(state: ClockState, toPileIndex: number): ClockM
 }
 
 export function isGameWon(state: ClockState): boolean {
-  return state.piles.every(pile => pile.every(c => c.faceUp));
+  // To win:
+  // 1. All cards must be face-up (all revealed)
+  // 2. Center pile (index 12) must have exactly 4 Kings
+  // 3. All 12 non-center piles must have at least one card (valid game state)
+  const centerKingCount = state.piles[12].filter(c => c.rank === 'K').length;
+  const allFaceUp = state.piles.every(pile => pile.length === 0 || pile.every(c => c.faceUp));
+  const allNonCenterHaveCards = state.piles.slice(0, 12).every(pile => pile.length > 0);
+  return allFaceUp && centerKingCount === 4 && allNonCenterHaveCards;
 }
 
 export function isGameLost(state: ClockState): boolean {

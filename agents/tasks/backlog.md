@@ -4,7 +4,6 @@
 
 **Priority**: First task in this section = next task to work on. Physical order defines priority.
 
-- [TECH-008](TECH-008-test-clock-rules.md) - Add tests for clockRules.ts
 - [TECH-009](TECH-009-test-card-utils.md) - Add tests for cardUtils.ts
 - [FEAT-003](FEAT-003-game-instructions.md) - Add instructions/help for each game
 - [TECH-004](TECH-004-unify-state-naming.md) - Rename `state` → `gameState` in AcesUp and Clock
@@ -13,7 +12,7 @@
 
 ## In Progress
 
-_(None)_
+- [TECH-008](TECH-008-test-clock-rules.md) - Add tests for clockRules.ts
 
 ## Blocked
 

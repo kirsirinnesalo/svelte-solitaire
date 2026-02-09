@@ -4,7 +4,6 @@
 
 **Priority**: First task in this section = next task to work on. Physical order defines priority.
 
-- [TECH-009](TECH-009-test-card-utils.md) - Add tests for cardUtils.ts
 - [FEAT-003](FEAT-003-game-instructions.md) - Add instructions/help for each game
 - [TECH-004](TECH-004-unify-state-naming.md) - Rename `state` → `gameState` in AcesUp and Clock
 - [TECH-011](TECH-011-document-json-parse.md) - Add comments explaining JSON.parse usage
@@ -51,6 +50,7 @@ _(None)_
 
 ## Completed
 
+- [TECH-009](completed/TECH-009-test-card-utils.md) - Add tests for cardUtils.ts
 - [TECH-008](completed/TECH-008-test-clock-rules.md) - Add tests for clockRules.ts
 - [TECH-007](completed/TECH-007-test-acesup-rules.md) - Add tests for acesUpRules.ts
 - [TECH-006](completed/TECH-006-test-napoleon-rules.md) - Add tests for napoleonRules.ts

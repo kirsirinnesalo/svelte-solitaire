@@ -1,9 +1,9 @@
 /**
- * @covers TECH-001
- * @description Example tests for cardUtils module demonstrating Vitest setup
+ * @covers TECH-009
+ * @description Comprehensive tests for cardUtils module
  * @constrainedBy ADR-001
  */
-import { describe, it, expect } from 'vitest';
+import { describe, it, expect, vi, afterEach } from 'vitest';
 import {
   createDeck,
   shuffleDeck,
@@ -11,189 +11,201 @@ import {
   isBlack,
   getRankValue,
   canStackOnTableau,
-  canStackOnFoundation,
+  canStackOnFoundation
 } from './cardUtils';
-import type { Card } from '../types/game';
+import type { Card, Rank, Suit } from '../types/game';
+
+const suits: Suit[] = ['hearts', 'diamonds', 'clubs', 'spades'];
+const ranks: Rank[] = ['A', '2', '3', '4', '5', '6', '7', '8', '9', '10', 'J', 'Q', 'K'];
+
+function makeCard(rank: Rank, suit: Suit): Card {
+  return {
+    suit,
+    rank,
+    faceUp: true,
+    id: `${suit}-${rank}`
+  };
+}
 
 describe('cardUtils', () => {
+  afterEach(() => {
+    vi.restoreAllMocks();
+  });
+
   describe('createDeck', () => {
-    it('creates a standard 52-card deck', () => {
+    it('creates a standard 52-card deck with unique ids', () => {
       const deck = createDeck();
       expect(deck).toHaveLength(52);
+
+      const ids = deck.map(card => card.id);
+      expect(new Set(ids).size).toBe(52);
     });
 
-    it('creates cards with all suits', () => {
+    it('creates all suit and rank combinations with faceUp false', () => {
       const deck = createDeck();
-      const suits = [...new Set(deck.map((card) => card.suit))];
-      expect(suits).toHaveLength(4);
-      expect(suits).toContain('hearts');
-      expect(suits).toContain('diamonds');
-      expect(suits).toContain('clubs');
-      expect(suits).toContain('spades');
+
+      for (const suit of suits) {
+        for (const rank of ranks) {
+          const match = deck.find(card => card.suit === suit && card.rank === rank);
+          expect(match).toBeDefined();
+          expect(match?.faceUp).toBe(false);
+          expect(match?.id).toBe(`${suit}-${rank}`);
+        }
+      }
     });
 
-    it('creates cards with all ranks', () => {
-      const deck = createDeck();
-      const ranks = [...new Set(deck.map((card) => card.rank))];
-      expect(ranks).toHaveLength(13);
-      expect(ranks).toContain('A');
-      expect(ranks).toContain('K');
-    });
+    it('creates new card objects on each call', () => {
+      const deckA = createDeck();
+      const deckB = createDeck();
 
-    it('creates cards face down by default', () => {
-      const deck = createDeck();
-      expect(deck.every((card) => !card.faceUp)).toBe(true);
-    });
-
-    it('creates cards with unique IDs', () => {
-      const deck = createDeck();
-      const ids = deck.map((card) => card.id);
-      const uniqueIds = new Set(ids);
-      expect(uniqueIds.size).toBe(52);
+      expect(deckA).not.toBe(deckB);
+      expect(deckA[0]).not.toBe(deckB[0]);
+      expect(deckA[0]).toEqual(deckB[0]);
     });
   });
 
   describe('shuffleDeck', () => {
-    it('returns a deck with same length', () => {
-      const deck = createDeck();
-      const shuffled = shuffleDeck(deck);
-      expect(shuffled).toHaveLength(deck.length);
-    });
-
-    it('returns a new array (does not mutate original)', () => {
+    it('returns a new array without mutating the original', () => {
       const deck = createDeck();
       const original = [...deck];
       const shuffled = shuffleDeck(deck);
-      expect(deck).toEqual(original);
+
       expect(shuffled).not.toBe(deck);
+      expect(deck).toEqual(original);
+      expect(shuffled).toHaveLength(deck.length);
     });
 
-    it('contains all original cards', () => {
+    it('contains all original cards after shuffle', () => {
       const deck = createDeck();
       const shuffled = shuffleDeck(deck);
-      const deckIds = deck.map((card) => card.id).sort();
-      const shuffledIds = shuffled.map((card) => card.id).sort();
+
+      const deckIds = deck.map(card => card.id).sort();
+      const shuffledIds = shuffled.map(card => card.id).sort();
       expect(shuffledIds).toEqual(deckIds);
+    });
+
+    it('uses Fisher-Yates swapping order with deterministic randomness', () => {
+      vi.spyOn(Math, 'random').mockReturnValue(0);
+
+      const deck = [
+        makeCard('A', 'hearts'),
+        makeCard('2', 'hearts'),
+        makeCard('3', 'hearts')
+      ];
+
+      const shuffled = shuffleDeck(deck);
+
+      expect(shuffled.map(card => card.rank)).toEqual(['2', '3', 'A']);
     });
   });
 
   describe('isRed', () => {
-    it('returns true for hearts', () => {
+    it('returns true for red suits and false otherwise', () => {
       expect(isRed('hearts')).toBe(true);
-    });
-
-    it('returns true for diamonds', () => {
       expect(isRed('diamonds')).toBe(true);
-    });
-
-    it('returns false for clubs', () => {
       expect(isRed('clubs')).toBe(false);
-    });
-
-    it('returns false for spades', () => {
       expect(isRed('spades')).toBe(false);
     });
   });
 
   describe('isBlack', () => {
-    it('returns true for clubs', () => {
+    it('returns true for black suits and false otherwise', () => {
       expect(isBlack('clubs')).toBe(true);
-    });
-
-    it('returns true for spades', () => {
       expect(isBlack('spades')).toBe(true);
-    });
-
-    it('returns false for hearts', () => {
       expect(isBlack('hearts')).toBe(false);
-    });
-
-    it('returns false for diamonds', () => {
       expect(isBlack('diamonds')).toBe(false);
     });
   });
 
   describe('getRankValue', () => {
-    it('returns 1 for Ace', () => {
-      expect(getRankValue('A')).toBe(1);
-    });
+    it('maps all ranks to their numeric values', () => {
+      const expected: Record<Rank, number> = {
+        'A': 1,
+        '2': 2,
+        '3': 3,
+        '4': 4,
+        '5': 5,
+        '6': 6,
+        '7': 7,
+        '8': 8,
+        '9': 9,
+        '10': 10,
+        'J': 11,
+        'Q': 12,
+        'K': 13
+      };
 
-    it('returns 11 for Jack', () => {
-      expect(getRankValue('J')).toBe(11);
-    });
-
-    it('returns 12 for Queen', () => {
-      expect(getRankValue('Q')).toBe(12);
-    });
-
-    it('returns 13 for King', () => {
-      expect(getRankValue('K')).toBe(13);
-    });
-
-    it('returns numeric value for number cards', () => {
-      expect(getRankValue('2')).toBe(2);
-      expect(getRankValue('5')).toBe(5);
-      expect(getRankValue('10')).toBe(10);
+      for (const rank of ranks) {
+        expect(getRankValue(rank)).toBe(expected[rank]);
+      }
     });
   });
 
   describe('canStackOnTableau', () => {
-    it('allows King on empty tableau', () => {
-      const king: Card = { suit: 'hearts', rank: 'K', faceUp: true, id: 'hearts-K' };
-      expect(canStackOnTableau(null, king)).toBe(true);
-    });
-
-    it('disallows non-King on empty tableau', () => {
-      const queen: Card = { suit: 'hearts', rank: 'Q', faceUp: true, id: 'hearts-Q' };
-      expect(canStackOnTableau(null, queen)).toBe(false);
+    it('allows only Kings on empty tableau', () => {
+      expect(canStackOnTableau(null, makeCard('K', 'hearts'))).toBe(true);
+      expect(canStackOnTableau(null, makeCard('Q', 'hearts'))).toBe(false);
     });
 
     it('allows opposite color with descending rank', () => {
-      const redSeven: Card = { suit: 'hearts', rank: '7', faceUp: true, id: 'hearts-7' };
-      const blackSix: Card = { suit: 'clubs', rank: '6', faceUp: true, id: 'clubs-6' };
-      expect(canStackOnTableau(redSeven, blackSix)).toBe(true);
+      const top = makeCard('7', 'hearts');
+      const bottom = makeCard('6', 'clubs');
+      expect(canStackOnTableau(top, bottom)).toBe(true);
     });
 
-    it('disallows same color', () => {
-      const redSeven: Card = { suit: 'hearts', rank: '7', faceUp: true, id: 'hearts-7' };
-      const redSix: Card = { suit: 'diamonds', rank: '6', faceUp: true, id: 'diamonds-6' };
-      expect(canStackOnTableau(redSeven, redSix)).toBe(false);
+    it('disallows same color even if descending', () => {
+      const top = makeCard('7', 'hearts');
+      const bottom = makeCard('6', 'diamonds');
+      expect(canStackOnTableau(top, bottom)).toBe(false);
     });
 
-    it('disallows wrong rank order', () => {
-      const redSeven: Card = { suit: 'hearts', rank: '7', faceUp: true, id: 'hearts-7' };
-      const blackFive: Card = { suit: 'clubs', rank: '5', faceUp: true, id: 'clubs-5' };
-      expect(canStackOnTableau(redSeven, blackFive)).toBe(false);
+    it('disallows opposite color with non-descending rank', () => {
+      const top = makeCard('7', 'hearts');
+      const bottom = makeCard('5', 'clubs');
+      expect(canStackOnTableau(top, bottom)).toBe(false);
+    });
+
+    it('allows Ace below 2 with opposite color', () => {
+      const top = makeCard('2', 'hearts');
+      const bottom = makeCard('A', 'clubs');
+      expect(canStackOnTableau(top, bottom)).toBe(true);
+    });
+
+    it('disallows any card below an Ace', () => {
+      const top = makeCard('A', 'hearts');
+      const bottom = makeCard('K', 'clubs');
+      expect(canStackOnTableau(top, bottom)).toBe(false);
     });
   });
 
   describe('canStackOnFoundation', () => {
-    it('allows Ace on empty foundation', () => {
-      const ace: Card = { suit: 'hearts', rank: 'A', faceUp: true, id: 'hearts-A' };
-      expect(canStackOnFoundation(null, ace)).toBe(true);
-    });
-
-    it('disallows non-Ace on empty foundation', () => {
-      const two: Card = { suit: 'hearts', rank: '2', faceUp: true, id: 'hearts-2' };
-      expect(canStackOnFoundation(null, two)).toBe(false);
+    it('allows only Aces on empty foundation', () => {
+      expect(canStackOnFoundation(null, makeCard('A', 'spades'))).toBe(true);
+      expect(canStackOnFoundation(null, makeCard('2', 'spades'))).toBe(false);
     });
 
     it('allows same suit with ascending rank', () => {
-      const heartsTwo: Card = { suit: 'hearts', rank: '2', faceUp: true, id: 'hearts-2' };
-      const heartsThree: Card = { suit: 'hearts', rank: '3', faceUp: true, id: 'hearts-3' };
-      expect(canStackOnFoundation(heartsTwo, heartsThree)).toBe(true);
+      const top = makeCard('Q', 'hearts');
+      const card = makeCard('K', 'hearts');
+      expect(canStackOnFoundation(top, card)).toBe(true);
     });
 
-    it('disallows different suit', () => {
-      const heartsTwo: Card = { suit: 'hearts', rank: '2', faceUp: true, id: 'hearts-2' };
-      const clubsThree: Card = { suit: 'clubs', rank: '3', faceUp: true, id: 'clubs-3' };
-      expect(canStackOnFoundation(heartsTwo, clubsThree)).toBe(false);
+    it('disallows same suit with non-ascending rank', () => {
+      const top = makeCard('Q', 'hearts');
+      const card = makeCard('A', 'hearts');
+      expect(canStackOnFoundation(top, card)).toBe(false);
     });
 
-    it('disallows wrong rank order', () => {
-      const heartsTwo: Card = { suit: 'hearts', rank: '2', faceUp: true, id: 'hearts-2' };
-      const heartsFour: Card = { suit: 'hearts', rank: '4', faceUp: true, id: 'hearts-4' };
-      expect(canStackOnFoundation(heartsTwo, heartsFour)).toBe(false);
+    it('disallows different suit even if ascending', () => {
+      const top = makeCard('Q', 'hearts');
+      const card = makeCard('K', 'clubs');
+      expect(canStackOnFoundation(top, card)).toBe(false);
+    });
+
+    it('disallows descending rank', () => {
+      const top = makeCard('3', 'spades');
+      const card = makeCard('2', 'spades');
+      expect(canStackOnFoundation(top, card)).toBe(false);
     });
   });
 });

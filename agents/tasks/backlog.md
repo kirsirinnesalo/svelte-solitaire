@@ -13,7 +13,7 @@
 
 ## In Progress
 
-- [TECH-007](TECH-007-test-acesup-rules.md) - Add tests for acesUpRules.ts
+_(None)_
 
 ## Blocked
 
@@ -52,6 +52,7 @@ _(None)_
 
 ## Completed
 
+- [TECH-007](completed/TECH-007-test-acesup-rules.md) - Add tests for acesUpRules.ts
 - [TECH-006](completed/TECH-006-test-napoleon-rules.md) - Add tests for napoleonRules.ts
 - [TECH-005](completed/TECH-005-test-klondike-rules.md) - Add comprehensive tests for klondikeRules.ts
 - [TECH-001](completed/TECH-001-vitest-setup.md) - Set up Vitest testing infrastructure

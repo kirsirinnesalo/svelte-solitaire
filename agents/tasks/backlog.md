@@ -22,8 +22,10 @@ _(None)_
 
 ## Features
 
-- [FEAT-001](FEAT-001-card-animations.md) - Add card movement animations
+- [FEAT-001](FEAT-001-card-animations.md) - Card flip animation with CSS 3D transforms
+- [FEAT-011](FEAT-011-card-movement-animations.md) - Card movement animations with overlay technique
 - [FEAT-002](FEAT-002-settings-live-preview.md) - Add live preview to card back settings modal
+- [FEAT-003](FEAT-003-game-instructions.md) - Add instructions/help for each game
 - [FEAT-004](FEAT-004-statistics-display.md) - Display game statistics in game selector
 - [FEAT-005](FEAT-005-keyboard-navigation.md) - Implement keyboard navigation for cards
 - [FEAT-006](FEAT-006-screen-reader-support.md) - Add ARIA labels and screen reader support

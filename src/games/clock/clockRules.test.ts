@@ -14,40 +14,45 @@ import {
 } from './clockRules';
 import type { Card } from '../../types/game';
 
-describe('Clock Solitaire Rules', () => {
-  // Helper function to create test cards
-  const createCard = (
-    rank: Card['rank'],
-    suit: Card['suit'] = 'hearts',
-    faceUp = false,
-    id?: string
-  ): Card => ({
+// Helper function to create test cards
+function createCard(
+  rank: Card['rank'],
+  suit: Card['suit'] = 'hearts',
+  faceUp = false,
+  id?: string
+): Card {
+  return {
     rank,
     suit,
     faceUp,
     id: id || `${rank}-${suit}`
-  });
+  };
+}
 
-  // Helper function to create initial empty state
-  const emptyState = (): ClockState => ({
+// Helper function to create initial empty state
+function emptyState(): ClockState {
+  return {
     piles: [
       [], [], [], [], [], [], [], [], [], [], [], [], []
     ],
     revealedCardPileIndex: null
-  });
-
-  // Helper function to create 13-pile state
-  const createStateWithPiles = (pileCards: Card[][]): ClockState => {
-    const state: ClockState = {
-      piles: pileCards,
-      revealedCardPileIndex: null
-    };
-    // Ensure 13 piles exist
-    while (state.piles.length < 13) {
-      state.piles.push([]);
-    }
-    return state;
   };
+}
+
+// Helper function to create 13-pile state
+function createStateWithPiles(pileCards: Card[][]): ClockState {
+  const state: ClockState = {
+    piles: pileCards,
+    revealedCardPileIndex: null
+  };
+  // Ensure 13 piles exist
+  while (state.piles.length < 13) {
+    state.piles.push([]);
+  }
+  return state;
+}
+
+describe('Clock Solitaire Rules', () => {
 
   describe('getRankPileIndex', () => {
     it('should map Q to index 0 (12 o\'clock)', () => {

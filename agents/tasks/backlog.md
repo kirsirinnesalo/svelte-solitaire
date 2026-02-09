@@ -4,7 +4,6 @@
 
 **Priority**: First task in this section = next task to work on. Physical order defines priority.
 
-- [TECH-007](TECH-007-test-acesup-rules.md) - Add tests for acesUpRules.ts
 - [TECH-008](TECH-008-test-clock-rules.md) - Add tests for clockRules.ts
 - [TECH-009](TECH-009-test-card-utils.md) - Add tests for cardUtils.ts
 - [FEAT-003](FEAT-003-game-instructions.md) - Add instructions/help for each game
@@ -14,7 +13,7 @@
 
 ## In Progress
 
-_(None)_
+- [TECH-007](TECH-007-test-acesup-rules.md) - Add tests for acesUpRules.ts
 
 ## Blocked
 

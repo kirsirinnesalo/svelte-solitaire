@@ -202,7 +202,7 @@ describe('Clock Solitaire Rules', () => {
       const result = moveRevealedCard(stateWithRevealed, 1);
 
       expect(result.valid).toBe(true);
-      expect(result.newState!.piles[1]).toContainEqual(createCard('A', 'hearts'));
+      expect(result.newState!.piles[1]).toContainEqual(createCard('A', 'hearts', true));
     });
 
     it('should return invalid when no card is revealed', () => {
@@ -281,23 +281,25 @@ describe('Clock Solitaire Rules', () => {
 
     it('should return isWon true when 4th King placed in center with all face-up', () => {
       const state = createStateWithPiles([
-        [createCard('K', 'hearts', true)],
+        [createCard('Q', 'hearts', true)],
         [createCard('A', 'diamonds', true)],
         [createCard('2', 'clubs', true)],
         [createCard('3', 'spades', true)],
         [createCard('4', 'hearts', true)],
-        [createCard('5', 'diamonds', true)],
+        [createCard('K', 'hearts', false)],  // 4th King here, face-down
         [createCard('6', 'clubs', true)],
         [createCard('7', 'spades', true)],
         [createCard('8', 'hearts', true)],
         [createCard('9', 'diamonds', true)],
         [createCard('10', 'clubs', true)],
         [createCard('J', 'spades', true)],
-        [createCard('K', 'diamonds', false), createCard('K', 'clubs', false), createCard('K', 'spades', false)]
+        [createCard('K', 'diamonds', true), createCard('K', 'clubs', true), createCard('K', 'spades', true)]  // 3 Kings in center
       ]);
-      const revealedState = revealCard(state, 12);
+      // Reveal the 4th King from pile 5
+      const revealedState = revealCard(state, 5);
       const stateWithRevealed = revealedState.newState!;
 
+      // Move 4th King to center pile 12 - this makes it the 4th King in center
       const result = moveRevealedCard(stateWithRevealed, 12);
 
       expect(result.valid).toBe(true);
@@ -306,23 +308,25 @@ describe('Clock Solitaire Rules', () => {
 
     it('should return isLost true when 4th King placed in center with face-down cards', () => {
       const state = createStateWithPiles([
-        [createCard('Q', 'hearts', false)],
+        [createCard('Q', 'hearts', false)],  // Face-down card that wasn't revealed
         [createCard('A', 'diamonds', true)],
         [createCard('2', 'clubs', true)],
         [createCard('3', 'spades', true)],
         [createCard('4', 'hearts', true)],
-        [createCard('5', 'diamonds', true)],
+        [createCard('K', 'hearts', false)],  // 4th King, face-down (will be revealed)
         [createCard('6', 'clubs', true)],
         [createCard('7', 'spades', true)],
         [createCard('8', 'hearts', true)],
         [createCard('9', 'diamonds', true)],
         [createCard('10', 'clubs', true)],
         [createCard('J', 'spades', true)],
-        [createCard('K', 'diamonds', false), createCard('K', 'clubs', false), createCard('K', 'spades', false)]
+        [createCard('K', 'diamonds', true), createCard('K', 'clubs', true), createCard('K', 'spades', true)]  // 3 Kings in center
       ]);
-      const revealedState = revealCard(state, 12);
+      // Reveal the 4th King from pile 5
+      const revealedState = revealCard(state, 5);
       const stateWithRevealed = revealedState.newState!;
 
+      // Move 4th King to center - but Q pile (0) still has face-down card, so it's a loss
       const result = moveRevealedCard(stateWithRevealed, 12);
 
       expect(result.valid).toBe(true);

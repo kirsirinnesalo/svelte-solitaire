@@ -63,7 +63,7 @@ export const acesUpInstructions: GameInstruction = {
 };
 
 export const clockInstructions: GameInstruction = {
-  title: 'Clock Solitaire (Kellop asianssi)',
+  title: 'Clock Solitaire (Kellopasianssi)',
   goal: 'Paljasta kaikki kortit ennen kuin neljäs kuningas paljastuu.',
   rules: [
     'Kortit on jaettu 13 pinoon: 12 kellotaulun ympäri ja 1 keskellä.',

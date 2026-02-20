@@ -25,7 +25,7 @@
 
 {#if isVisible}
   <div class="backdrop" onclick={onClose} aria-label="Sulje ohjeet" role="button" tabindex="0" onkeydown={(e) => (e.key === 'Enter' || e.key === ' ') && onClose()} />
-  <div class="help-content" role="dialog" aria-modal="true" aria-labelledby="help-title" tabindex="-1" onclick={(e) => e.stopPropagation()}>
+  <div class="help-content" role="dialog" aria-modal="true" aria-labelledby="help-title" tabindex="-1">
     <div class="help-header">
       <h2 id="help-title">{instruction.title}</h2>
       <button class="close-btn" onclick={onClose} aria-label="Sulje ohjeet">✕</button>
@@ -123,6 +123,7 @@
 
   .help-body {
     padding: 1.5rem;
+    text-align: left;
   }
 
   .help-body section {

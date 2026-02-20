@@ -6,6 +6,7 @@
   import GameHeader from '../../components/GameHeader.svelte';
   import GameOverOverlay from '../../components/GameOverOverlay.svelte';
   import PauseOverlay from '../../components/PauseOverlay.svelte';
+  import HelpOverlay from '../../components/HelpOverlay.svelte';
   import RecycleToggle from '../../components/settings/RecycleToggle.svelte';
   import CounterToggle from '../../components/settings/CounterToggle.svelte';
   import { 
@@ -20,6 +21,7 @@
     type NapoleonState 
   } from './napoleonRules';
   import { allowDrop } from '../../lib/dragUtils';
+  import { napoleonInstructions } from '../../lib/gameInstructions';
   import '../../styles/shared.css';
 
   let gameState: NapoleonState = $state({
@@ -47,6 +49,7 @@
   let displayTime = $state<number>(0); // For live timer display
   let isPaused = $state<boolean>(false);
   let pauseStartTime = $state<number>(0);
+  let isHelpVisible = $state<boolean>(false);
 
   // Derived state for undo button
   let undoDisabled = $derived(history.length === 0 || isWon || isLost);
@@ -118,6 +121,10 @@
       pauseStartTime = Date.now();
       isPaused = true;
     }
+  }
+
+  function toggleHelp() {
+    isHelpVisible = !isHelpVisible;
   }
 
   function drawCard() {
@@ -469,6 +476,13 @@
   initGame();
 </script>
 
+<svelte:window onkeydown={(e) => {
+  if ((e.key === '?' || e.key === 'F1') && !isHelpVisible) {
+    e.preventDefault();
+    toggleHelp();
+  }
+}} />
+
 <div class="napoleon">
   <GameHeader
     {undoDisabled}
@@ -481,6 +495,7 @@
     onNewGame={initGame}
     onUndo={undo}
     onPause={togglePause}
+    onHelp={toggleHelp}
   >
     {#snippet settings()}
       <RecycleToggle bind:value={maxRecycles} options={[1, 2, 'unlimited']} />
@@ -489,6 +504,7 @@
   </GameHeader>
 
   <div class="game-area">
+    <HelpOverlay isVisible={isHelpVisible} instruction={napoleonInstructions} onClose={toggleHelp} />
     <PauseOverlay {isPaused} onResume={togglePause} />
     <GameOverOverlay {isWon} {isLost} {moves} {elapsedTime} />
     

@@ -14,6 +14,7 @@
     onUndo,
     onHint,
     onPause,
+    onHelp,
     settings
   }: { 
     undoDisabled?: boolean; 
@@ -28,6 +29,7 @@
     onUndo?: () => void;
     onHint?: () => void;
     onPause?: () => void;
+    onHelp?: () => void;
     settings?: Snippet;
   } = $props();
   
@@ -66,6 +68,15 @@
     >
       💡 Vihje
     </button>
+    {#if onHelp}
+    <button 
+      class="help-btn" 
+      onclick={onHelp}
+      title="Näytä pelin ohjeet (paina ? tai F1)"
+    >
+      ❓ Ohjeet
+    </button>
+    {/if}
     <div class="timer">
       ⏱ {formatTime(elapsedTime)}
     </div>
@@ -140,7 +151,7 @@
     gap: 1rem;
   }
 
-  .new-game-btn, .restart-btn, .undo-btn, .hint-btn {
+  .new-game-btn, .restart-btn, .undo-btn, .hint-btn, .help-btn {
     padding: 0.5rem 1rem;
     border: none;
     border-radius: 6px;
@@ -154,7 +165,8 @@
   .new-game-btn:hover, 
   .restart-btn:hover:not(:disabled), 
   .undo-btn:hover:not(:disabled),
-  .hint-btn:hover:not(:disabled) {
+  .hint-btn:hover:not(:disabled),
+  .help-btn:hover {
     background: #45a049;
   }
 

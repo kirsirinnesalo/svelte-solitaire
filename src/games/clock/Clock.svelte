@@ -5,8 +5,10 @@
   import GameHeader from '../../components/GameHeader.svelte';
   import GameOverOverlay from '../../components/GameOverOverlay.svelte';
   import PauseOverlay from '../../components/PauseOverlay.svelte';
+  import HelpOverlay from '../../components/HelpOverlay.svelte';
   import { revealCard, moveRevealedCard, isGameWon, isGameLost, type ClockState } from './clockRules';
   import { allowDrop } from '../../lib/dragUtils';
+  import { clockInstructions } from '../../lib/gameInstructions';
   import '../../styles/shared.css';
 
   let gameState: ClockState = $state({
@@ -23,6 +25,7 @@
   let displayTime = $state<number>(0); // For live timer display
   let isPaused = $state<boolean>(false);
   let pauseStartTime = $state<number>(0);
+  let isHelpVisible = $state<boolean>(false);
   
   // Update display time every second when game is running
   $effect(() => {
@@ -89,6 +92,10 @@
       pauseStartTime = Date.now();
       isPaused = true;
     }
+  }
+
+  function toggleHelp() {
+    isHelpVisible = !isHelpVisible;
   }
 
   function handlePileClick(pileIndex: number) {
@@ -167,15 +174,25 @@
   }
 </script>
 
+<svelte:window onkeydown={(e) => {
+  if ((e.key === '?' || e.key === 'F1') && !isHelpVisible) {
+    e.preventDefault();
+    toggleHelp();
+  }
+}} />
+
 <div class="clock-game">
   <GameHeader
     undoDisabled={true}
     restartDisabled={true}
     hintDisabled={true}
     elapsedTime={displayTime}
-    {isPaused}    gameStarted={startTime > 0}
-    gameEnded={isWon || isLost}    onNewGame={initGame}
+    {isPaused}
+    gameStarted={startTime > 0}
+    gameEnded={isWon || isLost}
+    onNewGame={initGame}
     onPause={togglePause}
+    onHelp={toggleHelp}
   >
     {#snippet settings()}
       <!-- Ei asetuksia tällä hetkellä -->
@@ -183,6 +200,7 @@
   </GameHeader>
 
   <div class="game-area">
+    <HelpOverlay isVisible={isHelpVisible} instruction={clockInstructions} onClose={toggleHelp} />
     <PauseOverlay {isPaused} onResume={togglePause} />
     <GameOverOverlay {isWon} {isLost} {moves} {elapsedTime} />
     

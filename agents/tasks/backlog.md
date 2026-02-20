@@ -10,7 +10,7 @@
 
 ## In Progress
 
-- [FEAT-003](FEAT-003-game-instructions.md) - Add instructions/help for each game
+_(None)_
 
 ## Blocked
 
@@ -49,6 +49,7 @@ _(None)_
 
 ## Completed
 
+- [FEAT-003](completed/FEAT-003-game-instructions.md) - Add instructions/help for each game
 - [TECH-009](completed/TECH-009-test-card-utils.md) - Add tests for cardUtils.ts
 - [TECH-008](completed/TECH-008-test-clock-rules.md) - Add tests for clockRules.ts
 - [TECH-007](completed/TECH-007-test-acesup-rules.md) - Add tests for acesUpRules.ts

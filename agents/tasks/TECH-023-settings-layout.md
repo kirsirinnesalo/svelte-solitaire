@@ -14,6 +14,7 @@ We want to stack each setting label above its control for a more compact layout.
 - [ ] The new layout reduces horizontal width compared to the current row layout.
 - [ ] The "Laskurit" control is not checkbox-style in the new layout.
 - [ ] The "Laskurit" control visually matches other settings controls.
+- [ ] Selected-state text color is legible on green backgrounds (e.g., draw count 3).
 - [ ] Existing settings remain functional after layout change.
 - [ ] Tests written and passing (TDD)
 - [ ] No TypeScript errors

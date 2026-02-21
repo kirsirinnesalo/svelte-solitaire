@@ -25,6 +25,7 @@ _(None)_
 - [FEAT-001](FEAT-001-card-animations.md) - Card flip animation with CSS 3D transforms
 - [FEAT-011](FEAT-011-card-movement-animations.md) - Card movement animations with overlay technique
 - [FEAT-012](FEAT-012-mobile-responsive-layout.md) - Mobile responsive layout and touch-friendly play
+- [FEAT-013](FEAT-013-version-display.md) - Show app version in UI
 - [FEAT-002](FEAT-002-settings-live-preview.md) - Add live preview to card back settings modal
 - [FEAT-003](FEAT-003-game-instructions.md) - Add instructions/help for each game
 - [FEAT-004](FEAT-004-statistics-display.md) - Display game statistics in game selector

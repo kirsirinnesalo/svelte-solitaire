@@ -79,6 +79,23 @@ npm run preview
 - Deployment happens automatically on every push to `main` via GitHub Actions.
 - If the repository name changes, update `base` in `vite.config.ts` to match the new path.
 
+### Versioning
+
+- The version is stored in `package.json` under `version` (SemVer: major.minor.patch).
+- Update it manually or use npm:
+
+```bash
+# Bug fix release (0.1.0 -> 0.1.1)
+npm version patch
+
+# Feature release (0.1.0 -> 0.2.0)
+npm version minor
+
+# Breaking changes (0.1.0 -> 1.0.0)
+npm version major
+```
+- `npm version` also creates a git tag by default.
+
 ## 🧪 Development Commands
 
 ```bash

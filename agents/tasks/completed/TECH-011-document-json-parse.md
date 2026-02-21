@@ -10,13 +10,13 @@ Without comments, future developers might "fix" this to use structuredClone, bre
 
 ## Acceptance Criteria
 
-- [ ] Add comment in Klondike.svelte above JSON.parse usage
-- [ ] Add comment in Napoleon.svelte above JSON.parse usage
-- [ ] Add comment in AcesUp.svelte above JSON.parse usage
-- [ ] Comment references ADR-004
-- [ ] Comment explains $state proxy incompatibility with structuredClone
-- [ ] No functionality changes (documentation only)
-- [ ] No TypeScript errors
+- [x] Add comment in Klondike.svelte above JSON.parse usage
+- [x] Add comment in Napoleon.svelte above JSON.parse usage
+- [x] ~~Add comment in AcesUp.svelte above JSON.parse usage~~ — N/A: AcesUp has no undo and no JSON.parse usage
+- [x] Comment references ADR-004
+- [x] Comment explains $state proxy incompatibility with structuredClone
+- [x] No functionality changes (documentation only)
+- [x] No TypeScript errors
 
 ## References
 

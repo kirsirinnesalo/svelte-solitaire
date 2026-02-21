@@ -91,6 +91,8 @@
   }
 
   function saveState() {
+    // JSON.parse instead of structuredClone: Svelte 5 $state proxies are not
+    // compatible with structuredClone. See ADR-004 for rationale.
     history = [...history, {
       gameState: JSON.parse(JSON.stringify(gameState)),
       recycleCount,
@@ -101,6 +103,8 @@
   function undo() {
     if (history.length === 0 || isWon) return;
     const previous = history[history.length - 1];
+    // JSON.parse instead of structuredClone: Svelte 5 $state proxies are not
+    // compatible with structuredClone. See ADR-004 for rationale.
     gameState = JSON.parse(JSON.stringify(previous.gameState));
     recycleCount = previous.recycleCount;
     moves = previous.moves;

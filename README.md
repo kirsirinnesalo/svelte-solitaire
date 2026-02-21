@@ -94,33 +94,6 @@ src/
 - `games/klondike/klondikeRules.ts` - Game logic
 - `games/klondike/klondikeRules.test.ts` - Tests
 
-## 🎴 Games
-
-### Klondike
-Classic solitaire with seven tableau piles. Goal is to build up foundations by suit in ascending order.
-- Draw 1 or 3 cards from deck
-
-### Napoleon's Tomb
-Strategic solitaire where the goal is to build Napoleon's tomb and surround it with guards.
-- **Napoleon's tomb (center)**: Build down 6→5→4→3→2→A, four rounds
-- **4 guards (corners)**: Build up 7→8→9→10→J→Q→K (7 cards each)
-- **4 reserve piles**: Temporary storage, max 1 card per pile
-- Only one card can be moved at a time
-- Challenging but rewarding game
-
-### Aces Up
-Quick and simple solitaire with 4 piles.
-- Goal: leave only aces
-- Remove cards by clicking
-- Automatic "can remove" detection
-
-### Clock
-Solitaire based on an analog clock face.
-- Cards arranged like a clock: 12 positions around the dial, kings in the center
-- Click a pile to reveal its top card
-- Place each card in its clock position (A=1 o'clock, 2=2 o'clock, ..., Q=12 o'clock, K=center)
-- Win by revealing all cards before placing the 4th king
-
 ## 🛠️ Technologies
 
 - **Svelte 5** - Modern reactive framework

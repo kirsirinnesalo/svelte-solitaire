@@ -4,6 +4,7 @@
 
 **Priority**: First task in this section = next task to work on. Physical order defines priority.
 
+- [BUG-003](BUG-003-clock-start-pile.md) - Clock should only start from center pile
 - [TECH-026](TECH-026-card-back-selector-style.md) - Align card back selector styling with homepage
 - [BUG-002](BUG-002-napoleon-callback-props.md) - Fix Napoleon to use callback props (ADR-003 violation)
 - [TECH-027](TECH-027-timer-utility.md) - Extract shared timer utility (~80 lines duplication)
@@ -49,6 +50,5 @@ _(None)_
 ## Bugs
 
 - [BUG-001](BUG-001-cardback-persistence.md) - Fix cardBack localStorage persistence using ADR-006
-- [BUG-003](BUG-003-clock-start-pile.md) - Clock should only start from center pile
 
 

@@ -17,26 +17,12 @@ npm run check     # TypeScript validation
 npm run test      # Run tests
 ```
 
-## 🎮 Current Features
+## 🎮 Games
 
-### Games
-
-- ✅ **Klondike** - Classic solitaire
-- ✅ **Napoleon's Tomb** - Strategic single-deck solitaire
-- ✅ **Aces Up** - Quick elimination game
-- ✅ **Clock** - Build the clock by placing cards on their hours
-
-### Game Features
-
-- ✅ **Drag & drop** - Intuitive card movement
-- ✅ **Undo/Redo** - Full history support
-- ✅ **Game settings** - Customizable rules per game
-- ✅ **Card back selection** - Multiple designs
-- ✅ **Move counter** - Track your efficiency
-- ✅ **Timer** - Optional time tracking
-- ✅ **Auto-complete** - Smart foundational moves (Klondike)
-- ✅ **Pause overlay** - Pause without showing cards
-- ⏳ **Testing** - Vitest setup in progress
+- **Klondike** - Classic solitaire
+- **Napoleon's Tomb** - Strategic single-deck solitaire
+- **Aces Up** - Quick elimination game
+- **Clock** - Build the clock by placing cards on their hours
 
 ## 📂 Project Structure
 

@@ -11,6 +11,10 @@
 
 ## In Progress
 
+_(None)_
+
+## Completed
+
 - [TECH-022](TECH-022-counter-settings.md) - Add reusable counter settings (label: Laskurit)
 
 ## Blocked

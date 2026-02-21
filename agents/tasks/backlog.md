@@ -4,13 +4,12 @@
 
 **Priority**: First task in this section = next task to work on. Physical order defines priority.
 
-- [TECH-004](TECH-004-unify-state-naming.md) - Rename `state` → `gameState` in AcesUp and Clock
 - [TECH-011](TECH-011-document-json-parse.md) - Add comments explaining JSON.parse usage
 - [TECH-012](TECH-012-document-effect-usage.md) - Add documentation for $effect usage in Klondike
 
 ## In Progress
 
-_(None)_
+- [TECH-004](TECH-004-unify-state-naming.md) - Rename `state` → `gameState` in AcesUp and Clock
 
 ## Blocked
 

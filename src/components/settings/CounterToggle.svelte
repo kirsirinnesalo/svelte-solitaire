@@ -69,16 +69,6 @@
   .slider-label {
     font-size: 0.9rem;
     font-weight: 600;
-    color: #666;
-    transition: color 0.3s;
-  }
-
-  .toggle-slider.on .slider-option:first-child .slider-label {
-    color: #666;
-  }
-
-  .toggle-slider:not(.on) .slider-option:first-child .slider-label,
-  .toggle-slider.on .slider-option:last-child .slider-label {
     color: white;
   }
 

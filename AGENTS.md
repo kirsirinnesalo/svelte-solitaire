@@ -2,7 +2,7 @@
 
 Welcome to the Svelte Solitaire development team! This document contains everything needed to understand the project architecture, practices, and workflow.
 
-> **Quick Start**: Read this document first, then check [agents/README.md](agents/README.md) for a quick scan. In case of conflict, ADRs take precedence over this guide.
+> **Quick Start**: Read this document first. In case of conflict, ADRs take precedence over this guide.
 
 ## 📋 Quick Reference
 
@@ -24,6 +24,23 @@ Before starting ANY task:
 6. [ ] Create todo list (VS Code Copilot: use `manage_todo_list` tool)
 
 **Then follow Task Workflow below.**
+
+## 🚦 Critical Rules
+
+- Follow TDD (test before code)
+- Never modify completed tasks (create new task)
+- Never violate ADRs (create superseding ADR)
+- Never commit failing tests
+- Annotate tests: `@covers FEAT-001` `@constrainedBy ADR-002`
+
+## 🚨 Escalate If
+
+- ADR would be violated
+- Behavior is ambiguous
+- Tests conflict with acceptance criteria
+- Change breaks documented invariants
+
+**How**: Document in task file, propose ADR update, ask specific questions.
 
 ## 🔄 Task Workflow (Agent Responsibilities)
 

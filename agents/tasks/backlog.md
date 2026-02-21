@@ -48,5 +48,6 @@ _(None)_
 ## Bugs
 
 - [BUG-001](BUG-001-cardback-persistence.md) - Fix cardBack localStorage persistence using ADR-006
+- [BUG-003](BUG-003-clock-start-pile.md) - Clock should only start from center pile
 
 

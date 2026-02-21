@@ -26,3 +26,9 @@ Standardizing on `gameState` avoids confusion with Svelte 5's `$state` rune and 
 ## Notes
 
 Simple find-and-replace refactoring. No logic changes.
+
+## Closure (2026-02-21)
+
+**Status: Closed as obsolete — already implemented.**
+
+Git history shows that both `AcesUp.svelte` and `Clock.svelte` have used `gameState` since the Svelte 5 migration commit `6a42d44` ("Toteuta Svelte 5 -migraatio"). The task was created based on an incorrect assumption about the current state of the codebase. No code changes were needed or made.

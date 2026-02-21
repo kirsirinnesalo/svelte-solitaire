@@ -4,6 +4,7 @@
   import Napoleon from './games/napoleon/Napoleon.svelte';
   import AcesUp from './games/acesup/AcesUp.svelte';
   import Clock from './games/clock/Clock.svelte';
+  import VersionFooter from './components/VersionFooter.svelte';
   import type { GameType } from './types/game';
   import { cardBackType } from './lib/cardBackStore.svelte';
 
@@ -82,6 +83,8 @@
   {:else if selectedGame === 'clock'}
     <Clock />
   {/if}
+
+  <VersionFooter />
 </main>
 
 <style>

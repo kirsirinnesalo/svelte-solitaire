@@ -28,9 +28,9 @@
 <style>
   .draw-toggle-container {
     display: flex;
-    flex-direction: row;
+    flex-direction: column;
     align-items: center;
-    gap: 0.5rem;
+    gap: 0.4rem;
   }
 
   .toggle-label {

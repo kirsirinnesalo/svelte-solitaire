@@ -4,23 +4,24 @@
 
 <div class="counter-toggle-container">
   <span class="toggle-label">{label}</span>
-  <div class="counter-toggle">
-    <button 
-      type="button"
-      class="counter-option" 
-      class:active={!checked}
-      onclick={() => checked = false}
-    >
-      Pois
-    </button>
-    <button 
-      type="button"
-      class="counter-option" 
-      class:active={checked}
-      onclick={() => checked = true}
-    >
-      Päällä
-    </button>
+  <div class="toggle-slider" class:on={checked}>
+    <div class="slider-track">
+      <button 
+        type="button"
+        class="slider-option" 
+        onclick={() => checked = false}
+      >
+        <span class="slider-label">✕</span>
+      </button>
+      <button 
+        type="button"
+        class="slider-option" 
+        onclick={() => checked = true}
+      >
+        <span class="slider-label">✓</span>
+      </button>
+      <div class="slider-thumb"></div>
+    </div>
   </div>
 </div>
 
@@ -38,32 +39,68 @@
     color: #2c3e50;
   }
 
-  .counter-toggle {
+  .toggle-slider {
+    position: relative;
+  }
+
+  .slider-track {
+    position: relative;
     display: flex;
-    gap: 0.25rem;
-    background: #e0e0e0;
+    background: #d0d0d0;
+    border-radius: 16px;
     padding: 2px;
-    border-radius: 6px;
+    width: 70px;
+    height: 32px;
+    transition: background 0.3s;
   }
 
-  .counter-option {
-    padding: 0.3rem 0.6rem;
-    border: none;
+  .toggle-slider.on .slider-track {
+    background: #90d090;
+  }
+
+  .slider-option {
+    flex: 1;
     background: transparent;
-    color: #666;
+    border: none;
     cursor: pointer;
-    font-size: 0.9rem;
-    font-weight: 500;
-    border-radius: 4px;
-    transition: all 0.2s;
+    z-index: 2;
+    position: relative;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 0;
   }
 
-  .counter-option:hover {
-    background: rgba(76, 175, 80, 0.1);
+  .slider-label {
+    font-size: 1.1rem;
+    font-weight: 600;
+    color: #666;
+    transition: color 0.3s;
   }
 
-  .counter-option.active {
-    background: #4CAF50;
+  .toggle-slider.on .slider-option:first-child .slider-label {
+    color: #888;
+  }
+
+  .toggle-slider:not(.on) .slider-option:first-child .slider-label,
+  .toggle-slider.on .slider-option:last-child .slider-label {
     color: white;
+  }
+
+  .slider-thumb {
+    position: absolute;
+    top: 2px;
+    left: 2px;
+    width: calc(50% - 2px);
+    height: calc(100% - 4px);
+    background: #999;
+    border-radius: 14px;
+    transition: all 0.3s ease;
+    z-index: 1;
+  }
+
+  .toggle-slider.on .slider-thumb {
+    transform: translateX(100%);
+    background: #4CAF50;
   }
 </style>

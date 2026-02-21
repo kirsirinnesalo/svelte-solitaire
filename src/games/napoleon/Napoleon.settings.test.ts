@@ -16,15 +16,15 @@ describe('Napoleon counter setting', () => {
     // Counter is off by default (checked=false), so stock-count should be hidden
     expect(container.querySelector('.stock-count')).toBeNull();
 
-    // Find the "Päällä" button and click it to enable counters
-    const onButton = screen.getByText('Päällä');
+    // Find the checkmark button (✓) and click it to enable counters
+    const onButton = screen.getByText('✓');
     await user.click(onButton);
 
     // Now stock counter should be visible
     expect(container.querySelector('.stock-count')).toBeTruthy();
     
-    // Click "Pois" to disable again
-    const offButton = screen.getByText('Pois');
+    // Click cross (✕) to disable again
+    const offButton = screen.getByText('✕');
     await user.click(offButton);
     
     // Stock counter should be hidden again

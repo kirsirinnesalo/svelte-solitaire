@@ -5,7 +5,7 @@ import CounterToggle from './CounterToggle.svelte';
 
 /**
  * @covers TECH-023
- * @description Ensures the counter toggle uses stacked layout and button-based toggle.
+ * @description Ensures the counter toggle uses stacked layout and compact slider toggle.
  * @constrainedBy ADR-001, ADR-002
  */
 describe('CounterToggle layout (TECH-023)', () => {
@@ -35,47 +35,41 @@ describe('CounterToggle layout (TECH-023)', () => {
     expect(screen.queryByRole('checkbox')).toBeNull();
   });
 
-  it('has On/Off button options', () => {
+  it('has compact symbol-based options', () => {
     render(CounterToggle, { props: { checked: false } });
     
-    expect(screen.getByText('Pois')).toBeTruthy();
-    expect(screen.getByText('Päällä')).toBeTruthy();
+    expect(screen.getByText('✕')).toBeTruthy();
+    expect(screen.getByText('✓')).toBeTruthy();
   });
 
   it('toggles state when clicking buttons', async () => {
     const user = userEvent.setup();
     render(CounterToggle, { props: { checked: false } });
     
-    const onButton = screen.getByText('Päällä');
-    const offButton = screen.getByText('Pois');
+    const checkButton = screen.getByText('✓');
+    const crossButton = screen.getByText('✕');
     
-    // Initially "Pois" should be active
-    expect(offButton.classList.contains('active')).toBe(true);
-    expect(onButton.classList.contains('active')).toBe(false);
+    // Initially unchecked, so cross button area should show slider
+    const slider = document.querySelector('.toggle-slider');
+    expect(slider?.classList.contains('checked')).toBe(false);
     
-    await user.click(onButton);
+    await user.click(checkButton);
     
-    // After clicking "Päällä", it should become active
-    expect(onButton.classList.contains('active')).toBe(true);
+    // After clicking checkmark, slider should move
+    expect(slider?.classList.contains('checked')).toBe(true);
   });
 
-  it('shows active state styling on selected button', () => {
+  it('shows slider thumb in correct position', () => {
     const { container } = render(CounterToggle, { props: { checked: true } });
     
-    const buttons = container.querySelectorAll('button');
-    const activeButtons = Array.from(buttons).filter(btn => 
-      btn.classList.contains('active')
-    );
-    
-    expect(activeButtons.length).toBe(1);
-    // The "Päällä" button should be active when checked=true
-    expect(activeButtons[0].textContent?.trim()).toBe('Päällä');
+    const slider = container.querySelector('.toggle-slider');
+    expect(slider?.classList.contains('checked')).toBe(true);
   });
 
-  it('shows "Pois" as active when checked is false', () => {
+  it('shows slider on left when unchecked', () => {
     const { container } = render(CounterToggle, { props: { checked: false } });
     
-    const poisButton = screen.getByText('Pois');
-    expect(poisButton.classList.contains('active')).toBe(true);
+    const slider = container.querySelector('.toggle-slider');
+    expect(slider?.classList.contains('checked')).toBe(false);
   });
 });

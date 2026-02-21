@@ -112,7 +112,8 @@ describe('Clock Solitaire Rules', () => {
     it('should reveal a face-down card at top of pile', () => {
       const state = createStateWithPiles([
         [createCard('Q', 'hearts', false)],
-        [], [], [], [], [], [], [], [], [], [], [], []
+        [], [], [], [], [], [], [], [], [], [], [],
+        [createCard('K', 'hearts', true)] // Center has face-up card (game started)
       ]);
 
       const result = revealCard(state, 0);
@@ -147,7 +148,8 @@ describe('Clock Solitaire Rules', () => {
         [createCard('Q', 'hearts', false)],
         [createCard('A', 'diamonds', false)],
         [createCard('2', 'clubs', false)],
-        [], [], [], [], [], [], [], [], [], []
+        [], [], [], [], [], [], [], [], [],
+        [createCard('K', 'hearts', true)] // Center has face-up card (game started)
       ]);
 
       const result = revealCard(state, 2);
@@ -163,7 +165,8 @@ describe('Clock Solitaire Rules', () => {
     it('should only reveal top card of pile with multiple cards', () => {
       const state = createStateWithPiles([
         [createCard('Q', 'hearts', false), createCard('A', 'hearts', false)],
-        [], [], [], [], [], [], [], [], [], [], [], []
+        [], [], [], [], [], [], [], [], [], [], [],
+        [createCard('K', 'hearts', true)] // Center has face-up card (game started)
       ]);
 
       const result = revealCard(state, 0);
@@ -193,9 +196,10 @@ describe('Clock Solitaire Rules', () => {
       const state = createStateWithPiles([
         [], // 0: Q position
         [createCard('A', 'hearts', false)], // 1: A position
-        [], [], [], [], [], [], [], [], [], [], []
+        [], [], [], [], [], [], [], [], [], [],
+        [createCard('K', 'hearts', true)] // Center has face-up card (game started)
       ]);
-      // Simulate revealing A from pile 0
+      // Simulate revealing A from pile 1
       const revealedState = revealCard(state, 1);
       const stateWithRevealed = revealedState.newState!;
 
@@ -208,7 +212,8 @@ describe('Clock Solitaire Rules', () => {
     it('should return invalid when no card is revealed', () => {
       const state = createStateWithPiles([
         [createCard('A', 'hearts', false)],
-        [], [], [], [], [], [], [], [], [], [], [], []
+        [], [], [], [], [], [], [], [], [], [], [],
+        [createCard('K', 'hearts', true)] // Center has face-up card
       ]);
 
       const result = moveRevealedCard(state, 1);
@@ -219,7 +224,8 @@ describe('Clock Solitaire Rules', () => {
     it('should return invalid when dropping on wrong pile', () => {
       const state = createStateWithPiles([
         [createCard('A', 'hearts', false)],
-        [], [], [], [], [], [], [], [], [], [], [], []
+        [], [], [], [], [], [], [], [], [], [], [],
+        [createCard('K', 'hearts', true)] // Center has face-up card (game started)
       ]);
       const revealedState = revealCard(state, 0);
       const stateWithRevealed = revealedState.newState!;
@@ -234,7 +240,8 @@ describe('Clock Solitaire Rules', () => {
       const state = createStateWithPiles([
         [createCard('A', 'hearts', false)],
         [createCard('Q', 'diamonds', false), createCard('K', 'diamonds', false)],
-        [], [], [], [], [], [], [], [], [], [], []
+        [], [], [], [], [], [], [], [], [], [],
+        [createCard('K', 'hearts', true)] // Center has face-up card (game started)
       ]);
       const revealedState = revealCard(state, 0);
       const stateWithRevealed = revealedState.newState!;
@@ -252,7 +259,8 @@ describe('Clock Solitaire Rules', () => {
       const state = createStateWithPiles([
         [createCard('A', 'hearts', false)],
         [createCard('Q', 'diamonds', false)],
-        [], [], [], [], [], [], [], [], [], [], []
+        [], [], [], [], [], [], [], [], [], [],
+        [createCard('K', 'hearts', true)] // Center has face-up card (game started)
       ]);
       const revealedState = revealCard(state, 0);
       const stateWithRevealed = revealedState.newState!;
@@ -267,7 +275,7 @@ describe('Clock Solitaire Rules', () => {
       const state = createStateWithPiles([
         [createCard('K', 'hearts', false)],
         [], [], [], [], [], [], [], [], [], [], [],
-        [] // Center pile (index 12)
+        [createCard('K', 'diamonds', true)] // Center has face-up card (game started)
       ]);
       const revealedState = revealCard(state, 0);
       const stateWithRevealed = revealedState.newState!;
@@ -337,7 +345,8 @@ describe('Clock Solitaire Rules', () => {
       const state = createStateWithPiles([
         [createCard('A', 'hearts', false)],
         [createCard('Q', 'diamonds', false)],
-        [], [], [], [], [], [], [], [], [], [], []
+        [], [], [], [], [], [], [], [], [], [],
+        [createCard('K', 'hearts', true)] // Center has face-up card (game started)
       ]);
       const revealedState = revealCard(state, 0);
       const stateWithRevealed = revealedState.newState!;
@@ -352,7 +361,8 @@ describe('Clock Solitaire Rules', () => {
     it('should preserve original state when move is invalid', () => {
       const state = createStateWithPiles([
         [createCard('A', 'hearts', false)],
-        [], [], [], [], [], [], [], [], [], [], [], []
+        [], [], [], [], [], [], [], [], [], [], [],
+        [createCard('K', 'hearts', true)] // Center has face-up card (game started)
       ]);
       const revealedState = revealCard(state, 0);
       const stateWithRevealed = revealedState.newState!;
@@ -525,18 +535,19 @@ describe('Clock Solitaire Rules', () => {
       const state = createStateWithPiles([
         [createCard('A', 'hearts', false)],
         [createCard('Q', 'diamonds', false)],
-        [], [], [], [], [], [], [], [], [], [], []
+        [], [], [], [], [], [], [], [], [], [],
+        [createCard('K', 'spades', false)] // center pile
       ]);
 
-      // Reveal card from pile 0
-      const revealResult = revealCard(state, 0);
+      // Must start from center pile (index 12)
+      const revealResult = revealCard(state, 12);
       expect(revealResult.valid).toBe(true);
       const afterReveal = revealResult.newState!;
 
-      // Move A to pile 1
-      const moveResult = moveRevealedCard(afterReveal, 1);
+      // Move K to pile 12 (center)
+      const moveResult = moveRevealedCard(afterReveal, 12);
       expect(moveResult.valid).toBe(true);
-      expect(moveResult.newState!.piles[1][0].rank).toBe('A');
+      expect(moveResult.newState!.piles[12][0].rank).toBe('K');
     });
 
     it('should handle moving Kings to center', () => {
@@ -583,6 +594,129 @@ describe('Clock Solitaire Rules', () => {
       moveResult = moveRevealedCard(currentState, 12);
       expect(moveResult.valid).toBe(true);
       expect(moveResult.isWon).toBe(true);
+    });
+  });
+
+  /**
+   * @covers BUG-003
+   * @description Tests that the game can only be started from center pile
+   * @constrainedBy ADR-001
+   */
+  describe('Center pile start rule', () => {
+    it('should allow revealing from center pile (index 12) when no cards are face-up', () => {
+      const state = createStateWithPiles([
+        [createCard('Q', 'hearts', false)],
+        [createCard('A', 'hearts', false)],
+        [createCard('2', 'hearts', false)],
+        [createCard('3', 'hearts', false)],
+        [createCard('4', 'hearts', false)],
+        [createCard('5', 'hearts', false)],
+        [createCard('6', 'hearts', false)],
+        [createCard('7', 'hearts', false)],
+        [createCard('8', 'hearts', false)],
+        [createCard('9', 'hearts', false)],
+        [createCard('10', 'hearts', false)],
+        [createCard('J', 'hearts', false)],
+        [createCard('K', 'hearts', false)] // center pile
+      ]);
+
+      const result = revealCard(state, 12);
+
+      expect(result.valid).toBe(true);
+      expect(result.newState).toBeDefined();
+      expect(result.newState!.piles[12][0].faceUp).toBe(true);
+    });
+
+    it('should NOT allow revealing from non-center pile when no cards are face-up', () => {
+      const state = createStateWithPiles([
+        [createCard('Q', 'hearts', false)],
+        [createCard('A', 'hearts', false)],
+        [createCard('2', 'hearts', false)],
+        [createCard('3', 'hearts', false)],
+        [createCard('4', 'hearts', false)],
+        [createCard('5', 'hearts', false)],
+        [createCard('6', 'hearts', false)],
+        [createCard('7', 'hearts', false)],
+        [createCard('8', 'hearts', false)],
+        [createCard('9', 'hearts', false)],
+        [createCard('10', 'hearts', false)],
+        [createCard('J', 'hearts', false)],
+        [createCard('K', 'hearts', false)] // center pile
+      ]);
+
+      // Try to reveal from pile 0 (Q position) - should fail
+      const result = revealCard(state, 0);
+
+      expect(result.valid).toBe(false);
+      expect(result.newState).toBeUndefined();
+    });
+
+    it('should allow revealing from any pile after game has started', () => {
+      const state = createStateWithPiles([
+        [createCard('Q', 'hearts', false)],
+        [createCard('A', 'hearts', false)],
+        [createCard('2', 'hearts', false)],
+        [createCard('3', 'hearts', false)],
+        [createCard('4', 'hearts', false)],
+        [createCard('5', 'hearts', false)],
+        [createCard('6', 'hearts', false)],
+        [createCard('7', 'hearts', false)],
+        [createCard('8', 'hearts', false)],
+        [createCard('9', 'hearts', false)],
+        [createCard('10', 'hearts', false)],
+        [createCard('J', 'hearts', false)],
+        [createCard('K', 'hearts', true)] // center pile has face-up card (game started)
+      ]);
+
+      // Should allow revealing from non-center pile after game started
+      const result = revealCard(state, 0);
+
+      expect(result.valid).toBe(true);
+      expect(result.newState).toBeDefined();
+    });
+
+    it('should block revealing from pile 5 when no cards are face-up', () => {
+      const state = createStateWithPiles([
+        [createCard('Q', 'hearts', false)],
+        [createCard('A', 'hearts', false)],
+        [createCard('2', 'hearts', false)],
+        [createCard('3', 'hearts', false)],
+        [createCard('4', 'hearts', false)],
+        [createCard('5', 'hearts', false)],
+        [createCard('6', 'hearts', false)],
+        [createCard('7', 'hearts', false)],
+        [createCard('8', 'hearts', false)],
+        [createCard('9', 'hearts', false)],
+        [createCard('10', 'hearts', false)],
+        [createCard('J', 'hearts', false)],
+        [createCard('K', 'hearts', false)]
+      ]);
+
+      const result = revealCard(state, 5);
+
+      expect(result.valid).toBe(false);
+    });
+
+    it('should block revealing from pile 11 when no cards are face-up', () => {
+      const state = createStateWithPiles([
+        [createCard('Q', 'hearts', false)],
+        [createCard('A', 'hearts', false)],
+        [createCard('2', 'hearts', false)],
+        [createCard('3', 'hearts', false)],
+        [createCard('4', 'hearts', false)],
+        [createCard('5', 'hearts', false)],
+        [createCard('6', 'hearts', false)],
+        [createCard('7', 'hearts', false)],
+        [createCard('8', 'hearts', false)],
+        [createCard('9', 'hearts', false)],
+        [createCard('10', 'hearts', false)],
+        [createCard('J', 'hearts', false)],
+        [createCard('K', 'hearts', false)]
+      ]);
+
+      const result = revealCard(state, 11);
+
+      expect(result.valid).toBe(false);
     });
   });
 });

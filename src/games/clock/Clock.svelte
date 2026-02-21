@@ -102,17 +102,17 @@
     if (isPaused) return;
     if (isWon || isLost || !gameStarted) return;
     
-    // Start timer on first action
-    if (startTime === 0) {
-      startTime = Date.now();
-    }
-    
     // If there's already a revealed card, ignore clicks
     if (gameState.revealedCardPileIndex !== null) return;
     
     const result = revealCard(gameState, pileIndex);
     
     if (result.valid && result.newState) {
+      // Start timer on first valid action
+      if (startTime === 0) {
+        startTime = Date.now();
+      }
+      
       gameState = result.newState;
     }
   }

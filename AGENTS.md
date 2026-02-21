@@ -140,58 +140,7 @@ Every task is complete when:
 - Pure functions (`*Rules.ts`): 100%
 - Components: 80%+
 
-## 🎨 Svelte 5 Runes Patterns
-
-### State Management
-```typescript
-// ✅ Correct - use $state for all mutable state
-let moves = $state(0);
-let gameState: KlondikeState = $state({
-  tableau: [] as Card[][],
-  foundations: [[], [], [], []]
-});
-
-// ❌ Wrong - no reactive declarations
-let moves: number; // Not reactive!
-$: moves = history.length; // Forbidden! Use $derived
-```
-
-### Computed Values
-```typescript
-// ✅ Correct - use $derived for computed values
-let canUndo = $derived(history.length > 0 && !isWon && !isLost);
-
-// ❌ Wrong - don't use $effect for pure computations
-$effect(() => {
-  canUndo = history.length > 0; // Use $derived instead!
-});
-```
-
-### Props
-```typescript
-// ✅ Correct - destructure from $props()
-let { card, draggable = false }: { card: Card; draggable?: boolean } = $props();
-
-// ❌ Wrong - no export let
-export let card: Card; // Forbidden!
-```
-
-### Side Effects
-```typescript
-// ✅ Correct - use $effect for side effects only
-$effect(() => {
-  const interval = setInterval(() => elapsedTime++, 1000);
-  return () => clearInterval(interval);
-});
-```
-
-### Bindable Props
-```typescript
-// ✅ Correct - use $bindable for two-way binding
-let { checked = $bindable() }: { checked: boolean } = $props();
-```
-
-## 🎮 Game Implementation Pattern
+##  Game Implementation Pattern
 
 ### 1. Rules Module (`*Rules.ts`)
 ```typescript

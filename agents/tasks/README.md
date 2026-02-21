@@ -7,7 +7,7 @@ Complete guide for managing development tasks in this project.
 ## 🎯 Quick Reference
 
 - **Priority**: Physical order in Ready section (first = next)
-- **Workflow**: Ready → In Progress (ONE at a time) → Completed
+- **Workflow**: Ready → In Progress (ONE at a time) → archive to `completed/`
 - **Task Types**: FEAT (features), TECH (technical), BUG (bugs)
 - **Agent Rule**: Take FIRST task from Ready, work on ONE, complete fully
 - **User Role**: Prioritize tasks by ordering Ready section
@@ -74,14 +74,13 @@ Tasks tracked in [backlog.md](backlog.md) with these sections:
 1. **Ready** - USER prioritized (agents take FIRST only)
 2. **In Progress** - Currently active (max 1, on main branch)
 3. **Blocked** - Waiting on dependencies
-4. **Completed** - Done on feature branch (then archived, merged to main)
 
 ### Discovery Sections (Agent-Managed)
 5. **Features** - New feature ideas
 6. **Technical** - Technical debt, refactoring, testing, documentation
 7. **Bugs** - Discovered bugs
 
-**Flow**: User moves tasks from discovery sections → Ready. Agent takes from Ready → In Progress → Completed.
+**Flow**: User moves tasks from discovery sections → Ready. Agent takes from Ready → In Progress → archive to `completed/`.
 
 ---
 
@@ -177,7 +176,7 @@ Add to appropriate section (Features/Technical/Bugs/etc.).
 1. Verify all acceptance criteria met
 2. Add completion notes to task file
 3. Move task file to `completed/` directory (**keep original filename**)
-4. Update backlog.md: move to Completed section
+4. Remove the task from backlog.md
 5. **Commit completion**: `git commit -m "chore: complete TASK-ID"`
 6. Report branch readiness for merge
 7. **User merges** to main with `--no-ff` (brings completion + code)

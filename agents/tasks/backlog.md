@@ -52,17 +52,4 @@ _(None)_
 
 - [BUG-001](BUG-001-cardback-persistence.md) - Fix cardBack localStorage persistence using ADR-006
 
-## Completed
-
-- [FEAT-003](completed/FEAT-003-game-instructions.md) - Add instructions/help for each game
-- [TECH-009](completed/TECH-009-test-card-utils.md) - Add tests for cardUtils.ts
-- [TECH-008](completed/TECH-008-test-clock-rules.md) - Add tests for clockRules.ts
-- [TECH-007](completed/TECH-007-test-acesup-rules.md) - Add tests for acesUpRules.ts
-- [TECH-006](completed/TECH-006-test-napoleon-rules.md) - Add tests for napoleonRules.ts
-- [TECH-005](completed/TECH-005-test-klondike-rules.md) - Add comprehensive tests for klondikeRules.ts
-- [TECH-001](completed/TECH-001-vitest-setup.md) - Set up Vitest testing infrastructure
-- [FEAT-009](completed/FEAT-009-auto-complete-klondike.md) - Add auto-complete when all cards are face-up in Klondike
-
-_(Archive completed tasks to completed/ directory)_
-
 

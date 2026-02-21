@@ -49,7 +49,6 @@ Complete workflow for every task:
 8. **Document**: Update docs if user-facing, create ADR if architectural
 9. **Complete**:
    - **Agent** (on feature branch):
-     - Moves task to Completed in `backlog.md`
      - Archives task file to `completed/`
      - Commits: `git commit -m "chore: complete TASK-ID"`
      - Reports branch name and readiness
@@ -198,6 +197,7 @@ This enables:
 - **ONE task at a time** - complete before starting next
 - **Types**: FEAT (features), TECH (technical/testing/docs), BUG (bugs)
 - **Workflow**: Ready → In Progress → Completed → `completed/` directory
+- **Workflow**: Ready → In Progress → archive to `completed/` directory
 - **TDD**: Test first for all tasks
 - **Commits**: Short and focused - `feat(TASK-ID): what changed`
   - Don't repeat acceptance criteria (DoD is implicit)

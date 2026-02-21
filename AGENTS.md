@@ -216,14 +216,7 @@ npm run test -- --coverage  # Coverage report
 
 ## 🏗️ Architecture Decisions
 
-All architectural decisions are documented in `docs/adrs/`. Key decisions:
-
-- **[ADR-001](docs/adrs/ADR-001-test-driven-development.md)**: TDD workflow mandate
-- **[ADR-002](docs/adrs/ADR-002-svelte-5-runes-only.md)**: Svelte 5 runes-only approach
-- **[ADR-003](docs/adrs/ADR-003-callback-props-over-event-dispatchers.md)**: Callback props pattern
-- **[ADR-004](docs/adrs/ADR-004-json-parse-for-state-cloning.md)**: JSON.parse for state cloning
-- **[ADR-005](docs/adrs/ADR-005-game-over-overlay-refactor.md)**: Overlay component refactoring
-- **[ADR-006](docs/adrs/ADR-006-localstorage-for-game-statistics.md)**: LocalStorage for game statistics
+All architectural decisions are documented in [`docs/adrs/`](docs/adrs/). Review relevant ADRs before starting any task — they take precedence over this guide.
 
 ---
 

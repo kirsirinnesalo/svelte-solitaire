@@ -112,33 +112,6 @@ Every task is complete when:
 
 ---
 
-## 🎯 Project Structure
-
-```
-src/
-├── components/          # Shared UI components
-│   ├── CardComponent.svelte
-│   ├── GameHeader.svelte
-│   └── settings/       # Setting toggles ($bindable pattern)
-├── games/              # Game implementations
-│   ├── {game}/
-│   │   ├── {Game}.svelte      # UI component
-│   │   └── {game}Rules.ts     # Pure game logic
-├── lib/                # Utilities and stores
-│   ├── cardUtils.ts    # Card operations
-│   ├── dragUtils.ts    # Drag & drop helpers
-│   └── cardBackStore.svelte.ts  # Runes-based store
-├── types/              # TypeScript definitions
-│   └── game.ts         # Card, Suit, Rank, GameState types
-└── styles/             # Shared CSS
-    └── shared.css
-```
-
-**Example**: For a game called "Klondike":
-- UI: `src/games/klondike/Klondike.svelte`
-- Logic: `src/games/klondike/klondikeRules.ts`
-- Tests: `src/games/klondike/klondikeRules.test.ts`
-
 ## 📐 Code Conventions
 
 ### Language

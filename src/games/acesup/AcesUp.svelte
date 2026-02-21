@@ -5,6 +5,7 @@
   import GameHeader from '../../components/GameHeader.svelte';
   import GameOverOverlay from '../../components/GameOverOverlay.svelte';
   import PauseOverlay from '../../components/PauseOverlay.svelte';
+  import HelpOverlay from '../../components/HelpOverlay.svelte';
   import { 
     dealCards, 
     removeCard, 
@@ -15,6 +16,7 @@
     type AcesUpState 
   } from './acesUpRules';
   import { allowDrop } from '../../lib/dragUtils';
+  import { acesUpInstructions } from '../../lib/gameInstructions';
   import '../../styles/shared.css';
 
   let gameState: AcesUpState = $state({
@@ -33,6 +35,7 @@
   let displayTime = $state<number>(0); // For live timer display
   let isPaused = $state<boolean>(false);
   let pauseStartTime = $state<number>(0);
+  let isHelpVisible = $state<boolean>(false);
 
   // Derived state for undo button
   let undoDisabled = $derived(history.length === 0 || isWon || isLost);
@@ -199,6 +202,10 @@
     }
   }
 
+  function toggleHelp() {
+    isHelpVisible = !isHelpVisible;
+  }
+
   function showHint() {
     // Show highlights temporarily - next deal will hide them
     showHighlight = true;
@@ -218,20 +225,31 @@
   initGame();
 </script>
 
+<svelte:window onkeydown={(e) => {
+  if ((e.key === '?' || e.key === 'F1') && !isHelpVisible) {
+    e.preventDefault();
+    toggleHelp();
+  }
+}} />
+
 <div class="acesup">
   <GameHeader
     {undoDisabled}
     restartDisabled={true}
     hintDisabled={false}
     elapsedTime={displayTime}
-    {isPaused}    gameStarted={startTime > 0}
-    gameEnded={isWon || isLost}    onNewGame={initGame}
+    {isPaused}
+    gameStarted={startTime > 0}
+    gameEnded={isWon || isLost}
+    onNewGame={initGame}
     onUndo={undo}
     onHint={showHint}
     onPause={togglePause}
+    onHelp={toggleHelp}
   />
 
   <div class="game-area">
+    <HelpOverlay isVisible={isHelpVisible} instruction={acesUpInstructions} onClose={toggleHelp} />
     <PauseOverlay {isPaused} onResume={togglePause} />
     <GameOverOverlay {isWon} {isLost} {moves} {elapsedTime} />
     

@@ -5,10 +5,12 @@
   import GameHeader from '../../components/GameHeader.svelte';
   import GameOverOverlay from '../../components/GameOverOverlay.svelte';
   import PauseOverlay from '../../components/PauseOverlay.svelte';
+  import HelpOverlay from '../../components/HelpOverlay.svelte';
   import DrawCountToggle from '../../components/settings/DrawCountToggle.svelte';
   import RecycleToggle from '../../components/settings/RecycleToggle.svelte';
   import { moveCard, isGameWon, isGameLost, canAutoComplete, findNextAutoMove, type KlondikeState } from './klondikeRules';
   import { allowDrop } from '../../lib/dragUtils';
+  import { klondikeInstructions } from '../../lib/gameInstructions';
   import '../../styles/shared.css';
 
   let gameState: KlondikeState = $state({
@@ -39,6 +41,7 @@
   let isPaused = $state<boolean>(false);
   let pauseStartTime = $state<number>(0);
   let isAutoCompleting = $state<boolean>(false); // Track auto-complete state
+  let isHelpVisible = $state<boolean>(false); // Help overlay visibility
 
   // Derived state for undo button
   let undoDisabled = $derived(history.length === 0 || isWon || isLost || !gameStarted);
@@ -173,6 +176,10 @@
       pauseStartTime = Date.now();
       isPaused = true;
     }
+  }
+
+  function toggleHelp() {
+    isHelpVisible = !isHelpVisible;
   }
 
   function drawFromStock() {
@@ -420,6 +427,13 @@
   }
 </script>
 
+<svelte:window onkeydown={(e) => {
+  if ((e.key === '?' || e.key === 'F1') && !isHelpVisible) {
+    e.preventDefault();
+    toggleHelp();
+  }
+}} />
+
 <div class="klondike">
   <GameHeader
     undoDisabled={undoDisabled}
@@ -433,6 +447,7 @@
     onUndo={undo}
     onHint={showHint}
     onPause={togglePause}
+    onHelp={toggleHelp}
   >
     {#snippet settings()}
       <DrawCountToggle bind:value={drawCount} />
@@ -452,6 +467,7 @@
   {/if}
 
   <div class="game-area">
+    <HelpOverlay isVisible={isHelpVisible} instruction={klondikeInstructions} onClose={toggleHelp} />
     <PauseOverlay {isPaused} onResume={togglePause} />
     <GameOverOverlay {isWon} {isLost} {moves} {elapsedTime} />
     

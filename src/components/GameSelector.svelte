@@ -7,22 +7,22 @@
     {
       id: 'klondike',
       name: 'Klondike',
-      description: 'Klassinen pasianssi: rakenna pinot ässästä kuninkaaseen'
+      description: 'Klassisessa pasianssissa kerätään kortit maittain ässästä kuninkaaseen'
     },
     {
       id: 'napoleon',
       name: 'Napoleonin hauta',
-      description: 'Rakenna kulmapakat 7→K ja keskuspakka 6→A'
+      description: 'Rakenna hauta ja neljä vartijaa'
     },
     {
       id: 'acesup',
       name: 'Aces Up',
-      description: 'Poista kaikki kortit paitsi ässät'
+      description: 'Nopea peli - jätä jäljelle vain ässät'
     },
     {
       id: 'clock',
-      name: 'Kellopasianssi',
-      description: 'Käännä kortit kellotauluun: Q→klo 12, A→klo 1, kuningas→keskelle'
+      name: 'Kello',
+      description: 'Kokoa korteista kellotaulu'
     }
   ];
 
@@ -78,6 +78,9 @@
     cursor: pointer;
     transition: all 0.3s ease;
     text-align: left;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
   }
 
   .game-card:hover:not(.disabled) {

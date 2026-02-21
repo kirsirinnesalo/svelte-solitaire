@@ -45,14 +45,6 @@ src/
 - **[agents/adrs/](agents/adrs/)** - Architecture Decision Records
 - **[agents/tasks/backlog.md](agents/tasks/backlog.md)** - Task backlog and roadmap
 
-## 🤝 Contributing
-
-1. Read [AGENTS.md](AGENTS.md) for workflow and conventions
-2. Check [agents/tasks/backlog.md](agents/tasks/backlog.md) for available tasks
-3. Follow TDD: Write test first, then implement
-4. Use feature branches with Conventional Commits
-5. Ensure all tests pass before merging
-
 ## 📝 License
 
 MIT License - see [LICENSE](LICENSE) for details.

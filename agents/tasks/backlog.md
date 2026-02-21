@@ -4,7 +4,12 @@
 
 **Priority**: First task in this section = next task to work on. Physical order defines priority.
 
-_(None)_
+- [TECH-021](TECH-021-remove-napoleon-draw-counter.md) - Show recycle counters only when limit > 1
+- [TECH-022](TECH-022-counter-settings.md) - Add reusable counter settings (label: Laskurit)
+- [TECH-023](TECH-023-settings-layout.md) - Stack settings labels above controls
+- [TECH-024](TECH-024-icon-only-actions.md) - Icon-only action buttons with hover labels
+- [TECH-025](TECH-025-action-button-styling.md) - Primary green + neutral secondary actions
+- [TECH-026](TECH-026-card-back-selector-style.md) - Align card back selector styling with homepage
 
 ## In Progress
 
@@ -40,12 +45,6 @@ _(None)_
 - [TECH-018](TECH-018-component-tests.md) - Add component tests with Testing Library
 - [TECH-019](TECH-019-e2e-tests.md) - Add E2E tests for game scenarios
 - [TECH-020](TECH-020-card-bounds-collision.md) - Improve drag collision detection using card bounds
-- [TECH-021](TECH-021-remove-napoleon-draw-counter.md) - Show recycle counters only when limit > 1
-- [TECH-022](TECH-022-counter-settings.md) - Add reusable counter settings (label: Laskurit)
-- [TECH-023](TECH-023-settings-layout.md) - Stack settings labels above controls
-- [TECH-024](TECH-024-icon-only-actions.md) - Icon-only action buttons with hover labels
-- [TECH-025](TECH-025-action-button-styling.md) - Primary green + neutral secondary actions
-- [TECH-026](TECH-026-card-back-selector-style.md) - Align card back selector styling with homepage
 
 ## Bugs
 

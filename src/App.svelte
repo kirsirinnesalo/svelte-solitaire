@@ -61,7 +61,7 @@
         {#if selectedGame === 'klondike'}
           Klondike
         {:else if selectedGame === 'napoleon'}
-          Napoleon's Tomb
+          Napoleonin hauta
         {:else if selectedGame === 'acesup'}
           Aces Up
         {:else if selectedGame === 'clock'}

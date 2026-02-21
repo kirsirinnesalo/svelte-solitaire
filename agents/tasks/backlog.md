@@ -4,16 +4,16 @@
 
 **Priority**: First task in this section = next task to work on. Physical order defines priority.
 
-- [TECH-024](TECH-024-icon-only-actions.md) - Icon-only action buttons with hover labels
 - [TECH-025](TECH-025-action-button-styling.md) - Primary green + neutral secondary actions
 - [TECH-026](TECH-026-card-back-selector-style.md) - Align card back selector styling with homepage
 
 ## In Progress
 
-- [TECH-023](TECH-023-settings-layout.md) - Stack settings labels above controls
+- [TECH-024](TECH-024-icon-only-actions.md) - Icon-only action buttons with hover labels
 
 ## Completed
 
+- [TECH-023](TECH-023-settings-layout.md) - Stack settings labels above controls
 - [TECH-022](TECH-022-counter-settings.md) - Add reusable counter settings (label: Laskurit)
 
 ## Blocked

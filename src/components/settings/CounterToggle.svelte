@@ -11,14 +11,14 @@
         class="slider-option" 
         onclick={() => checked = false}
       >
-        <span class="slider-label">✕</span>
+        <span class="slider-label" class:active={!checked}>✕</span>
       </button>
       <button 
         type="button"
         class="slider-option" 
         onclick={() => checked = true}
       >
-        <span class="slider-label">✓</span>
+        <span class="slider-label" class:active={checked}>✓</span>
       </button>
       <div class="slider-thumb"></div>
     </div>
@@ -73,21 +73,7 @@
     transition: color 0.3s;
   }
 
-  /* When off (checked=false): left button (✕) is white, right button (✓) is gray */
-  .toggle-slider:not(.on) .slider-option:first-child .slider-label {
-    color: white;
-  }
-
-  .toggle-slider:not(.on) .slider-option:last-child .slider-label {
-    color: #666;
-  }
-
-  /* When on (checked=true): left button (✕) is gray, right button (✓) is white */
-  .toggle-slider.on .slider-option:first-child .slider-label {
-    color: #666;
-  }
-
-  .toggle-slider.on .slider-option:last-child .slider-label {
+  .slider-label.active {
     color: white;
   }
 

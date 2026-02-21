@@ -15,7 +15,7 @@
 
 ## In Progress
 
-- [BUG-003](BUG-003-clock-start-pile.md) - Clock should only start from center pile
+_(None)_
 
 ## Blocked
 

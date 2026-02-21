@@ -42,6 +42,9 @@ _(None)_
 - [TECH-018](TECH-018-component-tests.md) - Add component tests with Testing Library
 - [TECH-019](TECH-019-e2e-tests.md) - Add E2E tests for game scenarios
 - [TECH-020](TECH-020-card-bounds-collision.md) - Improve drag collision detection using card bounds
+- [TECH-021](TECH-021-remove-napoleon-draw-counter.md) - Show recycle counters only when limit > 1
+- [TECH-022](TECH-022-counter-settings.md) - Add reusable counter settings (label: Laskurit)
+- [TECH-023](TECH-023-settings-layout.md) - Stack settings labels above controls
 
 ## Bugs
 

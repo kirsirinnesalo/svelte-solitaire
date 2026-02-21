@@ -29,7 +29,7 @@ Show for each game:
 - [TECH-002](TECH-002-stats-storage.md) - Stats storage (required first)
 
 **Related ADRs:**
-- [ADR-006](../adrs/ADR-006-localstorage-for-game-statistics.md) - Statistics spec
+- [ADR-006](../../docs/adrs/ADR-006-localstorage-for-game-statistics.md) - Statistics spec
 
 ## Notes
 

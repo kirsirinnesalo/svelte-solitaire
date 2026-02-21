@@ -27,8 +27,8 @@ Per ADR-006 (LocalStorage for game statistics), we should use LocalStorage for p
 ## References
 
 **Related ADRs:**
-- [ADR-006](../adrs/ADR-006-localstorage-for-game-statistics.md) - LocalStorage for preferences
-- [ADR-002](../adrs/ADR-002-svelte-5-runes-only.md) - $state runes patterns
+- [ADR-006](../../docs/adrs/ADR-006-localstorage-for-game-statistics.md) - LocalStorage for preferences
+- [ADR-002](../../docs/adrs/ADR-002-svelte-5-runes-only.md) - $state runes patterns
 
 **External:**
 - [LocalStorage MDN](https://developer.mozilla.org/en-US/docs/Web/API/Window/localStorage)

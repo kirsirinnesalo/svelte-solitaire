@@ -4,7 +4,7 @@ Napoleon uses deprecated `createEventDispatcher`, violating ADR-003.
 
 ## Summary
 
-[Napoleon.svelte](../../src/games/napoleon/Napoleon.svelte) currently imports and uses `createEventDispatcher` from Svelte, which violates [ADR-003 Callback Props Over Event Dispatchers](../adrs/ADR-003-callback-props-over-event-dispatchers.md).
+[Napoleon.svelte](../../src/games/napoleon/Napoleon.svelte) currently imports and uses `createEventDispatcher` from Svelte, which violates [ADR-003 Callback Props Over Event Dispatchers](../../docs/adrs/ADR-003-callback-props-over-event-dispatchers.md).
 
 All other game components (Klondike, AcesUp, Clock) correctly use callback props. Napoleon must be updated for consistency and ADR compliance.
 
@@ -20,8 +20,8 @@ All other game components (Klondike, AcesUp, Clock) correctly use callback props
 ## References
 
 **Related ADRs:**
-- [ADR-003](../adrs/ADR-003-callback-props-over-event-dispatchers.md) - Callback props over event dispatchers
-- [ADR-002](../adrs/ADR-002-svelte-5-runes-only.md) - Svelte 5 runes patterns
+- [ADR-003](../../docs/adrs/ADR-003-callback-props-over-event-dispatchers.md) - Callback props over event dispatchers
+- [ADR-002](../../docs/adrs/ADR-002-svelte-5-runes-only.md) - Svelte 5 runes patterns
 
 ## Notes
 

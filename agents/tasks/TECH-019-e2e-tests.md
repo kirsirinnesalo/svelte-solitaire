@@ -22,7 +22,7 @@ E2E tests verify complete user workflows work correctly. Focus on critical paths
 ## References
 
 **Related ADRs:**
-- [ADR-001](../adrs/ADR-001-test-driven-development.md) - TDD workflow
+- [ADR-001](../../docs/adrs/ADR-001-test-driven-development.md) - TDD workflow
 
 **External:**
 - [Playwright](https://playwright.dev/)

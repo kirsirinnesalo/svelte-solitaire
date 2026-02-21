@@ -27,7 +27,7 @@ We need to implement a CSS 3D flip animation that rotates the card 180 degrees a
 ## References
 
 **Related ADRs:**
-- [ADR-002](../adrs/ADR-002-svelte-5-runes-only.md) - Use Svelte 5 runes patterns
+- [ADR-002](../../docs/adrs/ADR-002-svelte-5-runes-only.md) - Use Svelte 5 runes patterns
 
 **Related Tasks:**
 - [FEAT-011](FEAT-011-card-movement-animations.md) - Card movement animations (separate task)

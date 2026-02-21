@@ -235,7 +235,7 @@ export function saveToStorage() {
   - [MDN: Storage quota](https://developer.mozilla.org/en-US/docs/Web/API/Storage_API/Storage_quotas_and_eviction_criteria)
   
 - **Related ADRs**:
-  - [ADR-000](ADR-000-agent-guidance.md): "Simplicity over cleverness" principle
+  - [AGENTS.md](../../AGENTS.md): "Simplicity over cleverness" principle
   - [ADR-002](ADR-002-svelte-5-runes-only.md): $state runes for reactive statistics
 
 - **Related Tasks**:

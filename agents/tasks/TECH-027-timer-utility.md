@@ -43,8 +43,8 @@ Creating a shared `gameTimer` utility will:
 - Related to TECH-010 (undo manager) - similar pattern of extracting duplicated logic
 
 **Related ADRs:**
-- [ADR-002](../adrs/ADR-002-svelte-5-runes-only.md) - Svelte 5 runes-only approach
-- [ADR-000](../adrs/ADR-000-agent-guidance.md) - DRY principle
+- [ADR-002](../../docs/adrs/ADR-002-svelte-5-runes-only.md) - Svelte 5 runes-only approach
+- [AGENTS.md](../../AGENTS.md) - DRY principle
 
 ## Notes
 

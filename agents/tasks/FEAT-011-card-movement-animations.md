@@ -41,8 +41,8 @@ The technical challenge: When state updates, Svelte moves the card's DOM element
 
 ## Related ADRs
 
-- [ADR-002](../adrs/ADR-002-svelte-5-runes-only.md) - Svelte 5 runes patterns
-- [ADR-004](../adrs/ADR-004-json-parse-for-state-cloning.md) - State cloning with JSON.parse
+- [ADR-002](../../docs/adrs/ADR-002-svelte-5-runes-only.md) - Svelte 5 runes patterns
+- [ADR-004](../../docs/adrs/ADR-004-json-parse-for-state-cloning.md) - State cloning with JSON.parse
 
 ## References
 

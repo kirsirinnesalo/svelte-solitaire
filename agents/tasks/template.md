@@ -24,7 +24,7 @@
 - [TASK-ID](TASK-ID.md) - Description
 
 **Related ADRs:**
-- [ADR-XXX](../adrs/ADR-XXX-title.md) - Description
+- [ADR-XXX](../../docs/adrs/ADR-XXX-title.md) - Description
 
 **External:**
 - [Link to documentation](https://example.com)

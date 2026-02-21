@@ -2,9 +2,7 @@
 
 Welcome to the Svelte Solitaire development team! This document contains everything needed to understand the project architecture, practices, and workflow.
 
-> **Document roles**: AGENTS.md focuses on operational workflow. ADR-000 defines architectural and cultural rules. In case of conflict, ADRs take precedence.
-
-> **Quick Start**: Read [agents/adrs/ADR-000](agents/adrs/ADR-000-agent-guidance.md) first (project DNA), then this guide. For a quick scan, see [agents/README.md](agents/README.md).
+> **Quick Start**: Read this document first, then check [agents/README.md](agents/README.md) for a quick scan. In case of conflict, ADRs take precedence over this guide.
 
 ## 📋 Quick Reference
 
@@ -120,17 +118,14 @@ src/
 
 ## 🏗️ Architecture Decisions
 
-All architectural decisions are documented in `agents/adrs/`. Key decisions:
+All architectural decisions are documented in `docs/adrs/`. Key decisions:
 
-- **[ADR-000](agents/adrs/ADR-000-agent-guidance.md)**: Project DNA and conventions
-- **[ADR-001](agents/adrs/ADR-001-test-driven-development.md)**: TDD workflow mandate
-- **[ADR-002](agents/adrs/ADR-002-svelte-5-runes-only.md)**: Svelte 5 runes-only approach
-- **[ADR-003](agents/adrs/ADR-003-callback-props-over-event-dispatchers.md)**: Callback props pattern
-- **[ADR-004](agents/adrs/ADR-004-json-parse-for-state-cloning.md)**: JSON.parse for state cloning
-- **[ADR-005](agents/adrs/ADR-005-game-over-overlay-refactor.md)**: Overlay component refactoring
-- **[ADR-006](agents/adrs/ADR-006-localstorage-for-game-statistics.md)**: LocalStorage for game statistics
-
-📖 **Read ADR-000 first** - it contains the project's DNA.
+- **[ADR-001](docs/adrs/ADR-001-test-driven-development.md)**: TDD workflow mandate
+- **[ADR-002](docs/adrs/ADR-002-svelte-5-runes-only.md)**: Svelte 5 runes-only approach
+- **[ADR-003](docs/adrs/ADR-003-callback-props-over-event-dispatchers.md)**: Callback props pattern
+- **[ADR-004](docs/adrs/ADR-004-json-parse-for-state-cloning.md)**: JSON.parse for state cloning
+- **[ADR-005](docs/adrs/ADR-005-game-over-overlay-refactor.md)**: Overlay component refactoring
+- **[ADR-006](docs/adrs/ADR-006-localstorage-for-game-statistics.md)**: LocalStorage for game statistics
 
 ## 🔴 Test-Driven Development Workflow
 
@@ -201,6 +196,34 @@ This enables:
 - **Commits**: Short and focused - `feat(TASK-ID): what changed`
   - Don't repeat acceptance criteria (DoD is implicit)
   - Don't list test counts or implementation details
+
+## 📐 Code Conventions
+
+### Language
+- **UI text**: Finnish (`let moves = $state(0); // Siirrot`)
+- **Code**: English (variable names, functions, comments, docs)
+
+### File Naming
+- **Components**: PascalCase.svelte (`CardComponent.svelte`, `GameHeader.svelte`)
+- **Utilities**: camelCase.ts (`cardUtils.ts`, `dragUtils.ts`)
+- **Game rules**: camelCase + Rules.ts (`klondikeRules.ts`)
+- **Tests**: match source + .test.ts (`klondikeRules.test.ts`)
+- **Rune stores**: camelCase.svelte.ts (`cardBackStore.svelte.ts`)
+
+### Code Style
+- **No abbreviations**: `gameState` not `gs`, `tableau` not `tab`
+- **Explicit types**: always type function parameters
+- **No `any`**: use `unknown` if truly dynamic
+- **Immutability**: always create new objects/arrays for reactivity
+
+### Type System
+- Shared types in `src/types/game.ts`
+- Game-specific state interfaces in `*Rules.ts`
+- Inline type assertions for `$state`: `[] as Card[][]`
+
+### Test Coverage Targets
+- Pure functions (`*Rules.ts`): 100%
+- Components: 80%+
 
 ## 🎨 Svelte 5 Runes Patterns
 
@@ -306,7 +329,7 @@ history = [...history, JSON.parse(JSON.stringify(gameState))];
 history = [...history, structuredClone(gameState)]; // Error!
 ```
 
-See [ADR-004](agents/adrs/ADR-004-json-parse-for-state-cloning.md) for rationale.
+See [ADR-004](docs/adrs/ADR-004-json-parse-for-state-cloning.md) for rationale.
 
 ## 🔧 Common Workflows
 
@@ -368,7 +391,7 @@ Every task is complete when:
 **See [agents/tasks/README.md](agents/tasks/README.md) for complete workflow.**
 
 - [Svelte 5 Runes Docs](https://svelte.dev/docs/svelte/what-are-runes)
-- [Project ADRs](agents/adrs/) | [ADR Index](agents/adrs/README.md)
+- [Project ADRs](docs/adrs/) | [ADR Index](docs/adrs/README.md)
 - [Task Backlog](agents/tasks/backlog.md) | [Task Guide](agents/tasks/README.md)
 
 ## 🤝 Contributing

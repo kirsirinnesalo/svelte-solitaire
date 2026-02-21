@@ -514,7 +514,7 @@ export default defineConfig({
 - **Testing Library**: https://testing-library.com/docs/svelte-testing-library/intro
 - **TDD by Example**: Kent Beck
 - **Related ADRs**:
-  - [ADR-000](ADR-000-agent-guidance.md): Project workflow
+  - [AGENTS.md](../../AGENTS.md): Project workflow
   - [ADR-002](ADR-002-svelte-5-runes-only.md): Svelte patterns (impacts testing)
 
 ## Notes

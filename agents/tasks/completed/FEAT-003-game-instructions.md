@@ -26,7 +26,7 @@ New players need to learn game rules. Each game should have accessible instructi
 ## References
 
 **Related ADRs:**
-- [ADR-005](../adrs/ADR-005-game-over-overlay-refactor.md) - Overlay pattern
+- [ADR-005](../../docs/adrs/ADR-005-game-over-overlay-refactor.md) - Overlay pattern
 
 **External:**
 - [Wikipedia: Klondike](https://en.wikipedia.org/wiki/Klondike_(solitaire))

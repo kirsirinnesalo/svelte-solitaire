@@ -28,7 +28,7 @@ Using the dragged card's actual bounds (`getBoundingClientRect()`) to check coll
 - [FEAT-001](FEAT-001-card-animations.md) - Related to drag visual feedback
 
 **Related ADRs:**
-- [ADR-000](../adrs/ADR-000-agent-guidance.md) - User experience focus
+- [AGENTS.md](../../AGENTS.md) - User experience focus
 
 ## Notes
 

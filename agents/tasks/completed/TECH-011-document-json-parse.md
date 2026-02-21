@@ -21,7 +21,7 @@ Without comments, future developers might "fix" this to use structuredClone, bre
 ## References
 
 **Related ADRs:**
-- [ADR-004](../adrs/ADR-004-json-parse-for-state-cloning.md) - JSON.parse decision
+- [ADR-004](../../docs/adrs/ADR-004-json-parse-for-state-cloning.md) - JSON.parse decision
 
 ## Notes
 

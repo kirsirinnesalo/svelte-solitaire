@@ -27,7 +27,7 @@ Extracting common patterns into `dragUtils.ts` will reduce duplication while kee
 - Current `dragUtils.ts` has handleDragOver already
 
 **Related ADRs:**
-- [ADR-000](../adrs/ADR-000-agent-guidance.md) - DRY principle
+- [AGENTS.md](../../AGENTS.md) - DRY principle
 
 ## Notes
 

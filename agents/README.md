@@ -17,7 +17,7 @@
 | **[../AGENTS.md](../AGENTS.md)** | Complete guide: TDD, patterns, workflows |
 | **[tasks/README.md](tasks/README.md)** | Task management: lifecycle, template, rules |
 | **[tasks/backlog.md](tasks/backlog.md)** | Current work: Ready, In Progress, Discovery |
-| **[adrs/ADR-000](adrs/ADR-000-agent-guidance.md)** | Project DNA: conventions, style, architecture |
+| **[../docs/adrs/](../docs/adrs/)** | Architecture Decision Records |
 | **[../README.md](../README.md)** | App state: features, tech, getting started |
 
 ## 📝 Task Types
@@ -80,4 +80,4 @@ npm run build   # Production build
 
 ---
 
-**First time?** Read [ADR-000](adrs/ADR-000-agent-guidance.md), then [AGENTS.md](../AGENTS.md).
+**First time?** Read [AGENTS.md](../AGENTS.md).

@@ -28,7 +28,7 @@ Theme should:
 ## References
 
 **Related ADRs:**
-- [ADR-006](../adrs/ADR-006-localstorage-for-game-statistics.md) - LocalStorage for preferences
+- [ADR-006](../../docs/adrs/ADR-006-localstorage-for-game-statistics.md) - LocalStorage for preferences
 
 **External:**
 - [CSS custom properties](https://developer.mozilla.org/en-US/docs/Web/CSS/Using_CSS_custom_properties)

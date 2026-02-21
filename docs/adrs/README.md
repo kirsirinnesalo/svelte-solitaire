@@ -29,7 +29,6 @@ Don't create an ADR for:
 
 ## Current ADRs
 
-- **[ADR-000](ADR-000-agent-guidance.md)**: Project DNA and conventions
 - **[ADR-001](ADR-001-test-driven-development.md)**: TDD workflow mandate
 - **[ADR-002](ADR-002-svelte-5-runes-only.md)**: Svelte 5 runes-only approach
 - **[ADR-003](ADR-003-callback-props-over-event-dispatchers.md)**: Callback props pattern

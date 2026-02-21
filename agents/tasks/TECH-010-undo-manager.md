@@ -25,7 +25,7 @@ Creating a shared `undoManager` utility will save ~160 lines of code and central
 ## References
 
 **Related ADRs:**
-- [ADR-004](../adrs/ADR-004-json-parse-for-state-cloning.md) - JSON.parse for cloning
+- [ADR-004](../../docs/adrs/ADR-004-json-parse-for-state-cloning.md) - JSON.parse for cloning
 
 ## Notes
 

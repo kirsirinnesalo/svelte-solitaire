@@ -36,7 +36,7 @@ Statistics tracked per game:
 - [BUG-001](BUG-001-cardback-persistence.md) - Similar localStorage pattern
 
 **Related ADRs:**
-- [ADR-006](../adrs/ADR-006-localstorage-for-game-statistics.md) - LocalStorage decision
+- [ADR-006](../../docs/adrs/ADR-006-localstorage-for-game-statistics.md) - LocalStorage decision
 
 ## Notes
 

@@ -33,7 +33,7 @@ Test coverage should include:
 - [TECH-006](TECH-006-test-napoleon-rules.md) - Similar pattern
 
 **Related ADRs:**
-- [ADR-001](../adrs/ADR-001-test-driven-development.md) - TDD workflow
+- [ADR-001](../../docs/adrs/ADR-001-test-driven-development.md) - TDD workflow
 
 ## Notes
 

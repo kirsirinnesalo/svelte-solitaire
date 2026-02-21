@@ -135,7 +135,7 @@ One-line summary of what this accomplishes.
 - [FEAT-XXX](FEAT-XXX-title.md) - Description
 
 **Related ADRs:**
-- [ADR-XXX](../adrs/ADR-XXX-title.md) - Decision name
+- [ADR-XXX](../../docs/adrs/ADR-XXX-title.md) - Decision name
 
 **External:**
 - [Documentation](https://example.com)
@@ -234,5 +234,5 @@ Discovery sections for new tasks:
 
 - [AGENTS.md](../../AGENTS.md) - Complete development guide
 - [backlog.md](backlog.md) - Task backlog
-- [ADR-001](../adrs/ADR-001-test-driven-development.md) - TDD workflow
-- [ADR-000](../adrs/ADR-000-agent-guidance.md) - Project DNA
+- [ADR-001](../../docs/adrs/ADR-001-test-driven-development.md) - TDD workflow
+- [AGENTS.md](../../AGENTS.md) - Project conventions

@@ -21,7 +21,7 @@ Games should initialize automatically on mount for better UX.
 ## References
 
 **Related ADRs:**
-- [ADR-002](../adrs/ADR-002-svelte-5-runes-only.md) - $effect patterns
+- [ADR-002](../../docs/adrs/ADR-002-svelte-5-runes-only.md) - $effect patterns
 
 ## Notes
 

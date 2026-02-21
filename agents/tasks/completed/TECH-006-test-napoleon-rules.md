@@ -22,4 +22,4 @@ Test all game logic functions in napoleonRules.ts per ADR-001.
 - [TECH-005](TECH-005-test-klondike-rules.md) - Pattern reference
 
 **Related ADRs:**
-- [ADR-001](../adrs/ADR-001-test-driven-development.md) - TDD workflow
+- [ADR-001](../../docs/adrs/ADR-001-test-driven-development.md) - TDD workflow

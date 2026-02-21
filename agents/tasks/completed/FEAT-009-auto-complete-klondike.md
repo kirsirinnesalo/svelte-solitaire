@@ -56,8 +56,8 @@ function canAutoComplete(state: KlondikeState): boolean {
 ## References
 
 **Related ADRs:**
-- [ADR-001](../adrs/ADR-001-test-driven-development.md) - TDD for detection logic
-- [ADR-002](../adrs/ADR-002-svelte-5-runes-only.md) - Use Svelte 5 patterns
+- [ADR-001](../../docs/adrs/ADR-001-test-driven-development.md) - TDD for detection logic
+- [ADR-002](../../docs/adrs/ADR-002-svelte-5-runes-only.md) - Use Svelte 5 patterns
 
 **Related Tasks:**
 - [FEAT-001](FEAT-001-card-animations.md) - Card animations (prerequisite)

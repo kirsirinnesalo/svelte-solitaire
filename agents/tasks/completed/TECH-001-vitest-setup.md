@@ -34,7 +34,7 @@ Vitest is the modern, fast, Vite-native testing framework that integrates seamle
 - [TECH-009](TECH-009-test-card-utils.md) - Tests for cardUtils.ts
 
 **Related ADRs:**
-- [ADR-001](../adrs/ADR-001-test-driven-development.md) - TDD workflow mandate
+- [ADR-001](../../docs/adrs/ADR-001-test-driven-development.md) - TDD workflow mandate
 
 **External:**
 - [Vitest Documentation](https://vitest.dev/)

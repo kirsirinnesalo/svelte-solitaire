@@ -31,7 +31,7 @@ Target controls:
 - [FEAT-007](FEAT-007-focus-styles.md) - Focus styles
 
 **Related ADRs:**
-- [ADR-003](../adrs/ADR-003-callback-props-over-event-dispatchers.md) - Props pattern
+- [ADR-003](../../docs/adrs/ADR-003-callback-props-over-event-dispatchers.md) - Props pattern
 
 **External:**
 - [WAI-ARIA keyboard patterns](https://www.w3.org/WAI/ARIA/apg/patterns/)

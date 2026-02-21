@@ -38,7 +38,7 @@ let canUndo = $derived(history.length > 0 && !isWon && !isLost);
 ## References
 
 **Related ADRs:**
-- [ADR-002](../adrs/ADR-002-svelte-5-runes-only.md) - Svelte 5 runes patterns
+- [ADR-002](../../docs/adrs/ADR-002-svelte-5-runes-only.md) - Svelte 5 runes patterns
 
 **External:**
 - [Svelte 5 $derived](https://svelte.dev/docs/svelte/$derived)

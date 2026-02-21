@@ -30,7 +30,7 @@ Focus on:
 - [TECH-001](TECH-001-vitest-setup.md) - Vitest setup required
 
 **Related ADRs:**
-- [ADR-001](../adrs/ADR-001-test-driven-development.md) - TDD workflow
+- [ADR-001](../../docs/adrs/ADR-001-test-driven-development.md) - TDD workflow
 
 **External:**
 - [Testing Library Svelte](https://testing-library.com/docs/svelte-testing-library/intro/)

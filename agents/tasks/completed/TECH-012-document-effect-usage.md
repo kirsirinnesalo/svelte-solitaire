@@ -18,7 +18,7 @@ Klondike uses `$effect()` to synchronize maxRecycles when drawCount changes. Thi
 ## References
 
 **Related ADRs:**
-- [ADR-002](../adrs/ADR-002-svelte-5-runes-only.md) - Runes patterns
+- [ADR-002](../../docs/adrs/ADR-002-svelte-5-runes-only.md) - Runes patterns
 
 **External:**
 - [Svelte 5 $effect](https://svelte.dev/docs/svelte/$effect)

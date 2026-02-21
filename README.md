@@ -42,7 +42,7 @@ src/
 ## 📚 Documentation
 
 - **[AGENTS.md](AGENTS.md)** - Development guide for AI agents and maintainers
-- **[agents/adrs/](agents/adrs/)** - Architecture Decision Records
+- **[docs/adrs/](docs/adrs/)** - Architecture Decision Records
 - **[agents/tasks/backlog.md](agents/tasks/backlog.md)** - Task backlog and roadmap
 
 ## 📝 License

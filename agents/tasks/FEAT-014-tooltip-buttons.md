@@ -34,7 +34,7 @@ This follows common UI patterns seen in modern web applications where icon-only 
 - [FEAT-003](completed/FEAT-003-game-instructions.md) - Added help button to header
 
 **Related ADRs:**
-- [ADR-002](../adrs/ADR-002-svelte-5-runes-only.md) - Svelte 5 runes patterns
+- [ADR-002](../../docs/adrs/ADR-002-svelte-5-runes-only.md) - Svelte 5 runes patterns
 
 **External:**
 - [WAI-ARIA: Tooltip Pattern](https://www.w3.org/WAI/ARIA/apg/patterns/tooltip/)

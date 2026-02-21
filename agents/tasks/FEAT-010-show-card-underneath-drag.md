@@ -71,7 +71,7 @@ Combine slight offset with reduced opacity for best effect.
 ## References
 
 **Related ADRs:**
-- [ADR-002](../adrs/ADR-002-svelte-5-runes-only.md) - Use Svelte 5 patterns
+- [ADR-002](../../docs/adrs/ADR-002-svelte-5-runes-only.md) - Use Svelte 5 patterns
 
 **Related Tasks:**
 - [FEAT-001](FEAT-001-card-animations.md) - Card animations (may want to coordinate styles)

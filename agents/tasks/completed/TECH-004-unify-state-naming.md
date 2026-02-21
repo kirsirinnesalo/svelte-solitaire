@@ -21,7 +21,7 @@ Standardizing on `gameState` avoids confusion with Svelte 5's `$state` rune and 
 ## References
 
 **Related ADRs:**
-- [ADR-002](../adrs/ADR-002-svelte-5-runes-only.md) - Runes-only approach
+- [ADR-002](../../docs/adrs/ADR-002-svelte-5-runes-only.md) - Runes-only approach
 
 ## Notes
 

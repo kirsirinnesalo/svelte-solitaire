@@ -26,7 +26,7 @@ Centralizing these improves maintainability and consistency.
 ## References
 
 **Related ADRs:**
-- [ADR-000](../adrs/ADR-000-agent-guidance.md) - DRY principle
+- [AGENTS.md](../../AGENTS.md) - DRY principle
 
 ## Notes
 

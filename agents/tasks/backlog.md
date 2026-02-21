@@ -4,11 +4,11 @@
 
 **Priority**: First task in this section = next task to work on. Physical order defines priority.
 
-- [TECH-012](TECH-012-document-effect-usage.md) - Add documentation for $effect usage in Klondike
+_(None)_
 
 ## In Progress
 
-_(None)_
+- [TECH-012](TECH-012-document-effect-usage.md) - Add documentation for $effect usage in Klondike
 
 ## Blocked
 

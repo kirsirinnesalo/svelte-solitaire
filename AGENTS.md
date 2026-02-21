@@ -178,16 +178,7 @@ export function isGameWon(state: GameState): boolean {
 </script>
 ```
 
-### 3. State Cloning
-```typescript
-// ✅ Correct - JSON.parse for $state proxy compatibility
-history = [...history, JSON.parse(JSON.stringify(gameState))];
-
-// ❌ Wrong - structuredClone fails with $state proxy
-history = [...history, structuredClone(gameState)]; // Error!
-```
-
-See [ADR-004](docs/adrs/ADR-004-json-parse-for-state-cloning.md) for rationale.
+State cloning: see [ADR-004](docs/adrs/ADR-004-json-parse-for-state-cloning.md).
 
 ## 🧪 Testing
 

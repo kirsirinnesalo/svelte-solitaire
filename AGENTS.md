@@ -54,9 +54,8 @@ Complete workflow for every task:
    - Run lint: `npm run lint` (if configured)
    - Run build: `npm run build`
 6. **Commit**: Commit frequently with `feat(TASK-ID): short summary` (Conventional Commits)
-7. **Validate**: All tests pass, no TypeScript errors, no warnings
-8. **Document**: Update docs if user-facing, create ADR if architectural
-9. **Complete**:
+7. **Document**: Update docs if user-facing, create ADR if architectural
+8. **Complete**:
    - **Agent** (on feature branch):
      - Archives task file to `completed/`
      - Commits: `git commit -m "chore(TASK-ID): complete task"`
@@ -71,16 +70,11 @@ Complete workflow for every task:
 
 **If merge is delayed**: Wait for user merge before starting next task. Do not continue on the same feature branch.
 
-**Note**: Task completion happens on feature branch. Main only gets "start" commits.
-
 ### ✅ Definition of Done
 
 Every task is complete when:
 - [ ] Tests written and passing (TDD red-green-refactor)
-- [ ] Code follows Svelte 5 runes patterns
-- [ ] TypeScript strict mode compliance
 - [ ] Finnish UI text, English code
-- [ ] No console warnings/errors
 - [ ] Committed with task ID
 - [ ] ADR created if architectural change
 - [ ] README.md updated if user-visible
@@ -182,16 +176,13 @@ State cloning: see [ADR-004](docs/adrs/ADR-004-json-parse-for-state-cloning.md).
 
 ### Test Annotations
 
+Annotate every test suite with the task and ADR it covers:
+
 ```typescript
 /**
  * @covers FEAT-001
  * @constrainedBy ADR-001, ADR-002
  */
-describe('Card animations', () => {
-  it('animates card movement', () => {
-    // test code
-  });
-});
 ```
 
 ## 🔧 Common Workflows

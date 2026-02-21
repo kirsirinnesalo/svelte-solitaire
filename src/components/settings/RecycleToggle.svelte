@@ -10,7 +10,7 @@
 </script>
 
 <div class="recycle-toggle-container">
-  <span class="toggle-label">Jakoja:</span>
+  <span class="toggle-label">Jakoja</span>
   <div class="recycle-toggle">
     {#each options as option}
       <button 

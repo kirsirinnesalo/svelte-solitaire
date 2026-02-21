@@ -21,7 +21,7 @@ describe('RecycleToggle layout (TECH-023)', () => {
 
   it('renders the label', () => {
     render(RecycleToggle, { props: { value: 1 } });
-    expect(screen.getByText('Jakoja:')).toBeTruthy();
+    expect(screen.getByText('Jakoja')).toBeTruthy();
   });
 
   it('toggles between options', async () => {

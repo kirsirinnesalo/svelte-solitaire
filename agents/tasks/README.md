@@ -177,7 +177,7 @@ Add to appropriate section (Features/Technical/Bugs/etc.).
 2. Add completion notes to task file
 3. Move task file to `completed/` directory (**keep original filename**)
 4. Remove the task from backlog.md
-5. **Commit completion**: `git commit -m "chore: complete TASK-ID"`
+5. **Commit completion**: `git commit -m "chore(TASK-ID): complete task"`
 6. Report branch readiness for merge
 7. **User merges** to main with `--no-ff` (brings completion + code)
 8. **User deletes** feature branch

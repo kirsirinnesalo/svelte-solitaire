@@ -44,19 +44,18 @@ describe('CounterToggle layout (TECH-023)', () => {
 
   it('toggles state when clicking buttons', async () => {
     const user = userEvent.setup();
-    let checked = false;
-    
-    const { component } = render(CounterToggle, { 
-      props: { 
-        checked,
-        oncheckedchange: (value: boolean) => { checked = value; }
-      } 
-    });
+    render(CounterToggle, { props: { checked: false } });
     
     const onButton = screen.getByText('Päällä');
+    const offButton = screen.getByText('Pois');
+    
+    // Initially "Pois" should be active
+    expect(offButton.classList.contains('active')).toBe(true);
+    expect(onButton.classList.contains('active')).toBe(false);
+    
     await user.click(onButton);
     
-    // Check that active class is applied after click
+    // After clicking "Päällä", it should become active
     expect(onButton.classList.contains('active')).toBe(true);
   });
 

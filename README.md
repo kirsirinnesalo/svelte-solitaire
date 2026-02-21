@@ -4,23 +4,6 @@ A single-page app featuring a collection of classic solitaire card games, built 
 
 ---
 
-## 🤖 For AI Agents
-
-**Read these first before starting any task:**
-
-1. [AGENTS.md](AGENTS.md) - Complete development guide
-2. [ADR-000](agents/adrs/ADR-000-agent-guidance.md) - Project DNA and conventions
-3. [Pre-flight Checklist](AGENTS.md#️-pre-flight-checklist) - Before starting any task
-4. [Task Backlog](agents/tasks/backlog.md) - Available tasks
-
-**Core workflow:**
-- ONE task at a time (complete fully before starting next)
-- Create feature branch for each task (`feat/TASK-ID-description`)
-- TDD workflow (tests first, red-green-refactor)
-- Merge with `--no-ff` when complete
-
----
-
 ## 🎮 Current Features
 
 ### Card Games
@@ -33,9 +16,9 @@ A single-page app featuring a collection of classic solitaire card games, built 
 ### Game Features
 
 - ✅ **Drag & drop** - Intuitive card movement
-- ✅ **Undo/Redo** - Full history support (TECH-005: unified undo manager)
+- ✅ **Undo/Redo** - Full history support
 - ✅ **Game settings** - Customizable rules per game
-- ✅ **Card back selection** - Multiple designs (BUG-001: localStorage persistence)
+- ✅ **Card back selection** - Multiple designs
 - ✅ **Move counter** - Track your efficiency
 - ✅ **Timer** - Optional time tracking
 - ✅ **Auto-complete** - Smart foundational moves (Klondike)
@@ -46,7 +29,7 @@ A single-page app featuring a collection of classic solitaire card games, built 
 - ✅ **Svelte 5 runes** - Modern reactive state (ADR-002)
 - ✅ **TypeScript strict** - Full type safety
 - ✅ **Component architecture** - Reusable UI components
-- ⏳ **Testing** - Vitest setup in progress (TECH-001)
+- ⏳ **Testing** - Vitest setup in progress
 
 ## 🚀 Getting Started
 
@@ -72,29 +55,6 @@ npm run build
 # Preview production build
 npm run preview
 ```
-
-### Deployment (GitHub Pages)
-
-- The site is published at: `https://<user>.github.io/svelte-solitaire/`
-- Deployment happens automatically on every push to `main` via GitHub Actions.
-- If the repository name changes, update `base` in `vite.config.ts` to match the new path.
-
-### Versioning
-
-- The version is stored in `package.json` under `version` (SemVer: major.minor.patch).
-- Update it manually or use npm:
-
-```bash
-# Bug fix release (0.1.0 -> 0.1.1)
-npm version patch
-
-# Feature release (0.1.0 -> 0.2.0)
-npm version minor
-
-# Breaking changes (0.1.0 -> 1.0.0)
-npm version major
-```
-- `npm version` also creates a git tag by default.
 
 ## 🧪 Development Commands
 
@@ -160,11 +120,6 @@ Solitaire based on an analog clock face.
 - Click a pile to reveal its top card
 - Place each card in its clock position (A=1 o'clock, 2=2 o'clock, ..., Q=12 o'clock, K=center)
 - Win by revealing all cards before placing the 4th king
-
-### Coming Soon
-- **Pyramid**: Remove pairs that sum to 13
-- **Yukon**: Like Klondike with more strategic options
-- **Perpetual Motion**: Endless solitaire with continuous shuffling
 
 ## 🛠️ Technologies
 

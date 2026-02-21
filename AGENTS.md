@@ -50,7 +50,7 @@ Complete workflow for every task:
 9. **Complete**:
    - **Agent** (on feature branch):
      - Archives task file to `completed/`
-     - Commits: `git commit -m "chore: complete TASK-ID"`
+     - Commits: `git commit -m "chore(TASK-ID): complete task"`
      - Reports branch name and readiness
    - **User** (integration):
      - Merges to main with `--no-ff`
@@ -196,7 +196,6 @@ This enables:
 - **Ready**: USER-MANAGED ONLY - agents take first, never add/reorder
 - **ONE task at a time** - complete before starting next
 - **Types**: FEAT (features), TECH (technical/testing/docs), BUG (bugs)
-- **Workflow**: Ready → In Progress → Completed → `completed/` directory
 - **Workflow**: Ready → In Progress → archive to `completed/` directory
 - **TDD**: Test first for all tasks
 - **Commits**: Short and focused - `feat(TASK-ID): what changed`

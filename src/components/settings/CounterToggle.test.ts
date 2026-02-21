@@ -51,25 +51,25 @@ describe('CounterToggle layout (TECH-023)', () => {
     
     // Initially unchecked, so cross button area should show slider
     const slider = document.querySelector('.toggle-slider');
-    expect(slider?.classList.contains('checked')).toBe(false);
+    expect(slider?.classList.contains('on')).toBe(false);
     
     await user.click(checkButton);
     
     // After clicking checkmark, slider should move
-    expect(slider?.classList.contains('checked')).toBe(true);
+    expect(slider?.classList.contains('on')).toBe(true);
   });
 
   it('shows slider thumb in correct position', () => {
     const { container } = render(CounterToggle, { props: { checked: true } });
     
     const slider = container.querySelector('.toggle-slider');
-    expect(slider?.classList.contains('checked')).toBe(true);
+    expect(slider?.classList.contains('on')).toBe(true);
   });
 
   it('shows slider on left when unchecked', () => {
     const { container } = render(CounterToggle, { props: { checked: false } });
     
     const slider = container.querySelector('.toggle-slider');
-    expect(slider?.classList.contains('checked')).toBe(false);
+    expect(slider?.classList.contains('on')).toBe(false);
   });
 });

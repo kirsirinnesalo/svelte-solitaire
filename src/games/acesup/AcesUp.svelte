@@ -6,6 +6,7 @@
   import GameOverOverlay from '../../components/GameOverOverlay.svelte';
   import PauseOverlay from '../../components/PauseOverlay.svelte';
   import HelpOverlay from '../../components/HelpOverlay.svelte';
+  import CounterToggle from '../../components/settings/CounterToggle.svelte';
   import { 
     dealCards, 
     removeCard, 
@@ -36,6 +37,7 @@
   let isPaused = $state<boolean>(false);
   let pauseStartTime = $state<number>(0);
   let isHelpVisible = $state<boolean>(false);
+  let showCounters = $state(false); // Toggle for stock counter (default off)
 
   // Derived state for undo button
   let undoDisabled = $derived(history.length === 0 || isWon || isLost);
@@ -246,7 +248,11 @@
     onHint={showHint}
     onPause={togglePause}
     onHelp={toggleHelp}
-  />
+  >
+    {#snippet settings()}
+      <CounterToggle bind:checked={showCounters} />
+    {/snippet}
+  </GameHeader>
 
   <div class="game-area">
     <HelpOverlay isVisible={isHelpVisible} instruction={acesUpInstructions} onClose={toggleHelp} />
@@ -262,7 +268,9 @@
       >
         {#if gameState.stock.length >= 4}
           <CardComponent card={gameState.stock[gameState.stock.length - 1]} />
-          <div class="stock-count">{gameState.stock.length}</div>
+          {#if showCounters}
+            <div class="stock-count">{gameState.stock.length}</div>
+          {/if}
         {:else}
           <div class="empty-pile stock-empty">✕</div>
         {/if}

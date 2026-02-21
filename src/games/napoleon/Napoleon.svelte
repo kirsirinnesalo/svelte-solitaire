@@ -792,7 +792,7 @@
           <div class="empty-pile game-over">✕</div>
         {/if}
       </button>
-      {#if activeMaxRecycles !== 'unlimited'}
+      {#if activeMaxRecycles !== 'unlimited' && activeMaxRecycles > 1}
         <div class="draw-count">{recycleCount + 1}/{activeMaxRecycles}</div>
       {/if}
     </div>

@@ -88,13 +88,14 @@
     left: 2px;
     width: calc(50% - 2px);
     height: calc(100% - 4px);
-    background: #4CAF50;
+    background: #b0b0b0;
     border-radius: 14px;
-    transition: transform 0.3s ease;
+    transition: transform 0.3s ease, background 0.3s ease;
     z-index: 1;
   }
 
   .toggle-slider.on .slider-thumb {
     transform: translateX(100%);
+    background: #4CAF50;
   }
 </style>

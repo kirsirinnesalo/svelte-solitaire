@@ -161,7 +161,7 @@ Add to appropriate section (Features/Technical/Bugs/etc.).
 1. Read task file thoroughly
 2. Plan implementation approach
 3. Move task to **In Progress** in backlog.md (on main branch)
-4. **Commit backlog immediately**: `git add agents/tasks/backlog.md && git commit -m "chore: start TASK-ID"`
+4. **Commit backlog immediately**: `git add agents/tasks/backlog.md && git commit -m "chore(TASK-ID): start task"`
 5. Create feature branch: `git checkout -b feat/TASK-ID-description`
 
 **Why commit to main?** Makes task status visible immediately. Only "start" commits go to main - all work happens on feature branch.
@@ -235,4 +235,3 @@ Discovery sections for new tasks:
 - [AGENTS.md](../../AGENTS.md) - Complete development guide
 - [backlog.md](backlog.md) - Task backlog
 - [ADR-001](../../docs/adrs/ADR-001-test-driven-development.md) - TDD workflow
-- [AGENTS.md](../../AGENTS.md) - Project conventions

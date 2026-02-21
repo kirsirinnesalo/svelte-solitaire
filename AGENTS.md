@@ -185,6 +185,15 @@ Annotate every test suite with the task and ADR it covers:
  */
 ```
 
+## 🔧 Adding a New Game
+
+1. Read existing game implementations (Klondike is reference)
+2. Create `src/games/{game}/{game}Rules.ts` with **tests first**
+3. Create `src/games/{game}/{Game}.svelte` component
+4. Add to `GameType` in `src/types/game.ts`
+5. Add to `games` array in `GameSelector.svelte`
+6. Add rendering case in `App.svelte`
+
 ## 🏗️ Architecture Decisions
 
 All architectural decisions are documented in [`docs/adrs/`](docs/adrs/). Review relevant ADRs before starting any task — they take precedence over this guide.

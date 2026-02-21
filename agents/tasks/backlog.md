@@ -14,7 +14,7 @@
 
 ## In Progress
 
-- [FEAT-013](FEAT-013-version-display.md) - Show app version in UI
+_(None)_
 
 ## Blocked
 

@@ -10,6 +10,7 @@
 <style>
   .highlight-toggle {
     display: flex;
+    flex-direction: column;
     align-items: center;
     gap: 0.4rem;
     font-size: 0.9rem;

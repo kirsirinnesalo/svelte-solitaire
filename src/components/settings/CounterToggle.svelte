@@ -73,11 +73,20 @@
     transition: color 0.3s;
   }
 
+  /* When off (checked=false): left button (✕) is white, right button (✓) is gray */
+  .toggle-slider:not(.on) .slider-option:first-child .slider-label {
+    color: white;
+  }
+
+  .toggle-slider:not(.on) .slider-option:last-child .slider-label {
+    color: #666;
+  }
+
+  /* When on (checked=true): left button (✕) is gray, right button (✓) is white */
   .toggle-slider.on .slider-option:first-child .slider-label {
     color: #666;
   }
 
-  .toggle-slider:not(.on) .slider-option:first-child .slider-label,
   .toggle-slider.on .slider-option:last-child .slider-label {
     color: white;
   }

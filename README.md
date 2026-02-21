@@ -73,6 +73,12 @@ npm run build
 npm run preview
 ```
 
+### Deployment (GitHub Pages)
+
+- The site is published at: `https://<user>.github.io/svelte-solitaire/`
+- Deployment happens automatically on every push to `main` via GitHub Actions.
+- If the repository name changes, update `base` in `vite.config.ts` to match the new path.
+
 ## 🧪 Development Commands
 
 ```bash

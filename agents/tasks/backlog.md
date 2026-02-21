@@ -47,6 +47,7 @@ _(None)_
 - [TECH-023](TECH-023-settings-layout.md) - Stack settings labels above controls
 - [TECH-024](TECH-024-icon-only-actions.md) - Icon-only action buttons with hover labels
 - [TECH-025](TECH-025-action-button-styling.md) - Primary green + neutral secondary actions
+- [TECH-026](TECH-026-card-back-selector-style.md) - Align card back selector styling with homepage
 
 ## Bugs
 

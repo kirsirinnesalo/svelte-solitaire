@@ -8,12 +8,12 @@ Klondike uses `$effect()` to synchronize maxRecycles when drawCount changes. Thi
 
 ## Acceptance Criteria
 
-- [ ] Add comment above $effect in Klondike.svelte
-- [ ] Explain this is side effect (mutating other state)
-- [ ] Explain why not $derived (changes different state variable)
-- [ ] Reference Svelte 5 runes documentation
-- [ ] No functionality changes
-- [ ] No TypeScript errors
+- [x] Add comment above $effect in Klondike.svelte
+- [x] Explain this is side effect (mutating other state)
+- [x] Explain why not $derived (changes different state variable)
+- [x] Reference Svelte 5 runes documentation
+- [x] No functionality changes
+- [x] No TypeScript errors
 
 ## References
 

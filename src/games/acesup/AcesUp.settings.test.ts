@@ -4,7 +4,7 @@ import userEvent from '@testing-library/user-event';
 import AcesUp from './AcesUp.svelte';
 
 /**
- * @covers TECH-022
+ * @covers TECH-022, TECH-023
  * @description Allows hiding the stock counter via the shared counter setting.
  * @constrainedBy ADR-001, ADR-002
  */
@@ -13,13 +13,21 @@ describe('AcesUp counter setting', () => {
     const user = userEvent.setup();
     const { container } = render(AcesUp);
 
-    const checkbox = screen.getByLabelText('Laskurit') as HTMLInputElement;
-    expect(checkbox.checked).toBe(false);
+    // Counter is off by default (checked=false), so stock-count should be hidden
     expect(container.querySelector('.stock-count')).toBeNull();
 
-    await user.click(checkbox);
+    // Find the "Päällä" button and click it to enable counters
+    const onButton = screen.getByText('Päällä');
+    await user.click(onButton);
 
-    expect(checkbox.checked).toBe(true);
+    // Now stock counter should be visible
     expect(container.querySelector('.stock-count')).toBeTruthy();
+    
+    // Click "Pois" to disable again
+    const offButton = screen.getByText('Pois');
+    await user.click(offButton);
+    
+    // Stock counter should be hidden again
+    expect(container.querySelector('.stock-count')).toBeNull();
   });
 });

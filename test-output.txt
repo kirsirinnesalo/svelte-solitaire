@@ -1,0 +1,1631 @@
+
+> svelte-solitaire@0.1.0 test
+> vitest --run --reporter=verbose
+
+
+[1m[46m RUN [49m[22m [36mv4.0.18 [39m[90m/mnt/c/MyTemp/sorsa/svelte-solitaire[39m
+
+ [32m✓[39m src/games/acesup/acesUpRules.test.ts[2m > [22mAces Up Rules[2m > [22mcanRemoveCard[2m > [22mshould return false when no higher card in same suit exists[32m 2[2mms[22m[39m
+ [32m✓[39m src/games/acesup/acesUpRules.test.ts[2m > [22mAces Up Rules[2m > [22mcanRemoveCard[2m > [22mshould return true when higher card of same suit exists[32m 0[2mms[22m[39m
+ [32m✓[39m src/games/acesup/acesUpRules.test.ts[2m > [22mAces Up Rules[2m > [22mcanRemoveCard[2m > [22mshould return false when higher card exists but different suit[32m 0[2mms[22m[39m
+ [32m✓[39m src/games/acesup/acesUpRules.test.ts[2m > [22mAces Up Rules[2m > [22mcanRemoveCard[2m > [22mshould return false when lower card of same suit exists[32m 0[2mms[22m[39m
+ [32m✓[39m src/games/acesup/acesUpRules.test.ts[2m > [22mAces Up Rules[2m > [22mcanRemoveCard[2m > [22mshould handle Ace as highest rank (value 14)[32m 0[2mms[22m[39m
+ [32m✓[39m src/games/acesup/acesUpRules.test.ts[2m > [22mAces Up Rules[2m > [22mcanRemoveCard[2m > [22mshould ignore empty piles[32m 0[2mms[22m[39m
+ [32m✓[39m src/games/acesup/acesUpRules.test.ts[2m > [22mAces Up Rules[2m > [22mcanRemoveCard[2m > [22mshould skip the same card when checking[32m 0[2mms[22m[39m
+ [32m✓[39m src/games/acesup/acesUpRules.test.ts[2m > [22mAces Up Rules[2m > [22mremoveCard[2m > [22mshould successfully remove a card that can be removed[32m 2[2mms[22m[39m
+ [32m✓[39m src/games/acesup/acesUpRules.test.ts[2m > [22mAces Up Rules[2m > [22mremoveCard[2m > [22mshould return invalid when trying to remove from empty pile[32m 1[2mms[22m[39m
+ [32m✓[39m src/games/acesup/acesUpRules.test.ts[2m > [22mAces Up Rules[2m > [22mremoveCard[2m > [22mshould return invalid for out of bounds pile[32m 0[2mms[22m[39m
+ [32m✓[39m src/games/acesup/acesUpRules.test.ts[2m > [22mAces Up Rules[2m > [22mremoveCard[2m > [22mshould return invalid when removing card that cannot be removed[32m 0[2mms[22m[39m
+ [32m✓[39m src/games/acesup/acesUpRules.test.ts[2m > [22mAces Up Rules[2m > [22mremoveCard[2m > [22mshould preserve original state when move is invalid[32m 0[2mms[22m[39m
+ [32m✓[39m src/games/acesup/acesUpRules.test.ts[2m > [22mAces Up Rules[2m > [22mremoveCard[2m > [22mshould show error message when pile index is negative[32m 0[2mms[22m[39m
+ [32m✓[39m src/games/acesup/acesUpRules.test.ts[2m > [22mAces Up Rules[2m > [22mmoveCard[2m > [22mshould move card from one pile to empty pile[32m 1[2mms[22m[39m
+ [32m✓[39m src/games/acesup/acesUpRules.test.ts[2m > [22mAces Up Rules[2m > [22mmoveCard[2m > [22mshould return invalid when moving to non-empty pile[32m 1[2mms[22m[39m
+ [32m✓[39m src/games/acesup/acesUpRules.test.ts[2m > [22mAces Up Rules[2m > [22mmoveCard[2m > [22mshould return invalid when moving from empty pile[32m 1[2mms[22m[39m
+ [32m✓[39m src/games/acesup/acesUpRules.test.ts[2m > [22mAces Up Rules[2m > [22mmoveCard[2m > [22mshould return invalid when source and target are same[32m 0[2mms[22m[39m
+ [32m✓[39m src/games/acesup/acesUpRules.test.ts[2m > [22mAces Up Rules[2m > [22mmoveCard[2m > [22mshould return invalid for out of bounds indices[32m 0[2mms[22m[39m
+ [32m✓[39m src/games/acesup/acesUpRules.test.ts[2m > [22mAces Up Rules[2m > [22mmoveCard[2m > [22mshould preserve original state when move is invalid[32m 0[2mms[22m[39m
+ [32m✓[39m src/games/acesup/acesUpRules.test.ts[2m > [22mAces Up Rules[2m > [22mmoveCard[2m > [22mshould handle moving from any pile to any other empty pile[32m 1[2mms[22m[39m
+ [32m✓[39m src/games/acesup/acesUpRules.test.ts[2m > [22mAces Up Rules[2m > [22mdealCards[2m > [22mshould deal one card to each pile[32m 1[2mms[22m[39m
+ [32m✓[39m src/games/acesup/acesUpRules.test.ts[2m > [22mAces Up Rules[2m > [22mdealCards[2m > [22mshould set dealt cards to faceUp[32m 0[2mms[22m[39m
+ [32m✓[39m src/games/acesup/acesUpRules.test.ts[2m > [22mAces Up Rules[2m > [22mdealCards[2m > [22mshould return invalid when not enough cards in stock[32m 0[2mms[22m[39m
+ [32m✓[39m src/games/acesup/acesUpRules.test.ts[2m > [22mAces Up Rules[2m > [22mdealCards[2m > [22mshould deal to 4 piles even if some already have cards[32m 1[2mms[22m[39m
+ [32m✓[39m src/games/acesup/acesUpRules.test.ts[2m > [22mAces Up Rules[2m > [22mdealCards[2m > [22mshould preserve original state when invalid[32m 0[2mms[22m[39m
+ [32m✓[39m src/games/acesup/acesUpRules.test.ts[2m > [22mAces Up Rules[2m > [22misGameWon[2m > [22mshould return true when only 4 aces remain and stock is empty[32m 0[2mms[22m[39m
+ [32m✓[39m src/games/acesup/acesUpRules.test.ts[2m > [22mAces Up Rules[2m > [22misGameWon[2m > [22mshould return false when stock still has cards[32m 0[2mms[22m[39m
+ [32m✓[39m src/games/acesup/acesUpRules.test.ts[2m > [22mAces Up Rules[2m > [22misGameWon[2m > [22mshould return false when non-ace cards remain[32m 0[2mms[22m[39m
+ [32m✓[39m src/games/acesup/acesUpRules.test.ts[2m > [22mAces Up Rules[2m > [22misGameWon[2m > [22mshould return false when fewer than 4 cards remain[32m 0[2mms[22m[39m
+ [32m✓[39m src/games/acesup/acesUpRules.test.ts[2m > [22mAces Up Rules[2m > [22misGameWon[2m > [22mshould return false when more than 4 cards remain[32m 0[2mms[22m[39m
+ [32m✓[39m src/games/acesup/acesUpRules.test.ts[2m > [22mAces Up Rules[2m > [22misGameWon[2m > [22mshould return false with some empty piles and cards in others[32m 0[2mms[22m[39m
+ [32m✓[39m src/games/acesup/acesUpRules.test.ts[2m > [22mAces Up Rules[2m > [22misGameLost[2m > [22mshould return false when stock has cards[32m 0[2mms[22m[39m
+ [32m✓[39m src/games/acesup/acesUpRules.test.ts[2m > [22mAces Up Rules[2m > [22misGameLost[2m > [22mshould return false when a removable card exists[32m 0[2mms[22m[39m
+ [32m✓[39m src/games/acesup/acesUpRules.test.ts[2m > [22mAces Up Rules[2m > [22misGameLost[2m > [22mshould return false with empty pile and cards available to move[32m 0[2mms[22m[39m
+ [32m✓[39m src/games/acesup/acesUpRules.test.ts[2m > [22mAces Up Rules[2m > [22misGameLost[2m > [22mshould return true when no cards can be removed and no empty piles for moves[32m 0[2mms[22m[39m
+ [32m✓[39m src/games/acesup/acesUpRules.test.ts[2m > [22mAces Up Rules[2m > [22misGameLost[2m > [22mshould return true when all piles have Kings (highest) with different suits[32m 0[2mms[22m[39m
+ [32m✓[39m src/games/acesup/acesUpRules.test.ts[2m > [22mAces Up Rules[2m > [22misGameLost[2m > [22mshould return false when all piles full but some cards removable[32m 0[2mms[22m[39m
+ [32m✓[39m src/games/acesup/acesUpRules.test.ts[2m > [22mAces Up Rules[2m > [22misGameLost[2m > [22mshould return true with one pile full and one empty, but no moves from full pile to empty[32m 0[2mms[22m[39m
+ [32m✓[39m src/games/acesup/acesUpRules.test.ts[2m > [22mAces Up Rules[2m > [22misGameLost[2m > [22mshould return true when only one pile filled with K and no empty piles[32m 0[2mms[22m[39m
+ [32m✓[39m src/games/acesup/acesUpRules.test.ts[2m > [22mAces Up Rules[2m > [22misGameLost[2m > [22mshould consider a non-removable card situation with no moves as lost[32m 0[2mms[22m[39m
+ [32m✓[39m src/games/acesup/acesUpRules.test.ts[2m > [22mAces Up Rules[2m > [22mIntegration scenarios[2m > [22mshould handle a complete game flow[32m 0[2mms[22m[39m
+ [32m✓[39m src/games/acesup/acesUpRules.test.ts[2m > [22mAces Up Rules[2m > [22mIntegration scenarios[2m > [22mshould prevent moves that violate game rules[32m 0[2mms[22m[39m
+[90mstdout[2m | src/games/napoleon/napoleonRules.test.ts[2m > [22m[2mNapoleon Rules - isGameWon[2m > [22m[2mshould be won when all corners complete and center has 24 cards ending in A
+[22m[39mTesting win state: { centerLength: [33m24[39m, centerLast: [32m'A'[39m, cornersComplete: [33mtrue[39m }
+
+ [32m✓[39m src/games/napoleon/napoleonRules.test.ts[2m > [22mNapoleon Rules - isGameLost[2m > [22mshould not be lost when stock has cards[32m 2[2mms[22m[39m
+ [32m✓[39m src/games/napoleon/napoleonRules.test.ts[2m > [22mNapoleon Rules - isGameLost[2m > [22mshould not be lost when waste has cards and recycling is available (maxRecycles=2, recycleCount=0)[32m 0[2mms[22m[39m
+ [32m✓[39m src/games/napoleon/napoleonRules.test.ts[2m > [22mNapoleon Rules - isGameLost[2m > [22mshould NOT be lost when waste has unplayable card but helpers are empty (maxRecycles=1, recycleCount=0)[32m 0[2mms[22m[39m
+ [32m✓[39m src/games/napoleon/napoleonRules.test.ts[2m > [22mNapoleon Rules - isGameLost[2m > [22mshould be lost when waste has unplayable card, no recycles, and helpers are full (maxRecycles=1, recycleCount=0)[32m 0[2mms[22m[39m
+ [32m✓[39m src/games/napoleon/napoleonRules.test.ts[2m > [22mNapoleon Rules - isGameLost[2m > [22mshould not be lost when waste has playable card (6 can start center)[32m 0[2mms[22m[39m
+ [32m✓[39m src/games/napoleon/napoleonRules.test.ts[2m > [22mNapoleon Rules - isGameLost[2m > [22mshould not be lost when waste has playable card (7 can start corner)[32m 0[2mms[22m[39m
+ [32m✓[39m src/games/napoleon/napoleonRules.test.ts[2m > [22mNapoleon Rules - isGameLost[2m > [22mshould not be lost when helper has playable card[32m 0[2mms[22m[39m
+ [32m✓[39m src/games/napoleon/napoleonRules.test.ts[2m > [22mNapoleon Rules - isGameLost[2m > [22mshould not be lost when sixPile has playable card[32m 0[2mms[22m[39m
+ [32m✓[39m src/games/napoleon/napoleonRules.test.ts[2m > [22mNapoleon Rules - isGameLost[2m > [22mshould be lost when sixPile has 6 but center already started and no other moves[32m 0[2mms[22m[39m
+ [32m✓[39m src/games/napoleon/napoleonRules.test.ts[2m > [22mNapoleon Rules - isGameLost[2m > [22mshould be lost when no cards anywhere[32m 0[2mms[22m[39m
+ [32m✓[39m src/games/napoleon/napoleonRules.test.ts[2m > [22mNapoleon Rules - isGameLost[2m > [22mshould be lost when helpers full but none can move[32m 0[2mms[22m[39m
+ [32m✓[39m src/games/napoleon/napoleonRules.test.ts[2m > [22mNapoleon Rules - isGameLost[2m > [22mshould not be lost with unlimited recycles and waste[32m 0[2mms[22m[39m
+ [32m✓[39m src/games/napoleon/napoleonRules.test.ts[2m > [22mNapoleon Rules - isGameWon[2m > [22mshould be won when all corners complete and center has 24 cards ending in A[32m 6[2mms[22m[39m
+ [32m✓[39m src/games/napoleon/napoleonRules.test.ts[2m > [22mNapoleon Rules - isGameWon[2m > [22mshould not be won when center has wrong number of cards[32m 0[2mms[22m[39m
+ [32m✓[39m src/games/napoleon/napoleonRules.test.ts[2m > [22mNapoleon Rules - isGameWon[2m > [22mshould not be won when center does not end with A[32m 0[2mms[22m[39m
+ [32m✓[39m src/games/napoleon/napoleonRules.test.ts[2m > [22mNapoleon Rules - isGameWon[2m > [22mshould not be won when corners incomplete[32m 0[2mms[22m[39m
+ [32m✓[39m src/games/napoleon/napoleonRules.test.ts[2m > [22mNapoleon Rules - isGameWon[2m > [22mshould not be won when cards still in stock[32m 0[2mms[22m[39m
+ [32m✓[39m src/games/napoleon/napoleonRules.test.ts[2m > [22mNapoleon Rules - canMoveToCenter[2m > [22mshould allow 6 on empty center pile[32m 0[2mms[22m[39m
+ [32m✓[39m src/games/napoleon/napoleonRules.test.ts[2m > [22mNapoleon Rules - canMoveToCenter[2m > [22mshould reject non-6 on empty center pile[32m 0[2mms[22m[39m
+ [32m✓[39m src/games/napoleon/napoleonRules.test.ts[2m > [22mNapoleon Rules - canMoveToCenter[2m > [22mshould build down from 6 to A[32m 1[2mms[22m[39m
+ [32m✓[39m src/games/napoleon/napoleonRules.test.ts[2m > [22mNapoleon Rules - canMoveToCenter[2m > [22mshould restart at 6 after Ace[32m 0[2mms[22m[39m
+ [32m✓[39m src/games/napoleon/napoleonRules.test.ts[2m > [22mNapoleon Rules - canMoveToCenter[2m > [22mshould reject out-of-sequence cards[32m 0[2mms[22m[39m
+ [32m✓[39m src/games/napoleon/napoleonRules.test.ts[2m > [22mNapoleon Rules - canMoveToCenter[2m > [22mshould reject cards after K sequence[32m 0[2mms[22m[39m
+ [32m✓[39m src/games/napoleon/napoleonRules.test.ts[2m > [22mNapoleon Rules - canMoveToCorner[2m > [22mshould allow 7 on empty corner pile[32m 0[2mms[22m[39m
+ [32m✓[39m src/games/napoleon/napoleonRules.test.ts[2m > [22mNapoleon Rules - canMoveToCorner[2m > [22mshould reject non-7 on empty corner pile[32m 0[2mms[22m[39m
+ [32m✓[39m src/games/napoleon/napoleonRules.test.ts[2m > [22mNapoleon Rules - canMoveToCorner[2m > [22mshould build up from 7 to K[32m 1[2mms[22m[39m
+ [32m✓[39m src/games/napoleon/napoleonRules.test.ts[2m > [22mNapoleon Rules - canMoveToCorner[2m > [22mshould reject cards on King[32m 1[2mms[22m[39m
+ [32m✓[39m src/games/napoleon/napoleonRules.test.ts[2m > [22mNapoleon Rules - canMoveToCorner[2m > [22mshould reject out-of-sequence cards[32m 0[2mms[22m[39m
+ [32m✓[39m src/games/napoleon/napoleonRules.test.ts[2m > [22mNapoleon Rules - canMoveToCorner[2m > [22mshould reject cards after Q[32m 0[2mms[22m[39m
+ [32m✓[39m src/games/napoleon/napoleonRules.test.ts[2m > [22mNapoleon Rules - canMoveToHelper[2m > [22mshould allow card on empty helper[32m 0[2mms[22m[39m
+ [32m✓[39m src/games/napoleon/napoleonRules.test.ts[2m > [22mNapoleon Rules - canMoveToHelper[2m > [22mshould reject card on occupied helper[32m 0[2mms[22m[39m
+ [32m✓[39m src/games/napoleon/napoleonRules.test.ts[2m > [22mNapoleon Rules - canMoveToSixPile[2m > [22mshould allow 6[32m 0[2mms[22m[39m
+ [32m✓[39m src/games/napoleon/napoleonRules.test.ts[2m > [22mNapoleon Rules - canMoveToSixPile[2m > [22mshould reject non-6 cards[32m 0[2mms[22m[39m
+ [32m✓[39m src/games/napoleon/napoleonRules.test.ts[2m > [22mNapoleon Rules - tryAutoPlace[2m > [22mshould place 6 on empty center[32m 2[2mms[22m[39m
+ [32m✓[39m src/games/napoleon/napoleonRules.test.ts[2m > [22mNapoleon Rules - tryAutoPlace[2m > [22mshould place 7 on corner[32m 0[2mms[22m[39m
+ [32m✓[39m src/games/napoleon/napoleonRules.test.ts[2m > [22mNapoleon Rules - tryAutoPlace[2m > [22mshould place 6 in sixPile when center is not empty[32m 1[2mms[22m[39m
+ [32m✓[39m src/games/napoleon/napoleonRules.test.ts[2m > [22mNapoleon Rules - tryAutoPlace[2m > [22mshould place card on helper when no other option[32m 1[2mms[22m[39m
+ [32m✓[39m src/games/napoleon/napoleonRules.test.ts[2m > [22mNapoleon Rules - tryAutoPlace[2m > [22mshould fail when no placement possible[32m 0[2mms[22m[39m
+ [32m✓[39m src/games/napoleon/napoleonRules.test.ts[2m > [22mNapoleon Rules - tryAutoPlace[2m > [22mshould prioritize center over corners[32m 0[2mms[22m[39m
+ [32m✓[39m src/games/napoleon/napoleonRules.test.ts[2m > [22mNapoleon Rules - tryAutoPlace[2m > [22mshould prioritize corners over sixPile[32m 0[2mms[22m[39m
+ [32m✓[39m src/games/napoleon/napoleonRules.test.ts[2m > [22mNapoleon Rules - tryAutoPlace[2m > [22mshould place continuing center sequence[32m 0[2mms[22m[39m
+ [32m✓[39m src/games/napoleon/napoleonRules.test.ts[2m > [22mNapoleon Rules - tryAutoPlace[2m > [22mshould not mutate original state[32m 0[2mms[22m[39m
+ [32m✓[39m src/games/napoleon/napoleonRules.test.ts[2m > [22mNapoleon Rules - countCycles[2m > [22mshould count 0 cycles for empty center[32m 0[2mms[22m[39m
+ [32m✓[39m src/games/napoleon/napoleonRules.test.ts[2m > [22mNapoleon Rules - countCycles[2m > [22mshould count 1 after first 6 (incomplete cycle)[32m 0[2mms[22m[39m
+ [32m✓[39m src/games/napoleon/napoleonRules.test.ts[2m > [22mNapoleon Rules - countCycles[2m > [22mshould count 1 cycle after first 6[32m 0[2mms[22m[39m
+ [32m✓[39m src/games/napoleon/napoleonRules.test.ts[2m > [22mNapoleon Rules - countCycles[2m > [22mshould count 2 cycles after second 6[32m 0[2mms[22m[39m
+ [32m✓[39m src/games/napoleon/napoleonRules.test.ts[2m > [22mNapoleon Rules - countCycles[2m > [22mshould count 3 cycles after third 6[32m 0[2mms[22m[39m
+ [32m✓[39m src/games/napoleon/napoleonRules.test.ts[2m > [22mNapoleon Rules - countCycles[2m > [22mshould count 4 cycles for complete center[32m 0[2mms[22m[39m
+ [32m✓[39m src/games/napoleon/napoleonRules.test.ts[2m > [22mNapoleon Rules - countCycles[2m > [22mshould count cycles correctly with mixed sequences[32m 0[2mms[22m[39m
+ [32m✓[39m src/games/clock/clockRules.test.ts[2m > [22mClock Solitaire Rules[2m > [22mgetRankPileIndex[2m > [22mshould map Q to index 0 (12 o'clock)[32m 2[2mms[22m[39m
+ [32m✓[39m src/games/clock/clockRules.test.ts[2m > [22mClock Solitaire Rules[2m > [22mgetRankPileIndex[2m > [22mshould map A to index 1 (1 o'clock)[32m 0[2mms[22m[39m
+ [32m✓[39m src/games/clock/clockRules.test.ts[2m > [22mClock Solitaire Rules[2m > [22mgetRankPileIndex[2m > [22mshould map 2 to index 2 (2 o'clock)[32m 0[2mms[22m[39m
+ [32m✓[39m src/games/clock/clockRules.test.ts[2m > [22mClock Solitaire Rules[2m > [22mgetRankPileIndex[2m > [22mshould map 3 to index 3[32m 0[2mms[22m[39m
+ [32m✓[39m src/games/clock/clockRules.test.ts[2m > [22mClock Solitaire Rules[2m > [22mgetRankPileIndex[2m > [22mshould map 4 to index 4[32m 0[2mms[22m[39m
+ [32m✓[39m src/games/clock/clockRules.test.ts[2m > [22mClock Solitaire Rules[2m > [22mgetRankPileIndex[2m > [22mshould map 5 to index 5[32m 0[2mms[22m[39m
+ [32m✓[39m src/games/clock/clockRules.test.ts[2m > [22mClock Solitaire Rules[2m > [22mgetRankPileIndex[2m > [22mshould map 6 to index 6[32m 0[2mms[22m[39m
+ [32m✓[39m src/games/clock/clockRules.test.ts[2m > [22mClock Solitaire Rules[2m > [22mgetRankPileIndex[2m > [22mshould map 7 to index 7[32m 0[2mms[22m[39m
+ [32m✓[39m src/games/clock/clockRules.test.ts[2m > [22mClock Solitaire Rules[2m > [22mgetRankPileIndex[2m > [22mshould map 8 to index 8[32m 0[2mms[22m[39m
+ [32m✓[39m src/games/clock/clockRules.test.ts[2m > [22mClock Solitaire Rules[2m > [22mgetRankPileIndex[2m > [22mshould map 9 to index 9[32m 0[2mms[22m[39m
+ [32m✓[39m src/games/clock/clockRules.test.ts[2m > [22mClock Solitaire Rules[2m > [22mgetRankPileIndex[2m > [22mshould map 10 to index 10[32m 0[2mms[22m[39m
+ [32m✓[39m src/games/clock/clockRules.test.ts[2m > [22mClock Solitaire Rules[2m > [22mgetRankPileIndex[2m > [22mshould map J to index 11 (11 o'clock)[32m 0[2mms[22m[39m
+ [32m✓[39m src/games/clock/clockRules.test.ts[2m > [22mClock Solitaire Rules[2m > [22mgetRankPileIndex[2m > [22mshould map K to index 12 (center)[32m 0[2mms[22m[39m
+ [32m✓[39m src/games/clock/clockRules.test.ts[2m > [22mClock Solitaire Rules[2m > [22mrevealCard[2m > [22mshould reveal a face-down card at top of pile[32m 1[2mms[22m[39m
+ [32m✓[39m src/games/clock/clockRules.test.ts[2m > [22mClock Solitaire Rules[2m > [22mrevealCard[2m > [22mshould return invalid when pile is empty[32m 0[2mms[22m[39m
+ [32m✓[39m src/games/clock/clockRules.test.ts[2m > [22mClock Solitaire Rules[2m > [22mrevealCard[2m > [22mshould return invalid when top card already face-up[32m 0[2mms[22m[39m
+ [32m✓[39m src/games/clock/clockRules.test.ts[2m > [22mClock Solitaire Rules[2m > [22mrevealCard[2m > [22mshould reveal from correct pile when multiple piles have cards[32m 0[2mms[22m[39m
+ [32m✓[39m src/games/clock/clockRules.test.ts[2m > [22mClock Solitaire Rules[2m > [22mrevealCard[2m > [22mshould only reveal top card of pile with multiple cards[32m 0[2mms[22m[39m
+ [32m✓[39m src/games/clock/clockRules.test.ts[2m > [22mClock Solitaire Rules[2m > [22mrevealCard[2m > [22mshould preserve original state when invalid[32m 0[2mms[22m[39m
+ [32m✓[39m src/games/clock/clockRules.test.ts[2m > [22mClock Solitaire Rules[2m > [22mmoveRevealedCard[2m > [22mshould move revealed card to correct pile[32m 1[2mms[22m[39m
+ [32m✓[39m src/games/clock/clockRules.test.ts[2m > [22mClock Solitaire Rules[2m > [22mmoveRevealedCard[2m > [22mshould return invalid when no card is revealed[32m 0[2mms[22m[39m
+ [32m✓[39m src/games/clock/clockRules.test.ts[2m > [22mClock Solitaire Rules[2m > [22mmoveRevealedCard[2m > [22mshould return invalid when dropping on wrong pile[32m 0[2mms[22m[39m
+ [32m✓[39m src/games/clock/clockRules.test.ts[2m > [22mClock Solitaire Rules[2m > [22mmoveRevealedCard[2m > [22mshould place card at bottom of target pile and reveal new top[32m 0[2mms[22m[39m
+ [32m✓[39m src/games/clock/clockRules.test.ts[2m > [22mClock Solitaire Rules[2m > [22mmoveRevealedCard[2m > [22mshould set revealedCardPileIndex to target pile for continuing sequence[32m 0[2mms[22m[39m
+ [32m✓[39m src/games/clock/clockRules.test.ts[2m > [22mClock Solitaire Rules[2m > [22mmoveRevealedCard[2m > [22mshould handle moving King to center pile[32m 0[2mms[22m[39m
+ [32m✓[39m src/games/clock/clockRules.test.ts[2m > [22mClock Solitaire Rules[2m > [22mmoveRevealedCard[2m > [22mshould return isWon true when 4th King placed in center with all face-up[32m 1[2mms[22m[39m
+ [32m✓[39m src/games/clock/clockRules.test.ts[2m > [22mClock Solitaire Rules[2m > [22mmoveRevealedCard[2m > [22mshould return isLost true when 4th King placed in center with face-down cards[32m 0[2mms[22m[39m
+ [32m✓[39m src/games/clock/clockRules.test.ts[2m > [22mClock Solitaire Rules[2m > [22mmoveRevealedCard[2m > [22mshould return valid true and isWon/isLost undefined for normal moves[32m 0[2mms[22m[39m
+ [32m✓[39m src/games/clock/clockRules.test.ts[2m > [22mClock Solitaire Rules[2m > [22mmoveRevealedCard[2m > [22mshould preserve original state when move is invalid[32m 0[2mms[22m[39m
+ [32m✓[39m src/games/clock/clockRules.test.ts[2m > [22mClock Solitaire Rules[2m > [22misGameWon[2m > [22mshould return true when all cards are face-up[32m 0[2mms[22m[39m
+ [32m✓[39m src/games/clock/clockRules.test.ts[2m > [22mClock Solitaire Rules[2m > [22misGameWon[2m > [22mshould return false when any pile has face-down card[32m 0[2mms[22m[39m
+ [32m✓[39m src/games/clock/clockRules.test.ts[2m > [22mClock Solitaire Rules[2m > [22misGameWon[2m > [22mshould return false with empty piles[32m 0[2mms[22m[39m
+ [32m✓[39m src/games/clock/clockRules.test.ts[2m > [22mClock Solitaire Rules[2m > [22misGameWon[2m > [22mshould return false when center pile incomplete[32m 1[2mms[22m[39m
+ [32m✓[39m src/games/clock/clockRules.test.ts[2m > [22mClock Solitaire Rules[2m > [22misGameLost[2m > [22mshould return false when less than 4 kings in center[32m 1[2mms[22m[39m
+ [32m✓[39m src/games/clock/clockRules.test.ts[2m > [22mClock Solitaire Rules[2m > [22misGameLost[2m > [22mshould return false when 4 kings in center and all cards face-up[32m 0[2mms[22m[39m
+ [32m✓[39m src/games/clock/clockRules.test.ts[2m > [22mClock Solitaire Rules[2m > [22misGameLost[2m > [22mshould return true when 4 kings in center and any card is face-down[32m 0[2mms[22m[39m
+ [32m✓[39m src/games/clock/clockRules.test.ts[2m > [22mClock Solitaire Rules[2m > [22misGameLost[2m > [22mshould return true when 4 kings in center with multiple face-down cards[32m 0[2mms[22m[39m
+ [32m✓[39m src/games/clock/clockRules.test.ts[2m > [22mClock Solitaire Rules[2m > [22mIntegration scenarios[2m > [22mshould handle a simple card reveal and move sequence[32m 0[2mms[22m[39m
+ [32m✓[39m src/games/clock/clockRules.test.ts[2m > [22mClock Solitaire Rules[2m > [22mIntegration scenarios[2m > [22mshould handle moving Kings to center[32m 1[2mms[22m[39m
+ [32m✓[39m src/lib/cardUtils.test.ts[2m > [22mcardUtils[2m > [22mcreateDeck[2m > [22mcreates a standard 52-card deck with unique ids[32m 5[2mms[22m[39m
+ [32m✓[39m src/lib/cardUtils.test.ts[2m > [22mcardUtils[2m > [22mcreateDeck[2m > [22mcreates all suit and rank combinations with faceUp false[32m 6[2mms[22m[39m
+ [32m✓[39m src/lib/cardUtils.test.ts[2m > [22mcardUtils[2m > [22mcreateDeck[2m > [22mcreates new card objects on each call[32m 2[2mms[22m[39m
+ [32m✓[39m src/lib/cardUtils.test.ts[2m > [22mcardUtils[2m > [22mshuffleDeck[2m > [22mreturns a new array without mutating the original[32m 1[2mms[22m[39m
+ [32m✓[39m src/lib/cardUtils.test.ts[2m > [22mcardUtils[2m > [22mshuffleDeck[2m > [22mcontains all original cards after shuffle[32m 1[2mms[22m[39m
+ [32m✓[39m src/lib/cardUtils.test.ts[2m > [22mcardUtils[2m > [22mshuffleDeck[2m > [22muses Fisher-Yates swapping order with deterministic randomness[32m 2[2mms[22m[39m
+ [32m✓[39m src/lib/cardUtils.test.ts[2m > [22mcardUtils[2m > [22misRed[2m > [22mreturns true for red suits and false otherwise[32m 0[2mms[22m[39m
+ [32m✓[39m src/lib/cardUtils.test.ts[2m > [22mcardUtils[2m > [22misBlack[2m > [22mreturns true for black suits and false otherwise[32m 0[2mms[22m[39m
+ [32m✓[39m src/lib/cardUtils.test.ts[2m > [22mcardUtils[2m > [22mgetRankValue[2m > [22mmaps all ranks to their numeric values[32m 1[2mms[22m[39m
+ [32m✓[39m src/lib/cardUtils.test.ts[2m > [22mcardUtils[2m > [22mcanStackOnTableau[2m > [22mallows only Kings on empty tableau[32m 1[2mms[22m[39m
+ [32m✓[39m src/lib/cardUtils.test.ts[2m > [22mcardUtils[2m > [22mcanStackOnTableau[2m > [22mallows opposite color with descending rank[32m 0[2mms[22m[39m
+ [32m✓[39m src/lib/cardUtils.test.ts[2m > [22mcardUtils[2m > [22mcanStackOnTableau[2m > [22mdisallows same color even if descending[32m 0[2mms[22m[39m
+ [32m✓[39m src/lib/cardUtils.test.ts[2m > [22mcardUtils[2m > [22mcanStackOnTableau[2m > [22mdisallows opposite color with non-descending rank[32m 0[2mms[22m[39m
+ [32m✓[39m src/lib/cardUtils.test.ts[2m > [22mcardUtils[2m > [22mcanStackOnTableau[2m > [22mallows Ace below 2 with opposite color[32m 0[2mms[22m[39m
+ [32m✓[39m src/lib/cardUtils.test.ts[2m > [22mcardUtils[2m > [22mcanStackOnTableau[2m > [22mdisallows any card below an Ace[32m 0[2mms[22m[39m
+ [32m✓[39m src/lib/cardUtils.test.ts[2m > [22mcardUtils[2m > [22mcanStackOnFoundation[2m > [22mallows only Aces on empty foundation[32m 0[2mms[22m[39m
+ [32m✓[39m src/lib/cardUtils.test.ts[2m > [22mcardUtils[2m > [22mcanStackOnFoundation[2m > [22mallows same suit with ascending rank[32m 0[2mms[22m[39m
+ [32m✓[39m src/lib/cardUtils.test.ts[2m > [22mcardUtils[2m > [22mcanStackOnFoundation[2m > [22mdisallows same suit with non-ascending rank[32m 0[2mms[22m[39m
+ [32m✓[39m src/lib/cardUtils.test.ts[2m > [22mcardUtils[2m > [22mcanStackOnFoundation[2m > [22mdisallows different suit even if ascending[32m 0[2mms[22m[39m
+ [32m✓[39m src/lib/cardUtils.test.ts[2m > [22mcardUtils[2m > [22mcanStackOnFoundation[2m > [22mdisallows descending rank[32m 0[2mms[22m[39m
+ [32m✓[39m src/games/klondike/klondikeRules.test.ts[2m > [22mKlondike Rules - isGameLost[2m > [22mshould not be lost when stock has cards[32m 2[2mms[22m[39m
+ [32m✓[39m src/games/klondike/klondikeRules.test.ts[2m > [22mKlondike Rules - isGameLost[2m > [22mshould not be lost when waste has cards and recycling is available[32m 0[2mms[22m[39m
+ [32m✓[39m src/games/klondike/klondikeRules.test.ts[2m > [22mKlondike Rules - isGameLost[2m > [22mshould not be lost when waste has playable card (King can go to empty tableau)[32m 0[2mms[22m[39m
+ [32m✓[39m src/games/klondike/klondikeRules.test.ts[2m > [22mKlondike Rules - isGameLost[2m > [22mshould not be lost when waste has playable card (Ace can start foundation)[32m 0[2mms[22m[39m
+ [32m✓[39m src/games/klondike/klondikeRules.test.ts[2m > [22mKlondike Rules - isGameLost[2m > [22mshould not be lost when tableau has face-down cards AND moves available[32m 0[2mms[22m[39m
+ [32m✓[39m src/games/klondike/klondikeRules.test.ts[2m > [22mKlondike Rules - isGameLost[2m > [22mshould be lost even when tableau has face-down cards if no moves available[32m 1[2mms[22m[39m
+ [32m✓[39m src/games/klondike/klondikeRules.test.ts[2m > [22mKlondike Rules - isGameLost[2m > [22mshould be lost when no moves available and no recycles left[32m 0[2mms[22m[39m
+ [32m✓[39m src/games/klondike/klondikeRules.test.ts[2m > [22mKlondike Rules - isGameLost[2m > [22mshould not be lost when tableau cards can move to foundation[32m 0[2mms[22m[39m
+ [32m✓[39m src/games/klondike/klondikeRules.test.ts[2m > [22mKlondike Rules - isGameLost[2m > [22mshould not be lost when tableau cards can move between piles[32m 1[2mms[22m[39m
+ [32m✓[39m src/games/klondike/klondikeRules.test.ts[2m > [22mKlondike Rules - isGameLost[2m > [22mshould be lost when completely stuck with no recycles[32m 0[2mms[22m[39m
+ [32m✓[39m src/games/klondike/klondikeRules.test.ts[2m > [22mKlondike Rules - isGameLost[2m > [22mshould not be lost with unlimited recycles and waste has cards[32m 0[2mms[22m[39m
+ [32m✓[39m src/games/klondike/klondikeRules.test.ts[2m > [22mKlondike Rules - isGameLost[2m > [22mshould be lost with unlimited recycles when no cards in waste/stock and no moves[32m 0[2mms[22m[39m
+ [32m✓[39m src/games/klondike/klondikeRules.test.ts[2m > [22mKlondike Rules - canMoveToTableau[2m > [22mshould allow King on empty pile[32m 0[2mms[22m[39m
+ [32m✓[39m src/games/klondike/klondikeRules.test.ts[2m > [22mKlondike Rules - canMoveToTableau[2m > [22mshould not allow non-King on empty pile[32m 0[2mms[22m[39m
+ [32m✓[39m src/games/klondike/klondikeRules.test.ts[2m > [22mKlondike Rules - canMoveToTableau[2m > [22mshould allow alternating color with descending rank[32m 0[2mms[22m[39m
+ [32m✓[39m src/games/klondike/klondikeRules.test.ts[2m > [22mKlondike Rules - canMoveToTableau[2m > [22mshould not allow same color cards[32m 0[2mms[22m[39m
+ [32m✓[39m src/games/klondike/klondikeRules.test.ts[2m > [22mKlondike Rules - canMoveToTableau[2m > [22mshould not allow non-descending rank[32m 0[2mms[22m[39m
+ [32m✓[39m src/games/klondike/klondikeRules.test.ts[2m > [22mKlondike Rules - canMoveToTableau[2m > [22mshould not allow ascending rank[32m 0[2mms[22m[39m
+ [32m✓[39m src/games/klondike/klondikeRules.test.ts[2m > [22mKlondike Rules - canMoveToTableau[2m > [22mshould work with low ranks[32m 0[2mms[22m[39m
+ [32m✓[39m src/games/klondike/klondikeRules.test.ts[2m > [22mKlondike Rules - canMoveToFoundation[2m > [22mshould allow Ace on empty foundation[32m 0[2mms[22m[39m
+ [32m✓[39m src/games/klondike/klondikeRules.test.ts[2m > [22mKlondike Rules - canMoveToFoundation[2m > [22mshould not allow non-Ace on empty foundation[32m 0[2mms[22m[39m
+ [32m✓[39m src/games/klondike/klondikeRules.test.ts[2m > [22mKlondike Rules - canMoveToFoundation[2m > [22mshould allow same suit with ascending rank[32m 0[2mms[22m[39m
+ [32m✓[39m src/games/klondike/klondikeRules.test.ts[2m > [22mKlondike Rules - canMoveToFoundation[2m > [22mshould not allow different suit[32m 0[2mms[22m[39m
+ [32m✓[39m src/games/klondike/klondikeRules.test.ts[2m > [22mKlondike Rules - canMoveToFoundation[2m > [22mshould not allow skipping ranks[32m 0[2mms[22m[39m
+ [32m✓[39m src/games/klondike/klondikeRules.test.ts[2m > [22mKlondike Rules - canMoveToFoundation[2m > [22mshould not allow descending rank[32m 0[2mms[22m[39m
+ [32m✓[39m src/games/klondike/klondikeRules.test.ts[2m > [22mKlondike Rules - canMoveToFoundation[2m > [22mshould work up to King[32m 0[2mms[22m[39m
+ [32m✓[39m src/games/klondike/klondikeRules.test.ts[2m > [22mKlondike Rules - moveCard[2m > [22mfrom waste[2m > [22mshould move card from waste to tableau[32m 1[2mms[22m[39m
+ [32m✓[39m src/games/klondike/klondikeRules.test.ts[2m > [22mKlondike Rules - moveCard[2m > [22mfrom waste[2m > [22mshould move card from waste to foundation[32m 0[2mms[22m[39m
+ [32m✓[39m src/games/klondike/klondikeRules.test.ts[2m > [22mKlondike Rules - moveCard[2m > [22mfrom waste[2m > [22mshould fail when waste is empty[32m 0[2mms[22m[39m
+ [32m✓[39m src/games/klondike/klondikeRules.test.ts[2m > [22mKlondike Rules - moveCard[2m > [22mfrom waste[2m > [22mshould fail invalid tableau move from waste[32m 0[2mms[22m[39m
+ [32m✓[39m src/games/klondike/klondikeRules.test.ts[2m > [22mKlondike Rules - moveCard[2m > [22mfrom waste[2m > [22mshould fail invalid foundation move from waste[32m 0[2mms[22m[39m
+ [32m✓[39m src/games/klondike/klondikeRules.test.ts[2m > [22mKlondike Rules - moveCard[2m > [22mfrom tableau[2m > [22mshould move single card from tableau to tableau[32m 1[2mms[22m[39m
+ [32m✓[39m src/games/klondike/klondikeRules.test.ts[2m > [22mKlondike Rules - moveCard[2m > [22mfrom tableau[2m > [22mshould move multiple cards from tableau to tableau[32m 0[2mms[22m[39m
+ [32m✓[39m src/games/klondike/klondikeRules.test.ts[2m > [22mKlondike Rules - moveCard[2m > [22mfrom tableau[2m > [22mshould move multiple cards from tableau to tableau - valid[32m 0[2mms[22m[39m
+ [32m✓[39m src/games/klondike/klondikeRules.test.ts[2m > [22mKlondike Rules - moveCard[2m > [22mfrom tableau[2m > [22mshould move multiple face-up cards as sequence[32m 0[2mms[22m[39m
+ [32m✓[39m src/games/klondike/klondikeRules.test.ts[2m > [22mKlondike Rules - moveCard[2m > [22mfrom tableau[2m > [22mshould flip face-down card after moving from tableau[32m 0[2mms[22m[39m
+ [32m✓[39m src/games/klondike/klondikeRules.test.ts[2m > [22mKlondike Rules - moveCard[2m > [22mfrom tableau[2m > [22mshould move King to empty tableau[32m 0[2mms[22m[39m
+ [32m✓[39m src/games/klondike/klondikeRules.test.ts[2m > [22mKlondike Rules - moveCard[2m > [22mfrom tableau[2m > [22mshould move card from tableau to foundation[32m 0[2mms[22m[39m
+ [32m✓[39m src/games/klondike/klondikeRules.test.ts[2m > [22mKlondike Rules - moveCard[2m > [22mfrom tableau[2m > [22mshould fail when tableau pile is empty[32m 0[2mms[22m[39m
+ [32m✓[39m src/games/klondike/klondikeRules.test.ts[2m > [22mKlondike Rules - moveCard[2m > [22mfrom tableau[2m > [22mshould fail when cardIndex is invalid[32m 0[2mms[22m[39m
+ [32m✓[39m src/games/klondike/klondikeRules.test.ts[2m > [22mKlondike Rules - moveCard[2m > [22mfrom tableau[2m > [22mshould fail when moving face-down card[32m 0[2mms[22m[39m
+ [32m✓[39m src/games/klondike/klondikeRules.test.ts[2m > [22mKlondike Rules - moveCard[2m > [22mfrom tableau[2m > [22mshould fail when multiple cards to foundation[32m 0[2mms[22m[39m
+ [32m✓[39m src/games/klondike/klondikeRules.test.ts[2m > [22mKlondike Rules - moveCard[2m > [22mfrom tableau[2m > [22mshould fail invalid tableau move[32m 0[2mms[22m[39m
+ [32m✓[39m src/games/klondike/klondikeRules.test.ts[2m > [22mKlondike Rules - moveCard[2m > [22mfrom foundation[2m > [22mshould move card from foundation to tableau[32m 0[2mms[22m[39m
+ [32m✓[39m src/games/klondike/klondikeRules.test.ts[2m > [22mKlondike Rules - moveCard[2m > [22mfrom foundation[2m > [22mshould fail when foundation pile is empty[32m 0[2mms[22m[39m
+ [32m✓[39m src/games/klondike/klondikeRules.test.ts[2m > [22mKlondike Rules - moveCard[2m > [22mshould maintain state immutability[32m 0[2mms[22m[39m
+ [32m✓[39m src/games/klondike/klondikeRules.test.ts[2m > [22mKlondike Rules - isGameWon[2m > [22mshould be won when all foundations complete[32m 0[2mms[22m[39m
+ [32m✓[39m src/games/klondike/klondikeRules.test.ts[2m > [22mKlondike Rules - isGameWon[2m > [22mshould not be won when foundations incomplete[32m 0[2mms[22m[39m
+ [32m✓[39m src/games/klondike/klondikeRules.test.ts[2m > [22mKlondike Rules - isGameWon[2m > [22mshould not be won when cards still in tableau[32m 0[2mms[22m[39m
+ [32m✓[39m src/games/klondike/klondikeRules.test.ts[2m > [22mKlondike Rules - canAutoComplete[2m > [22mshould detect when all cards are face-up[32m 0[2mms[22m[39m
+ [32m✓[39m src/games/klondike/klondikeRules.test.ts[2m > [22mKlondike Rules - canAutoComplete[2m > [22mshould return false when any tableau card is face-down[32m 0[2mms[22m[39m
+ [32m✓[39m src/games/klondike/klondikeRules.test.ts[2m > [22mKlondike Rules - canAutoComplete[2m > [22mshould return false when stock has face-down cards[32m 0[2mms[22m[39m
+ [32m✓[39m src/games/klondike/klondikeRules.test.ts[2m > [22mKlondike Rules - canAutoComplete[2m > [22mshould return true when all tableau and stock cards are face-up[32m 0[2mms[22m[39m
+ [32m✓[39m src/games/klondike/klondikeRules.test.ts[2m > [22mKlondike Rules - canAutoComplete[2m > [22mshould return true when tableau is empty and stock is empty[32m 0[2mms[22m[39m
+ [32m✓[39m src/games/klondike/klondikeRules.test.ts[2m > [22mKlondike Rules - canAutoComplete[2m > [22mshould return false when even one tableau card in deep pile is face-down[32m 0[2mms[22m[39m
+ [32m✓[39m src/games/klondike/klondikeRules.test.ts[2m > [22mKlondike Rules - findNextAutoMove[2m > [22mshould find ace to move to empty foundation[32m 0[2mms[22m[39m
+ [32m✓[39m src/games/klondike/klondikeRules.test.ts[2m > [22mKlondike Rules - findNextAutoMove[2m > [22mshould find card from waste to move to foundation[32m 0[2mms[22m[39m
+ [32m✓[39m src/games/klondike/klondikeRules.test.ts[2m > [22mKlondike Rules - findNextAutoMove[2m > [22mshould prioritize lower rank cards[32m 0[2mms[22m[39m
+ [32m✓[39m src/games/klondike/klondikeRules.test.ts[2m > [22mKlondike Rules - findNextAutoMove[2m > [22mshould return null when no moves available[32m 0[2mms[22m[39m
+ [32m✓[39m src/games/klondike/klondikeRules.test.ts[2m > [22mKlondike Rules - findNextAutoMove[2m > [22mshould find card from deep in tableau pile[32m 0[2mms[22m[39m
+ [32m✓[39m src/lib/gameInstructions.test.ts[2m > [22mgameInstructions[2m > [22mKlondike[2m > [22mhas a title[32m 2[2mms[22m[39m
+ [32m✓[39m src/lib/gameInstructions.test.ts[2m > [22mgameInstructions[2m > [22mKlondike[2m > [22mhas a goal[32m 0[2mms[22m[39m
+ [32m✓[39m src/lib/gameInstructions.test.ts[2m > [22mgameInstructions[2m > [22mKlondike[2m > [22mhas rules array[32m 0[2mms[22m[39m
+ [32m✓[39m src/lib/gameInstructions.test.ts[2m > [22mgameInstructions[2m > [22mKlondike[2m > [22mhas non-empty rule strings[32m 0[2mms[22m[39m
+ [32m✓[39m src/lib/gameInstructions.test.ts[2m > [22mgameInstructions[2m > [22mKlondike[2m > [22mhas tips array if provided[32m 0[2mms[22m[39m
+ [32m✓[39m src/lib/gameInstructions.test.ts[2m > [22mgameInstructions[2m > [22mKlondike[2m > [22mis in Finnish language[32m 0[2mms[22m[39m
+ [32m✓[39m src/lib/gameInstructions.test.ts[2m > [22mgameInstructions[2m > [22mNapoleon[2m > [22mhas a title[32m 0[2mms[22m[39m
+ [32m✓[39m src/lib/gameInstructions.test.ts[2m > [22mgameInstructions[2m > [22mNapoleon[2m > [22mhas a goal[32m 0[2mms[22m[39m
+ [32m✓[39m src/lib/gameInstructions.test.ts[2m > [22mgameInstructions[2m > [22mNapoleon[2m > [22mhas rules array[32m 0[2mms[22m[39m
+ [32m✓[39m src/lib/gameInstructions.test.ts[2m > [22mgameInstructions[2m > [22mNapoleon[2m > [22mhas non-empty rule strings[32m 1[2mms[22m[39m
+ [32m✓[39m src/lib/gameInstructions.test.ts[2m > [22mgameInstructions[2m > [22mNapoleon[2m > [22mhas tips array if provided[32m 0[2mms[22m[39m
+ [32m✓[39m src/lib/gameInstructions.test.ts[2m > [22mgameInstructions[2m > [22mNapoleon[2m > [22mis in Finnish language[32m 0[2mms[22m[39m
+ [32m✓[39m src/lib/gameInstructions.test.ts[2m > [22mgameInstructions[2m > [22mAcesUp[2m > [22mhas a title[32m 0[2mms[22m[39m
+ [32m✓[39m src/lib/gameInstructions.test.ts[2m > [22mgameInstructions[2m > [22mAcesUp[2m > [22mhas a goal[32m 0[2mms[22m[39m
+ [32m✓[39m src/lib/gameInstructions.test.ts[2m > [22mgameInstructions[2m > [22mAcesUp[2m > [22mhas rules array[32m 0[2mms[22m[39m
+ [32m✓[39m src/lib/gameInstructions.test.ts[2m > [22mgameInstructions[2m > [22mAcesUp[2m > [22mhas non-empty rule strings[32m 0[2mms[22m[39m
+ [32m✓[39m src/lib/gameInstructions.test.ts[2m > [22mgameInstructions[2m > [22mAcesUp[2m > [22mhas tips array if provided[32m 0[2mms[22m[39m
+ [32m✓[39m src/lib/gameInstructions.test.ts[2m > [22mgameInstructions[2m > [22mAcesUp[2m > [22mis in Finnish language[32m 0[2mms[22m[39m
+ [32m✓[39m src/lib/gameInstructions.test.ts[2m > [22mgameInstructions[2m > [22mClock[2m > [22mhas a title[32m 0[2mms[22m[39m
+ [32m✓[39m src/lib/gameInstructions.test.ts[2m > [22mgameInstructions[2m > [22mClock[2m > [22mhas a goal[32m 0[2mms[22m[39m
+ [32m✓[39m src/lib/gameInstructions.test.ts[2m > [22mgameInstructions[2m > [22mClock[2m > [22mhas rules array[32m 0[2mms[22m[39m
+ [32m✓[39m src/lib/gameInstructions.test.ts[2m > [22mgameInstructions[2m > [22mClock[2m > [22mhas non-empty rule strings[32m 0[2mms[22m[39m
+ [32m✓[39m src/lib/gameInstructions.test.ts[2m > [22mgameInstructions[2m > [22mClock[2m > [22mhas tips array if provided[32m 0[2mms[22m[39m
+ [32m✓[39m src/lib/gameInstructions.test.ts[2m > [22mgameInstructions[2m > [22mClock[2m > [22mis in Finnish language[32m 0[2mms[22m[39m
+ [32m✓[39m src/lib/gameInstructions.test.ts[2m > [22mgameInstructions[2m > [22mexports proper GameInstruction types[32m 1[2mms[22m[39m
+ [32m✓[39m src/lib/gameInstructions.test.ts[2m > [22mgameInstructions[2m > [22mKlondike has correct title[32m 0[2mms[22m[39m
+ [32m✓[39m src/lib/gameInstructions.test.ts[2m > [22mgameInstructions[2m > [22mNapoleon has correct title[32m 0[2mms[22m[39m
+ [32m✓[39m src/lib/gameInstructions.test.ts[2m > [22mgameInstructions[2m > [22mAcesUp has correct title[32m 0[2mms[22m[39m
+ [32m✓[39m src/lib/gameInstructions.test.ts[2m > [22mgameInstructions[2m > [22mClock has correct title[32m 0[2mms[22m[39m
+ [31m×[39m src/components/settings/HighlightToggle.test.ts[2m > [22mHighlightToggle layout (TECH-023)[2m > [22muses column layout with label above controls[32m 269[2mms[22m[39m
+[31m   → expected '' to be 'column' // Object.is equality[39m
+ [32m✓[39m src/components/settings/HighlightToggle.test.ts[2m > [22mHighlightToggle layout (TECH-023)[2m > [22mrenders the label[32m 12[2mms[22m[39m
+ [32m✓[39m src/components/HelpOverlay.test.ts[2m > [22mHelpOverlay[2m > [22mrenders when isVisible is true[32m 50[2mms[22m[39m
+ [32m✓[39m src/components/HelpOverlay.test.ts[2m > [22mHelpOverlay[2m > [22mdoes not render when isVisible is false[32m 2[2mms[22m[39m
+ [32m✓[39m src/components/HelpOverlay.test.ts[2m > [22mHelpOverlay[2m > [22mdisplays game title[32m 24[2mms[22m[39m
+ [32m✓[39m src/components/HelpOverlay.test.ts[2m > [22mHelpOverlay[2m > [22mdisplays game goal[32m 6[2mms[22m[39m
+ [32m✓[39m src/components/HelpOverlay.test.ts[2m > [22mHelpOverlay[2m > [22mdisplays all rules[32m 6[2mms[22m[39m
+ [32m✓[39m src/components/HelpOverlay.test.ts[2m > [22mHelpOverlay[2m > [22mdisplays tips when provided[32m 7[2mms[22m[39m
+ [32m✓[39m src/components/settings/CounterToggle.test.ts[2m > [22mCounterToggle[2m > [22mrenders the default label[32m 38[2mms[22m[39m
+ [31m×[39m src/components/settings/RecycleToggle.test.ts[2m > [22mRecycleToggle layout (TECH-023)[2m > [22muses column layout with label above controls[32m 250[2mms[22m[39m
+[31m   → expected '' to be 'column' // Object.is equality[39m
+ [32m✓[39m src/components/settings/RecycleToggle.test.ts[2m > [22mRecycleToggle layout (TECH-023)[2m > [22mrenders the label[32m 13[2mms[22m[39m
+ [31m×[39m src/components/settings/DrawCountToggle.test.ts[2m > [22mDrawCountToggle layout (TECH-023)[2m > [22muses column layout with label above controls[32m 257[2mms[22m[39m
+[31m   → expected '' to be 'column' // Object.is equality[39m
+ [32m✓[39m src/components/settings/DrawCountToggle.test.ts[2m > [22mDrawCountToggle layout (TECH-023)[2m > [22mrenders the label[32m 12[2mms[22m[39m
+ [31m×[39m src/components/settings/RecycleToggle.test.ts[2m > [22mRecycleToggle layout (TECH-023)[2m > [22mtoggles between options[32m 114[2mms[22m[39m
+[31m   → expected undefined to be 3 // Object.is equality[39m
+ [32m✓[39m src/components/settings/RecycleToggle.test.ts[2m > [22mRecycleToggle layout (TECH-023)[2m > [22mshows active state on selected option[32m 5[2mms[22m[39m
+ [31m×[39m src/components/settings/DrawCountToggle.test.ts[2m > [22mDrawCountToggle layout (TECH-023)[2m > [22mtoggles between options[32m 112[2mms[22m[39m
+[31m   → expected undefined to be 3 // Object.is equality[39m
+ [32m✓[39m src/components/settings/DrawCountToggle.test.ts[2m > [22mDrawCountToggle layout (TECH-023)[2m > [22mshows active state on selected option[32m 5[2mms[22m[39m
+ [31m×[39m src/games/acesup/AcesUp.settings.test.ts[2m > [22mAcesUp counter setting[2m > [22mhides the stock counter when toggled off[32m 116[2mms[22m[39m
+[31m   → Unable to find a label with the text of: Laskurit
+
+Ignored nodes: comments, script, style
+[36m<body>[31m
+  [36m<div>[31m
+    [36m<div[31m
+      [33mclass[31m=[32m"acesup svelte-1a8nke2"[31m
+    [36m>[31m
+      [36m<div[31m
+        [33mclass[31m=[32m"game-header svelte-147fq19"[31m
+      [36m>[31m
+        [36m<div[31m
+          [33mclass[31m=[32m"action-buttons svelte-147fq19"[31m
+        [36m>[31m
+          [36m<button[31m
+            [33mclass[31m=[32m"new-game-btn svelte-147fq19"[31m
+          [36m>[31m
+            [0m▶ Uusi peli[0m
+          [36m</button>[31m
+          [0m [0m
+          [36m<button[31m
+            [33mclass[31m=[32m"restart-btn svelte-147fq19"[31m
+            [33mdisabled[31m=[32m""[31m
+            [33mtitle[31m=[32m"Tulossa pian"[31m
+          [36m>[31m
+            [0m↻ Uudelleen[0m
+          [36m</button>[31m
+          [0m [0m
+          [36m<button[31m
+            [33mclass[31m=[32m"undo-btn svelte-147fq19"[31m
+            [33mdisabled[31m=[32m""[31m
+          [36m>[31m
+            [0m↶ Kumoa[0m
+          [36m</button>[31m
+          [0m [0m
+          [36m<button[31m
+            [33mclass[31m=[32m"hint-btn svelte-147fq19"[31m
+            [33mtitle[31m=[32m"Näytä mahdollinen siirto"[31m
+          [36m>[31m
+            [0m💡 Vihje[0m
+          [36m</button>[31m
+          [0m [0m
+          [36m<button[31m
+            [33mclass[31m=[32m"help-btn svelte-147fq19"[31m
+            [33mtitle[31m=[32m"Näytä pelin ohjeet (paina ? tai F1)"[31m
+          [36m>[31m
+            [0m❓ Ohjeet[0m
+          [36m</button>[31m
+          [0m [0m
+          [36m<div[31m
+            [33mclass[31m=[32m"timer svelte-147fq19"[31m
+          [36m>[31m
+            [0m⏱ 0:00[0m
+          [36m</div>[31m
+          [0m [0m
+          [36m<button[31m
+            [33mclass[31m=[32m"pause-btn svelte-147fq19 disabled"[31m
+            [33mdisabled[31m=[32m""[31m
+            [33mtitle[31m=[32m"Tauko"[31m
+          [36m>[31m
+            [0m⏸[0m
+          [36m</button>[31m
+        [36m</div>[31m
+        [0m [0m
+        [36m<div[31m
+          [33mclass[31m=[32m"game-settings svelte-147fq19"[31m
+        [36m>[31m
+          [36m<div[31m
+            [33mclass[31m=[32m"counter-toggle-container svelte-1wxyjcy"[31m
+          [36m>[31m
+            [36m<span[31m
+              [33mclass[31m=[32m"toggle-label svelte-1wxyjcy"[31m
+            [36m>[31m
+              [0mLaskurit[0m
+            [36m</span>[31m
+            [0m [0m
+            [36m<div[31m
+              [33mclass[31m=[32m"counter-toggle svelte-1wxyjcy"[31m
+            [36m>[31m
+              [36m<button[31m
+                [33mclass[31m=[32m"counter-option svelte-1wxyjcy active"[31m
+                [33mtype[31m=[32m"button"[31m
+              [36m>[31m
+                [0mPois[0m
+              [36m</button>[31m
+              [0m [0m
+              [36m<button[31m
+                [33mclass[31m=[32m"counter-option svelte-1wxyjcy"[31m
+                [33mtype[31m=[32m"button"[31m
+              [36m>[31m
+                [0mPäällä[0m
+              [36m</button>[31m
+            [36m</div>[31m
+          [36m</div>[31m
+          [0m[0m
+        [36m</div>[31m
+      [36m</div>[31m
+      [0m [0m
+      [36m<div[31m
+        [33mclass[31m=[32m"game-area svelte-1a8nke2"[31m
+      [36m>[31m
+        [0m[0m
+        [0m [0m
+        [0m[0m
+        [0m [0m
+        [0m[0m
+        [0m [0m
+        [36m<div[31m
+          [33mclass[31m=[32m"stock-section svelte-1a8nke2"[31m
+        [36m>[31m
+          [36m<button[31m
+            [33mclass[31m=[32m"stock-pile pile svelte-1a8nke2"[31m
+          [36m>[31m
+            [36m<div[31m
+              [33mclass[31m=[32m"card svelte-lb44f9"[31m
+              [33mdraggable[31m=[32m"false"[31m
+            [36m>[31m
+              [36m<div[31m
+                [33mclass[31m=[32m"card-back svelte-lb44f9"[31m
+                [33mdata-back-type[31m=[32m"classic-blue"[31m
+              [36m>[31m
+                [36m<div[31m
+                  [33mclass[31m=[32m"back-inner svelte-lb44f9"[31m
+                [36m>[31m
+                  [36m<div[31m
+                    [33mclass[31m=[32m"back-pattern svelte-lb44f9"[31m
+                  [36m/>[31m
+                [36m</div>[31m
+              [36m</div>[31m
+            [36m</div>[31m
+            [0m [0m
+          [36m</button>[31m
+        [36m</div>[31m
+        [0m [0m
+        [36m<div[31m
+          [33mclass[31m=[32m"piles-section svelte-1a8nke2"[31m
+        [36m>[31m
+          [36m<div[31m
+            [33mclass[31m=[32m"pile-container svelte-1a8nke2"[31m
+          [36m>[31m
+            [36m<div[31m
+              [33mclass[31m=[32m"play-pile pile svelte-1a8nke2"[31m
+              [33mrole[31m=[32m"button"[31m
+              [33mtabindex[31m=[32m"0"[31m
+            [36m>[31m
+              [36m<div[31m
+                [33mclass[31m=[32m"empty-pile"[31m
+              [36m/>[31m
+            [36m</div>[31m
+          [36m</div>[31m
+          [36m<div[31m
+            [33mclass[31m=[32m"pile-container svelte-1a8nke2"[31m
+          [36m>[31m
+            [36m<div[31m
+              [33mclass[31m=[32m"play-pile pile svelte-1a8nke2"[31m
+              [33mrole[31m=[32m"button"[31m
+              [33mtabindex[31m=[32m"0"[31m
+            [36m>[31m
+              [36m<div[31m
+                [33mclass[31m=[32m"empty-pile"[31m
+              [36m/>[31m
+            [36m</div>[31m
+          [36m</div>[31m
+          [36m<div[31m
+            [33mclass[31m=[32m"pile-container svelte-1a8nke2"[31m
+          [36m>[31m
+            [36m<div[31m
+              [33mclass[31m=[32m"play-pile pile svelte-1a8nke2"[31m
+              [33mrole[31m=[32m"button"[31m
+              [33mtabindex[31m=[32m"0"[31m
+            [36m>[31m
+              [36m<div[31m
+                [33mclass[31m=[32m"empty-pile"[31m
+              [36m/>[31m
+            [36m</div>[31m
+          [36m</div>[31m
+          [36m<div[31m
+            [33mclass[31m=[32m"pile-container svelte-1a8nke2"[31m
+          [36m>[31m
+            [36m<div[31m
+              [33mclass[31m=[32m"play-pile pile svelte-1a8nke2"[31m
+              [33mrole[31m=[32m"button"[31m
+              [33mtabindex[31m=[32m"0"[31m
+            [36m>[31m
+              [36m<div[31m
+                [33mclass[31m=[32m"empty-pile"[31m
+              [36m/>[31m
+            [36m</div>[31m
+          [36m</div>[31m
+          [0m[0m
+        [36m</div>[31m
+        [0m [0m
+        [36m<div[31m
+          [33mclass[31m=[32m"discard-section svelte-1a8nke2"[31m
+        [36m>[31m
+          [36m<div[31m
+            [33mclass[31m=[32m"discard-pile pile svelte-1a8nke2"[31m
+          [36m>[31m
+            [36m<div[31m
+              [33mclass[31m=[32m"empty-pile discard-icon svelte-1a8nke2"[31m
+            [36m>[31m
+              [0m🗑️[0m
+            [36m</div>[31m
+          [36m</div>[31m
+        [36m</div>[31m
+      [36m</div>[31m
+    [36m</div>[31m
+    [0m[0m
+    [0m[0m
+  [36m</div>[31m
+[36m</body>[31m[39m
+ [32m✓[39m src/components/HelpOverlay.test.ts[2m > [22mHelpOverlay[2m > [22mcalls onClose when backdrop is clicked[32m 262[2mms[22m[39m
+ [32m✓[39m src/components/HelpOverlay.test.ts[2m > [22mHelpOverlay[2m > [22mcalls onClose when Escape key is pressed[32m 20[2mms[22m[39m
+ [32m✓[39m src/components/HelpOverlay.test.ts[2m > [22mHelpOverlay[2m > [22mdoes not call onClose when Escape key is pressed while hidden[32m 9[2mms[22m[39m
+ [32m✓[39m src/components/HelpOverlay.test.ts[2m > [22mHelpOverlay[2m > [22mhas accessibility attributes[32m 6[2mms[22m[39m
+ [32m✓[39m src/components/HelpOverlay.test.ts[2m > [22mHelpOverlay[2m > [22mdoes not close overlay when clicking inside content[32m 50[2mms[22m[39m
+ [31m×[39m src/components/settings/CounterToggle.test.ts[2m > [22mCounterToggle[2m > [22mtoggles the checkbox state[32m 290[2mms[22m[39m
+[31m   → Unable to find an accessible element with the role "checkbox"
+
+Here are the accessible roles:
+
+  button:
+
+  Name "Pois":
+  [36m<button[31m
+    [33mclass[31m=[32m"counter-option svelte-1wxyjcy active"[31m
+    [33mtype[31m=[32m"button"[31m
+  [36m/>[31m
+
+  Name "Päällä":
+  [36m<button[31m
+    [33mclass[31m=[32m"counter-option svelte-1wxyjcy"[31m
+    [33mtype[31m=[32m"button"[31m
+  [36m/>[31m
+
+  --------------------------------------------------
+
+Ignored nodes: comments, script, style
+[36m<body>[31m
+  [36m<div>[31m
+    [36m<div[31m
+      [33mclass[31m=[32m"counter-toggle-container svelte-1wxyjcy"[31m
+    [36m>[31m
+      [36m<span[31m
+        [33mclass[31m=[32m"toggle-label svelte-1wxyjcy"[31m
+      [36m>[31m
+        [0mLaskurit[0m
+      [36m</span>[31m
+      [0m [0m
+      [36m<div[31m
+        [33mclass[31m=[32m"counter-toggle svelte-1wxyjcy"[31m
+      [36m>[31m
+        [36m<button[31m
+          [33mclass[31m=[32m"counter-option svelte-1wxyjcy active"[31m
+          [33mtype[31m=[32m"button"[31m
+        [36m>[31m
+          [0mPois[0m
+        [36m</button>[31m
+        [0m [0m
+        [36m<button[31m
+          [33mclass[31m=[32m"counter-option svelte-1wxyjcy"[31m
+          [33mtype[31m=[32m"button"[31m
+        [36m>[31m
+          [0mPäällä[0m
+        [36m</button>[31m
+      [36m</div>[31m
+    [36m</div>[31m
+    [0m[0m
+    [0m[0m
+  [36m</div>[31m
+[36m</body>[31m[39m
+ [31m×[39m src/components/settings/CounterToggle.test.ts[2m > [22mCounterToggle layout (TECH-023)[2m > [22muses column layout with label above controls[32m 50[2mms[22m[39m
+[31m   → expected '' to be 'column' // Object.is equality[39m
+ [31m×[39m src/games/napoleon/Napoleon.settings.test.ts[2m > [22mNapoleon counter setting[2m > [22mhides the stock counter when toggled off[32m 155[2mms[22m[39m
+[31m   → Unable to find a label with the text of: Laskurit
+
+Ignored nodes: comments, script, style
+[36m<body>[31m
+  [36m<div>[31m
+    [36m<div[31m
+      [33mclass[31m=[32m"napoleon svelte-1wtq5hg"[31m
+    [36m>[31m
+      [36m<div[31m
+        [33mclass[31m=[32m"game-header svelte-147fq19"[31m
+      [36m>[31m
+        [36m<div[31m
+          [33mclass[31m=[32m"action-buttons svelte-147fq19"[31m
+        [36m>[31m
+          [36m<button[31m
+            [33mclass[31m=[32m"new-game-btn svelte-147fq19"[31m
+          [36m>[31m
+            [0m▶ Uusi peli[0m
+          [36m</button>[31m
+          [0m [0m
+          [36m<button[31m
+            [33mclass[31m=[32m"restart-btn svelte-147fq19"[31m
+            [33mdisabled[31m=[32m""[31m
+            [33mtitle[31m=[32m"Tulossa pian"[31m
+          [36m>[31m
+            [0m↻ Uudelleen[0m
+          [36m</button>[31m
+          [0m [0m
+          [36m<button[31m
+            [33mclass[31m=[32m"undo-btn svelte-147fq19"[31m
+            [33mdisabled[31m=[32m""[31m
+          [36m>[31m
+            [0m↶ Kumoa[0m
+          [36m</button>[31m
+          [0m [0m
+          [36m<button[31m
+            [33mclass[31m=[32m"hint-btn svelte-147fq19"[31m
+            [33mdisabled[31m=[32m""[31m
+            [33mtitle[31m=[32m"Tulossa pian"[31m
+          [36m>[31m
+            [0m💡 Vihje[0m
+          [36m</button>[31m
+          [0m [0m
+          [36m<button[31m
+            [33mclass[31m=[32m"help-btn svelte-147fq19"[31m
+            [33mtitle[31m=[32m"Näytä pelin ohjeet (paina ? tai F1)"[31m
+          [36m>[31m
+            [0m❓ Ohjeet[0m
+          [36m</button>[31m
+          [0m [0m
+          [36m<div[31m
+            [33mclass[31m=[32m"timer svelte-147fq19"[31m
+          [36m>[31m
+            [0m⏱ 0:00[0m
+          [36m</div>[31m
+          [0m [0m
+          [36m<button[31m
+            [33mclass[31m=[32m"pause-btn svelte-147fq19 disabled"[31m
+            [33mdisabled[31m=[32m""[31m
+            [33mtitle[31m=[32m"Tauko"[31m
+          [36m>[31m
+            [0m⏸[0m
+          [36m</button>[31m
+        [36m</div>[31m
+        [0m [0m
+        [36m<div[31m
+          [33mclass[31m=[32m"game-settings svelte-147fq19"[31m
+        [36m>[31m
+          [36m<div[31m
+            [33mclass[31m=[32m"recycle-toggle-container svelte-6i4r19"[31m
+          [36m>[31m
+            [36m<span[31m
+              [33mclass[31m=[32m"toggle-label svelte-6i4r19"[31m
+            [36m>[31m
+              [0mJakoja:[0m
+            [36m</span>[31m
+            [0m [0m
+            [36m<div[31m
+              [33mclass[31m=[32m"recycle-toggle svelte-6i4r19"[31m
+            [36m>[31m
+              [36m<button[31m
+                [33mclass[31m=[32m"recycle-option svelte-6i4r19 active"[31m
+              [36m>[31m
+                [0m1[0m
+              [36m</button>[31m
+              [36m<button[31m
+                [33mclass[31m=[32m"recycle-option svelte-6i4r19"[31m
+              [36m>[31m
+                [0m2[0m
+              [36m</button>[31m
+              [36m<button[31m
+                [33mclass[31m=[32m"recycle-option svelte-6i4r19"[31m
+              [36m>[31m
+                [0m∞[0m
+              [36m</button>[31m
+              [0m[0m
+            [36m</div>[31m
+          [36m</div>[31m
+          [0m [0m
+          [36m<div[31m
+            [33mclass[31m=[32m"counter-toggle-container svelte-1wxyjcy"[31m
+          [36m>[31m
+            [36m<span[31m
+              [33mclass[31m=[32m"toggle-label svelte-1wxyjcy"[31m
+            [36m>[31m
+              [0mLaskurit[0m
+            [36m</span>[31m
+            [0m [0m
+            [36m<div[31m
+              [33mclass[31m=[32m"counter-toggle svelte-1wxyjcy"[31m
+            [36m>[31m
+              [36m<button[31m
+                [33mclass[31m=[32m"counter-option svelte-1wxyjcy active"[31m
+                [33mtype[31m=[32m"button"[31m
+              [36m>[31m
+                [0mPois[0m
+              [36m</button>[31m
+              [0m [0m
+              [36m<button[31m
+                [33mclass[31m=[32m"counter-option svelte-1wxyjcy"[31m
+                [33mtype[31m=[32m"button"[31m
+              [36m>[31m
+                [0mPäällä[0m
+              [36m</button>[31m
+            [36m</div>[31m
+          [36m</div>[31m
+          [0m[0m
+        [36m</div>[31m
+      [36m</div>[31m
+      [0m [0m
+      [36m<div[31m
+        [33mclass[31m=[32m"game-area svelte-1wtq5hg"[31m
+      [36m>[31m
+        [0m[0m
+        [0m [0m
+        [0m[0m
+        [0m [0m
+        [0m[0m
+        [0m [0m
+        [36m<div[31m
+          [33mclass[31m=[32m"play-field svelte-1wtq5hg"[31m
+        [36m>[31m
+          [36m<div[31m
+            [33mclass[31m=[32m"row row-1 svelte-1wtq5hg"[31m
+          [36m>[31m
+            [36m<div[31m
+              [33mclass[31m=[32m"corner-slot  svelte-1wtq5hg"[31m
+            [36m>[31m
+              [36m<div[31m
+                [33mclass[31m=[32m"empty-pile svelte-1wtq5hg"[31m
+              [36m>[31m
+                [0m7[0m
+              [36m</div>[31m
+            [36m</div>[31m
+            [0m [0m
+            [36m<div[31m
+              [33mclass[31m=[32m"helper-slot  svelte-1wtq5hg"[31m
+            [36m>[31m
+              [36m<div[31m
+                [33mclass[31m=[32m"empty-pile small svelte-1wtq5hg"[31m
+              [36m/>[31m
+            [36m</div>[31m
+            [0m [0m
+            [36m<div[31m
+              [33mclass[31m=[32m"corner-slot  svelte-1wtq5hg"[31m
+            [36m>[31m
+              [36m<div[31m
+                [33mclass[31m=[32m"empty-pile svelte-1wtq5hg"[31m
+              [36m>[31m
+                [0m7[0m
+              [36m</div>[31m
+            [36m</div>[31m
+          [36m</div>[31m
+          [0m [0m
+          [36m<div[31m
+            [33mclass[31m=[32m"row row-2 svelte-1wtq5hg"[31m
+          [36m>[31m
+            [36m<div[31m
+              [33mclass[31m=[32m"helper-slot  svelte-1wtq5hg"[31m
+            [36m>[31m
+              [36m<div[31m
+                [33mclass[31m=[32m"empty-pile small svelte-1wtq5hg"[31m
+              [36m/>[31m
+            [36m</div>[31m
+            [0m [0m
+            [36m<div[31m
+              [33mclass[31m=[32m"center-slot  svelte-1wtq5hg"[31m
+            [36m>[31m
+              [36m<div[31m
+                [33mclass[31m=[32m"empty-pile svelte-1wtq5hg"[31m
+              [36m>[31m
+                [0m6[0m
+              [36m</div>[31m
+            [36m</div>[31m
+            [0m [0m
+            [36m<div[31m
+              [33mclass[31m=[32m"helper-slot  svelte-1wtq5hg"[31m
+            [36m>[31m
+              [36m<div[31m
+                [33mclass[31m=[32m"empty-pile small svelte-1wtq5hg"[31m
+              [36m/>[31m
+            [36m</div>[31m
+          [36m</div>[31m
+          [0m [0m
+          [36m<div[31m
+            [33mclass[31m=[32m"row row-3 svelte-1wtq5hg"[31m
+          [36m>[31m
+            [36m<div[31m
+              [33mclass[31m=[32m"corner-slot  svelte-1wtq5hg"[31m
+            [36m>[31m
+              [36m<div[31m
+                [33mclass[31m=[32m"empty-pile svelte-1wtq5hg"[31m
+              [36m>[31m
+                [0m7[0m
+              [36m</div>[31m
+            [36m</div>[31m
+            [0m [0m
+            [36m<div[31m
+              [33mclass[31m=[32m"helper-slot  svelte-1wtq5hg"[31m
+            [36m>[31m
+              [36m<div[31m
+                [33mclass[31m=[32m"empty-pile small svelte-1wtq5hg"[31m
+              [36m/>[31m
+            [36m</div>[31m
+            [0m [0m
+            [36m<div[31m
+              [33mclass[31m=[32m"corner-slot  svelte-1wtq5hg"[31m
+            [36m>[31m
+              [36m<div[31m
+                [33mclass[31m=[32m"empty-pile svelte-1wtq5hg"[31m
+              [36m>[31m
+                [0m7[0m
+              [36m</div>[31m
+            [36m</div>[31m
+          [36m</div>[31m
+        [36m</div>[31m
+        [0m [0m
+        [36m<div[31m
+          [33mclass[31m=[32m"controls svelte-1wtq5hg"[31m
+        [36m>[31m
+          [36m<div[31m
+            [33mclass[31m=[32m"control-group svelte-1wtq5hg"[31m
+          [36m>[31m
+            [36m<div[31m
+              [33mclass[31m=[32m"pile-wrapper  svelte-1wtq5hg"[31m
+            [36m>[31m
+              [36m<div[31m
+                [33mclass[31m=[32m"empty-pile svelte-1wtq5hg"[31m
+              [36m>[31m
+                [0m6★[0m
+              [36m</div>[31m
+            [36m</div>[31m
+          [36m</div>[31m
+          [0m [0m
+          [36m<div[31m
+            [33mclass[31m=[32m"control-group svelte-1wtq5hg"[31m
+          [36m>[31m
+            [36m<div[31m
+              [33mclass[31m=[32m"current-card-slot svelte-1wtq5hg"[31m
+            [36m>[31m
+              [36m<div[31m
+                [33mclass[31m=[32m"empty-pile svelte-1wtq5hg"[31m
+              [36m/>[31m
+            [36m</div>[31m
+          [36m</div>[31m
+          [0m [0m
+          [36m<div[31m
+            [33mclass[31m=[32m"control-group svelte-1wtq5hg"[31m
+          [36m>[31m
+            [36m<button[31m
+              [33maria-label[31m=[32m"Nosta kortti jakopakasta"[31m
+              [33mclass[31m=[32m"stock-btn svelte-1wtq5hg"[31m
+            [36m>[31m
+              [36m<div[31m
+                [33mclass[31m=[32m"stack-card svelte-1wtq5hg"[31m
+                [33mstyle[31m=[32m"top: 4px; left: -2px; z-index: 0;"[31m
+              [36m/>[31m
+              [0m [0m
+              [36m<div[31m
+                [33mclass[31m=[32m"stack-card svelte-1wtq5hg"[31m
+                [33mstyle[31m=[32m"top: 2px; left: -1px; z-index: 1;"[31m
+              [36m/>[31m
+              [0m [0m
+              [36m<div[31m
+                [33mclass[31m=[32m"svelte-1wtq5hg"[31m
+                [33mstyle[31m=[32m"position: relative; z-index: 2;"[31m
+              [36m>[31m
+                [36m<div[31m
+                  [33mclass[31m=[32m"card svelte-lb44f9 red"[31m
+                  [33mdraggable[31m=[32m"false"[31m
+                [36m>[31m
+                  [36m<div[31m
+                    [33mclass[31m=[32m"card-back svelte-lb44f9"[31m
+                    [33mdata-back-type[31m=[32m"classic-blue"[31m
+                  [36m>[31m
+                    [36m<div[31m
+                      [33mclass[31m=[32m"back-inner svelte-lb44f9"[31m
+                    [36m>[31m
+                      [36m<div[31m
+                        [33mclass[31m=[32m"back-pattern svelte-lb44f9"[31m
+                      [36m/>[31m
+                    [36m</div>[31m
+                  [36m</div>[31m
+                [36m</div>[31m
+              [36m</div>[31m
+              [0m [0m
+            [36m</button>[31m
+            [0m [0m
+          [36m</div>[31m
+        [36m</div>[31m
+      [36m</div>[31m
+    [36m</div>[31m
+    [0m[0m
+    [0m[0m
+  [36m</div>[31m
+[36m</body>[31m[39m
+ [32m✓[39m src/components/settings/CounterToggle.test.ts[2m > [22mCounterToggle layout (TECH-023)[2m > [22muses button-based toggle instead of checkbox[32m 73[2mms[22m[39m
+ [32m✓[39m src/components/settings/CounterToggle.test.ts[2m > [22mCounterToggle layout (TECH-023)[2m > [22mhas On/Off button options[32m 7[2mms[22m[39m
+ [31m×[39m src/components/settings/CounterToggle.test.ts[2m > [22mCounterToggle layout (TECH-023)[2m > [22mtoggles state when clicking buttons[32m 45[2mms[22m[39m
+[31m   → expected undefined to be true // Object.is equality[39m
+ [32m✓[39m src/components/settings/CounterToggle.test.ts[2m > [22mCounterToggle layout (TECH-023)[2m > [22mshows active state styling on selected button[32m 2[2mms[22m[39m
+
+[31m⎯⎯⎯⎯⎯⎯[39m[1m[41m Failed Tests 10 [49m[22m[31m⎯⎯⎯⎯⎯⎯⎯[39m
+
+[41m[1m FAIL [22m[49m src/games/acesup/AcesUp.settings.test.ts[2m > [22mAcesUp counter setting[2m > [22mhides the stock counter when toggled off
+[31m[1mTestingLibraryElementError[22m[39m: Unable to find a label with the text of: Laskurit
+
+Ignored nodes: comments, script, style
+[36m<body>[39m
+  [36m<div>[39m
+    [36m<div[39m
+      [33mclass[39m=[32m"acesup svelte-1a8nke2"[39m
+    [36m>[39m
+      [36m<div[39m
+        [33mclass[39m=[32m"game-header svelte-147fq19"[39m
+      [36m>[39m
+        [36m<div[39m
+          [33mclass[39m=[32m"action-buttons svelte-147fq19"[39m
+        [36m>[39m
+          [36m<button[39m
+            [33mclass[39m=[32m"new-game-btn svelte-147fq19"[39m
+          [36m>[39m
+            [0m▶ Uusi peli[0m
+          [36m</button>[39m
+          [0m [0m
+          [36m<button[39m
+            [33mclass[39m=[32m"restart-btn svelte-147fq19"[39m
+            [33mdisabled[39m=[32m""[39m
+            [33mtitle[39m=[32m"Tulossa pian"[39m
+          [36m>[39m
+            [0m↻ Uudelleen[0m
+          [36m</button>[39m
+          [0m [0m
+          [36m<button[39m
+            [33mclass[39m=[32m"undo-btn svelte-147fq19"[39m
+            [33mdisabled[39m=[32m""[39m
+          [36m>[39m
+            [0m↶ Kumoa[0m
+          [36m</button>[39m
+          [0m [0m
+          [36m<button[39m
+            [33mclass[39m=[32m"hint-btn svelte-147fq19"[39m
+            [33mtitle[39m=[32m"Näytä mahdollinen siirto"[39m
+          [36m>[39m
+            [0m💡 Vihje[0m
+          [36m</button>[39m
+          [0m [0m
+          [36m<button[39m
+            [33mclass[39m=[32m"help-btn svelte-147fq19"[39m
+            [33mtitle[39m=[32m"Näytä pelin ohjeet (paina ? tai F1)"[39m
+          [36m>[39m
+            [0m❓ Ohjeet[0m
+          [36m</button>[39m
+          [0m [0m
+          [36m<div[39m
+            [33mclass[39m=[32m"timer svelte-147fq19"[39m
+          [36m>[39m
+            [0m⏱ 0:00[0m
+          [36m</div>[39m
+          [0m [0m
+          [36m<button[39m
+            [33mclass[39m=[32m"pause-btn svelte-147fq19 disabled"[39m
+            [33mdisabled[39m=[32m""[39m
+            [33mtitle[39m=[32m"Tauko"[39m
+          [36m>[39m
+            [0m⏸[0m
+          [36m</button>[39m
+        [36m</div>[39m
+        [0m [0m
+        [36m<div[39m
+          [33mclass[39m=[32m"game-settings svelte-147fq19"[39m
+        [36m>[39m
+          [36m<div[39m
+            [33mclass[39m=[32m"counter-toggle-container svelte-1wxyjcy"[39m
+          [36m>[39m
+            [36m<span[39m
+              [33mclass[39m=[32m"toggle-label svelte-1wxyjcy"[39m
+            [36m>[39m
+              [0mLaskurit[0m
+            [36m</span>[39m
+            [0m [0m
+            [36m<div[39m
+              [33mclass[39m=[32m"counter-toggle svelte-1wxyjcy"[39m
+            [36m>[39m
+              [36m<button[39m
+                [33mclass[39m=[32m"counter-option svelte-1wxyjcy active"[39m
+                [33mtype[39m=[32m"button"[39m
+              [36m>[39m
+                [0mPois[0m
+              [36m</button>[39m
+              [0m [0m
+              [36m<button[39m
+                [33mclass[39m=[32m"counter-option svelte-1wxyjcy"[39m
+                [33mtype[39m=[32m"button"[39m
+              [36m>[39m
+                [0mPäällä[0m
+              [36m</button>[39m
+            [36m</div>[39m
+          [36m</div>[39m
+          [0m[0m
+        [36m</div>[39m
+      [36m</div>[39m
+      [0m [0m
+      [36m<div[39m
+        [33mclass[39m=[32m"game-area svelte-1a8nke2"[39m
+      [36m>[39m
+        [0m[0m
+        [0m [0m
+        [0m[0m
+        [0m [0m
+        [0m[0m
+        [0m [0m
+        [36m<div[39m
+          [33mclass[39m=[32m"stock-section svelte-1a8nke2"[39m
+        [36m>[39m
+          [36m<button[39m
+            [33mclass[39m=[32m"stock-pile pile svelte-1a8nke2"[39m
+          [36m>[39m
+            [36m<div[39m
+              [33mclass[39m=[32m"card svelte-lb44f9"[39m
+              [33mdraggable[39m=[32m"false"[39m
+            [36m>[39m
+              [36m<div[39m
+                [33mclass[39m=[32m"card-back svelte-lb44f9"[39m
+                [33mdata-back-type[39m=[32m"classic-blue"[39m
+              [36m>[39m
+                [36m<div[39m
+                  [33mclass[39m=[32m"back-inner svelte-lb44f9"[39m
+                [36m>[39m
+                  [36m<div[39m
+                    [33mclass[39m=[32m"back-pattern svelte-lb44f9"[39m
+                  [36m/>[39m
+                [36m</div>[39m
+              [36m</div>[39m
+            [36m</div>[39m
+            [0m [0m
+          [36m</button>[39m
+        [36m</div>[39m
+        [0m [0m
+        [36m<div[39m
+          [33mclass[39m=[32m"piles-section svelte-1a8nke2"[39m
+        [36m>[39m
+          [36m<div[39m
+            [33mclass[39m=[32m"pile-container svelte-1a8nke2"[39m
+          [36m>[39m
+            [36m<div[39m
+              [33mclass[39m=[32m"play-pile pile svelte-1a8nke2"[39m
+              [33mrole[39m=[32m"button"[39m
+              [33mtabindex[39m=[32m"0"[39m
+            [36m>[39m
+              [36m<div[39m
+                [33mclass[39m=[32m"empty-pile"[39m
+              [36m/>[39m
+            [36m</div>[39m
+          [36m</div>[39m
+          [36m<div[39m
+            [33mclass[39m=[32m"pile-container svelte-1a8nke2"[39m
+          [36m>[39m
+            [36m<div[39m
+              [33mclass[39m=[32m"play-pile pile svelte-1a8nke2"[39m
+              [33mrole[39m=[32m"button"[39m
+              [33mtabindex[39m=[32m"0"[39m
+            [36m>[39m
+              [36m<div[39m
+                [33mclass[39m=[32m"empty-pile"[39m
+              [36m/>[39m
+            [36m</div>[39m
+          [36m</div>[39m
+          [36m<div[39m
+            [33mclass[39m=[32m"pile-container svelte-1a8nke2"[39m
+          [36m>[39m
+            [36m<div[39m
+              [33mclass[39m=[32m"play-pile pile svelte-1a8nke2"[39m
+              [33mrole[39m=[32m"button"[39m
+              [33mtabindex[39m=[32m"0"[39m
+            [36m>[39m
+              [36m<div[39m
+                [33mclass[39m=[32m"empty-pile"[39m
+              [36m/>[39m
+            [36m</div>[39m
+          [36m</div>[39m
+          [36m<div[39m
+            [33mclass[39m=[32m"pile-container svelte-1a8nke2"[39m
+          [36m>[39m
+            [36m<div[39m
+              [33mclass[39m=[32m"play-pile pile svelte-1a8nke2"[39m
+              [33mrole[39m=[32m"button"[39m
+              [33mtabindex[39m=[32m"0"[39m
+            [36m>[39m
+              [36m<div[39m
+                [33mclass[39m=[32m"empty-pile"[39m
+              [36m/>[39m
+            [36m</div>[39m
+          [36m</div>[39m
+          [0m[0m
+        [36m</div>[39m
+        [0m [0m
+        [36m<div[39m
+          [33mclass[39m=[32m"discard-section svelte-1a8nke2"[39m
+        [36m>[39m
+          [36m<div[39m
+            [33mclass[39m=[32m"discard-pile pile svelte-1a8nke2"[39m
+          [36m>[39m
+            [36m<div[39m
+              [33mclass[39m=[32m"empty-pile discard-icon svelte-1a8nke2"[39m
+            [36m>[39m
+              [0m🗑️[0m
+            [36m</div>[39m
+          [36m</div>[39m
+        [36m</div>[39m
+      [36m</div>[39m
+    [36m</div>[39m
+    [0m[0m
+    [0m[0m
+  [36m</div>[39m
+[36m</body>[39m
+[90m [2m❯[22m Object.getElementError node_modules/@testing-library/dom/dist/config.js:[2m37:19[22m[39m
+[90m [2m❯[22m getAllByLabelText node_modules/@testing-library/dom/dist/queries/label-text.js:[2m111:38[22m[39m
+[90m [2m❯[22m node_modules/@testing-library/dom/dist/query-helpers.js:[2m52:17[22m[39m
+[90m [2m❯[22m node_modules/@testing-library/dom/dist/query-helpers.js:[2m95:19[22m[39m
+[36m [2m❯[22m src/games/acesup/AcesUp.settings.test.ts:[2m16:29[22m[39m
+    [90m 14| [39m    [35mconst[39m { container } [33m=[39m [34mrender[39m([33mAcesUp[39m)[33m;[39m
+    [90m 15| [39m
+    [90m 16| [39m    const checkbox = screen.getByLabelText('Laskurit') as HTMLInputEle…
+    [90m   | [39m                            [31m^[39m
+    [90m 17| [39m    [34mexpect[39m(checkbox[33m.[39mchecked)[33m.[39m[34mtoBe[39m([35mfalse[39m)[33m;[39m
+    [90m 18| [39m    [34mexpect[39m(container[33m.[39m[34mquerySelector[39m([32m'.stock-count'[39m))[33m.[39m[34mtoBeNull[39m()[33m;[39m
+
+[31m[2m⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[1/10]⎯[22m[39m
+
+[41m[1m FAIL [22m[49m src/games/napoleon/Napoleon.settings.test.ts[2m > [22mNapoleon counter setting[2m > [22mhides the stock counter when toggled off
+[31m[1mTestingLibraryElementError[22m[39m: Unable to find a label with the text of: Laskurit
+
+Ignored nodes: comments, script, style
+[36m<body>[39m
+  [36m<div>[39m
+    [36m<div[39m
+      [33mclass[39m=[32m"napoleon svelte-1wtq5hg"[39m
+    [36m>[39m
+      [36m<div[39m
+        [33mclass[39m=[32m"game-header svelte-147fq19"[39m
+      [36m>[39m
+        [36m<div[39m
+          [33mclass[39m=[32m"action-buttons svelte-147fq19"[39m
+        [36m>[39m
+          [36m<button[39m
+            [33mclass[39m=[32m"new-game-btn svelte-147fq19"[39m
+          [36m>[39m
+            [0m▶ Uusi peli[0m
+          [36m</button>[39m
+          [0m [0m
+          [36m<button[39m
+            [33mclass[39m=[32m"restart-btn svelte-147fq19"[39m
+            [33mdisabled[39m=[32m""[39m
+            [33mtitle[39m=[32m"Tulossa pian"[39m
+          [36m>[39m
+            [0m↻ Uudelleen[0m
+          [36m</button>[39m
+          [0m [0m
+          [36m<button[39m
+            [33mclass[39m=[32m"undo-btn svelte-147fq19"[39m
+            [33mdisabled[39m=[32m""[39m
+          [36m>[39m
+            [0m↶ Kumoa[0m
+          [36m</button>[39m
+          [0m [0m
+          [36m<button[39m
+            [33mclass[39m=[32m"hint-btn svelte-147fq19"[39m
+            [33mdisabled[39m=[32m""[39m
+            [33mtitle[39m=[32m"Tulossa pian"[39m
+          [36m>[39m
+            [0m💡 Vihje[0m
+          [36m</button>[39m
+          [0m [0m
+          [36m<button[39m
+            [33mclass[39m=[32m"help-btn svelte-147fq19"[39m
+            [33mtitle[39m=[32m"Näytä pelin ohjeet (paina ? tai F1)"[39m
+          [36m>[39m
+            [0m❓ Ohjeet[0m
+          [36m</button>[39m
+          [0m [0m
+          [36m<div[39m
+            [33mclass[39m=[32m"timer svelte-147fq19"[39m
+          [36m>[39m
+            [0m⏱ 0:00[0m
+          [36m</div>[39m
+          [0m [0m
+          [36m<button[39m
+            [33mclass[39m=[32m"pause-btn svelte-147fq19 disabled"[39m
+            [33mdisabled[39m=[32m""[39m
+            [33mtitle[39m=[32m"Tauko"[39m
+          [36m>[39m
+            [0m⏸[0m
+          [36m</button>[39m
+        [36m</div>[39m
+        [0m [0m
+        [36m<div[39m
+          [33mclass[39m=[32m"game-settings svelte-147fq19"[39m
+        [36m>[39m
+          [36m<div[39m
+            [33mclass[39m=[32m"recycle-toggle-container svelte-6i4r19"[39m
+          [36m>[39m
+            [36m<span[39m
+              [33mclass[39m=[32m"toggle-label svelte-6i4r19"[39m
+            [36m>[39m
+              [0mJakoja:[0m
+            [36m</span>[39m
+            [0m [0m
+            [36m<div[39m
+              [33mclass[39m=[32m"recycle-toggle svelte-6i4r19"[39m
+            [36m>[39m
+              [36m<button[39m
+                [33mclass[39m=[32m"recycle-option svelte-6i4r19 active"[39m
+              [36m>[39m
+                [0m1[0m
+              [36m</button>[39m
+              [36m<button[39m
+                [33mclass[39m=[32m"recycle-option svelte-6i4r19"[39m
+              [36m>[39m
+                [0m2[0m
+              [36m</button>[39m
+              [36m<button[39m
+                [33mclass[39m=[32m"recycle-option svelte-6i4r19"[39m
+              [36m>[39m
+                [0m∞[0m
+              [36m</button>[39m
+              [0m[0m
+            [36m</div>[39m
+          [36m</div>[39m
+          [0m [0m
+          [36m<div[39m
+            [33mclass[39m=[32m"counter-toggle-container svelte-1wxyjcy"[39m
+          [36m>[39m
+            [36m<span[39m
+              [33mclass[39m=[32m"toggle-label svelte-1wxyjcy"[39m
+            [36m>[39m
+              [0mLaskurit[0m
+            [36m</span>[39m
+            [0m [0m
+            [36m<div[39m
+              [33mclass[39m=[32m"counter-toggle svelte-1wxyjcy"[39m
+            [36m>[39m
+              [36m<button[39m
+                [33mclass[39m=[32m"counter-option svelte-1wxyjcy active"[39m
+                [33mtype[39m=[32m"button"[39m
+              [36m>[39m
+                [0mPois[0m
+              [36m</button>[39m
+              [0m [0m
+              [36m<button[39m
+                [33mclass[39m=[32m"counter-option svelte-1wxyjcy"[39m
+                [33mtype[39m=[32m"button"[39m
+              [36m>[39m
+                [0mPäällä[0m
+              [36m</button>[39m
+            [36m</div>[39m
+          [36m</div>[39m
+          [0m[0m
+        [36m</div>[39m
+      [36m</div>[39m
+      [0m [0m
+      [36m<div[39m
+        [33mclass[39m=[32m"game-area svelte-1wtq5hg"[39m
+      [36m>[39m
+        [0m[0m
+        [0m [0m
+        [0m[0m
+        [0m [0m
+        [0m[0m
+        [0m [0m
+        [36m<div[39m
+          [33mclass[39m=[32m"play-field svelte-1wtq5hg"[39m
+        [36m>[39m
+          [36m<div[39m
+            [33mclass[39m=[32m"row row-1 svelte-1wtq5hg"[39m
+          [36m>[39m
+            [36m<div[39m
+              [33mclass[39m=[32m"corner-slot  svelte-1wtq5hg"[39m
+            [36m>[39m
+              [36m<div[39m
+                [33mclass[39m=[32m"empty-pile svelte-1wtq5hg"[39m
+              [36m>[39m
+                [0m7[0m
+              [36m</div>[39m
+            [36m</div>[39m
+            [0m [0m
+            [36m<div[39m
+              [33mclass[39m=[32m"helper-slot  svelte-1wtq5hg"[39m
+            [36m>[39m
+              [36m<div[39m
+                [33mclass[39m=[32m"empty-pile small svelte-1wtq5hg"[39m
+              [36m/>[39m
+            [36m</div>[39m
+            [0m [0m
+            [36m<div[39m
+              [33mclass[39m=[32m"corner-slot  svelte-1wtq5hg"[39m
+            [36m>[39m
+              [36m<div[39m
+                [33mclass[39m=[32m"empty-pile svelte-1wtq5hg"[39m
+              [36m>[39m
+                [0m7[0m
+              [36m</div>[39m
+            [36m</div>[39m
+          [36m</div>[39m
+          [0m [0m
+          [36m<div[39m
+            [33mclass[39m=[32m"row row-2 svelte-1wtq5hg"[39m
+          [36m>[39m
+            [36m<div[39m
+              [33mclass[39m=[32m"helper-slot  svelte-1wtq5hg"[39m
+            [36m>[39m
+              [36m<div[39m
+                [33mclass[39m=[32m"empty-pile small svelte-1wtq5hg"[39m
+              [36m/>[39m
+            [36m</div>[39m
+            [0m [0m
+            [36m<div[39m
+              [33mclass[39m=[32m"center-slot  svelte-1wtq5hg"[39m
+            [36m>[39m
+              [36m<div[39m
+                [33mclass[39m=[32m"empty-pile svelte-1wtq5hg"[39m
+              [36m>[39m
+                [0m6[0m
+              [36m</div>[39m
+            [36m</div>[39m
+            [0m [0m
+            [36m<div[39m
+              [33mclass[39m=[32m"helper-slot  svelte-1wtq5hg"[39m
+            [36m>[39m
+              [36m<div[39m
+                [33mclass[39m=[32m"empty-pile small svelte-1wtq5hg"[39m
+              [36m/>[39m
+            [36m</div>[39m
+          [36m</div>[39m
+          [0m [0m
+          [36m<div[39m
+            [33mclass[39m=[32m"row row-3 svelte-1wtq5hg"[39m
+          [36m>[39m
+            [36m<div[39m
+              [33mclass[39m=[32m"corner-slot  svelte-1wtq5hg"[39m
+            [36m>[39m
+              [36m<div[39m
+                [33mclass[39m=[32m"empty-pile svelte-1wtq5hg"[39m
+              [36m>[39m
+                [0m7[0m
+              [36m</div>[39m
+            [36m</div>[39m
+            [0m [0m
+            [36m<div[39m
+              [33mclass[39m=[32m"helper-slot  svelte-1wtq5hg"[39m
+            [36m>[39m
+              [36m<div[39m
+                [33mclass[39m=[32m"empty-pile small svelte-1wtq5hg"[39m
+              [36m/>[39m
+            [36m</div>[39m
+            [0m [0m
+            [36m<div[39m
+              [33mclass[39m=[32m"corner-slot  svelte-1wtq5hg"[39m
+            [36m>[39m
+              [36m<div[39m
+                [33mclass[39m=[32m"empty-pile svelte-1wtq5hg"[39m
+              [36m>[39m
+                [0m7[0m
+              [36m</div>[39m
+            [36m</div>[39m
+          [36m</div>[39m
+        [36m</div>[39m
+        [0m [0m
+        [36m<div[39m
+          [33mclass[39m=[32m"controls svelte-1wtq5hg"[39m
+        [36m>[39m
+          [36m<div[39m
+            [33mclass[39m=[32m"control-group svelte-1wtq5hg"[39m
+          [36m>[39m
+            [36m<div[39m
+              [33mclass[39m=[32m"pile-wrapper  svelte-1wtq5hg"[39m
+            [36m>[39m
+              [36m<div[39m
+                [33mclass[39m=[32m"empty-pile svelte-1wtq5hg"[39m
+              [36m>[39m
+                [0m6★[0m
+              [36m</div>[39m
+            [36m</div>[39m
+          [36m</div>[39m
+          [0m [0m
+          [36m<div[39m
+            [33mclass[39m=[32m"control-group svelte-1wtq5hg"[39m
+          [36m>[39m
+            [36m<div[39m
+              [33mclass[39m=[32m"current-card-slot svelte-1wtq5hg"[39m
+            [36m>[39m
+              [36m<div[39m
+                [33mclass[39m=[32m"empty-pile svelte-1wtq5hg"[39m
+              [36m/>[39m
+            [36m</div>[39m
+          [36m</div>[39m
+          [0m [0m
+          [36m<div[39m
+            [33mclass[39m=[32m"control-group svelte-1wtq5hg"[39m
+          [36m>[39m
+            [36m<button[39m
+              [33maria-label[39m=[32m"Nosta kortti jakopakasta"[39m
+              [33mclass[39m=[32m"stock-btn svelte-1wtq5hg"[39m
+            [36m>[39m
+              [36m<div[39m
+                [33mclass[39m=[32m"stack-card svelte-1wtq5hg"[39m
+                [33mstyle[39m=[32m"top: 4px; left: -2px; z-index: 0;"[39m
+              [36m/>[39m
+              [0m [0m
+              [36m<div[39m
+                [33mclass[39m=[32m"stack-card svelte-1wtq5hg"[39m
+                [33mstyle[39m=[32m"top: 2px; left: -1px; z-index: 1;"[39m
+              [36m/>[39m
+              [0m [0m
+              [36m<div[39m
+                [33mclass[39m=[32m"svelte-1wtq5hg"[39m
+                [33mstyle[39m=[32m"position: relative; z-index: 2;"[39m
+              [36m>[39m
+                [36m<div[39m
+                  [33mclass[39m=[32m"card svelte-lb44f9 red"[39m
+                  [33mdraggable[39m=[32m"false"[39m
+                [36m>[39m
+                  [36m<div[39m
+                    [33mclass[39m=[32m"card-back svelte-lb44f9"[39m
+                    [33mdata-back-type[39m=[32m"classic-blue"[39m
+                  [36m>[39m
+                    [36m<div[39m
+                      [33mclass[39m=[32m"back-inner svelte-lb44f9"[39m
+                    [36m>[39m
+                      [36m<div[39m
+                        [33mclass[39m=[32m"back-pattern svelte-lb44f9"[39m
+                      [36m/>[39m
+                    [36m</div>[39m
+                  [36m</div>[39m
+                [36m</div>[39m
+              [36m</div>[39m
+              [0m [0m
+            [36m</button>[39m
+            [0m [0m
+          [36m</div>[39m
+        [36m</div>[39m
+      [36m</div>[39m
+    [36m</div>[39m
+    [0m[0m
+    [0m[0m
+  [36m</div>[39m
+[36m</body>[39m
+[90m [2m❯[22m Object.getElementError node_modules/@testing-library/dom/dist/config.js:[2m37:19[22m[39m
+[90m [2m❯[22m getAllByLabelText node_modules/@testing-library/dom/dist/queries/label-text.js:[2m111:38[22m[39m
+[90m [2m❯[22m node_modules/@testing-library/dom/dist/query-helpers.js:[2m52:17[22m[39m
+[90m [2m❯[22m node_modules/@testing-library/dom/dist/query-helpers.js:[2m95:19[22m[39m
+[36m [2m❯[22m src/games/napoleon/Napoleon.settings.test.ts:[2m16:29[22m[39m
+    [90m 14| [39m    [35mconst[39m { container } [33m=[39m [34mrender[39m([33mNapoleon[39m)[33m;[39m
+    [90m 15| [39m
+    [90m 16| [39m    const checkbox = screen.getByLabelText('Laskurit') as HTMLInputEle…
+    [90m   | [39m                            [31m^[39m
+    [90m 17| [39m    [34mexpect[39m(checkbox[33m.[39mchecked)[33m.[39m[34mtoBe[39m([35mfalse[39m)[33m;[39m
+    [90m 18| [39m    [34mexpect[39m(container[33m.[39m[34mquerySelector[39m([32m'.stock-count'[39m))[33m.[39m[34mtoBeNull[39m()[33m;[39m
+
+[31m[2m⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[2/10]⎯[22m[39m
+
+[41m[1m FAIL [22m[49m src/components/settings/CounterToggle.test.ts[2m > [22mCounterToggle[2m > [22mtoggles the checkbox state
+[31m[1mTestingLibraryElementError[22m: Unable to find an accessible element with the role "checkbox"
+
+Here are the accessible roles:
+
+  button:
+
+  Name "Pois":
+  [36m<button[31m
+    [33mclass[31m=[32m"counter-option svelte-1wxyjcy active"[31m
+    [33mtype[31m=[32m"button"[31m
+  [36m/>[31m
+
+  Name "Päällä":
+  [36m<button[31m
+    [33mclass[31m=[32m"counter-option svelte-1wxyjcy"[31m
+    [33mtype[31m=[32m"button"[31m
+  [36m/>[31m
+
+  --------------------------------------------------
+
+Ignored nodes: comments, script, style
+[36m<body>[31m
+  [36m<div>[31m
+    [36m<div[31m
+      [33mclass[31m=[32m"counter-toggle-container svelte-1wxyjcy"[31m
+    [36m>[31m
+      [36m<span[31m
+        [33mclass[31m=[32m"toggle-label svelte-1wxyjcy"[31m
+      [36m>[31m
+        [0mLaskurit[0m
+      [36m</span>[31m
+      [0m [0m
+      [36m<div[31m
+        [33mclass[31m=[32m"counter-toggle svelte-1wxyjcy"[31m
+      [36m>[31m
+        [36m<button[31m
+          [33mclass[31m=[32m"counter-option svelte-1wxyjcy active"[31m
+          [33mtype[31m=[32m"button"[31m
+        [36m>[31m
+          [0mPois[0m
+        [36m</button>[31m
+        [0m [0m
+        [36m<button[31m
+          [33mclass[31m=[32m"counter-option svelte-1wxyjcy"[31m
+          [33mtype[31m=[32m"button"[31m
+        [36m>[31m
+          [0mPäällä[0m
+        [36m</button>[31m
+      [36m</div>[31m
+    [36m</div>[31m
+    [0m[0m
+    [0m[0m
+  [36m</div>[31m
+[36m</body>[31m[39m
+[90m [2m❯[22m Object.getElementError node_modules/@testing-library/dom/dist/config.js:[2m37:19[22m[39m
+[90m [2m❯[22m node_modules/@testing-library/dom/dist/query-helpers.js:[2m76:38[22m[39m
+[90m [2m❯[22m node_modules/@testing-library/dom/dist/query-helpers.js:[2m52:17[22m[39m
+[90m [2m❯[22m node_modules/@testing-library/dom/dist/query-helpers.js:[2m95:19[22m[39m
+[36m [2m❯[22m src/components/settings/CounterToggle.test.ts:[2m22:29[22m[39m
+    [90m 20| [39m    [34mrender[39m([33mCounterToggle[39m[33m,[39m { props[33m:[39m { checked[33m:[39m [35mfalse[39m } })[33m;[39m
+    [90m 21| [39m
+    [90m 22| [39m    [35mconst[39m checkbox [33m=[39m screen[33m.[39m[34mgetByRole[39m([32m'checkbox'[39m) [35mas[39m [33mHTMLInputElement[39m[33m;[39m
+    [90m   | [39m                            [31m^[39m
+    [90m 23| [39m    [34mexpect[39m(checkbox[33m.[39mchecked)[33m.[39m[34mtoBe[39m([35mfalse[39m)[33m;[39m
+    [90m 24| [39m
+
+[31m[2m⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[3/10]⎯[22m[39m
+
+[41m[1m FAIL [22m[49m src/components/settings/CounterToggle.test.ts[2m > [22mCounterToggle layout (TECH-023)[2m > [22muses column layout with label above controls
+[31m[1mAssertionError[22m: expected '' to be 'column' // Object.is equality[39m
+
+[32m- Expected[39m
+[31m+ Received[39m
+
+[32m- column[39m
+
+[36m [2m❯[22m src/components/settings/CounterToggle.test.ts:[2m44:34[22m[39m
+    [90m 42| [39m    
+    [90m 43| [39m    [35mconst[39m styles [33m=[39m window[33m.[39m[34mgetComputedStyle[39m(wrapper[33m![39m)[33m;[39m
+    [90m 44| [39m    [34mexpect[39m(styles[33m.[39mflexDirection)[33m.[39m[34mtoBe[39m([32m'column'[39m)[33m;[39m
+    [90m   | [39m                                 [31m^[39m
+    [90m 45| [39m  })[33m;[39m
+    [90m 46| [39m
+
+[31m[2m⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[4/10]⎯[22m[39m
+
+[41m[1m FAIL [22m[49m src/components/settings/CounterToggle.test.ts[2m > [22mCounterToggle layout (TECH-023)[2m > [22mtoggles state when clicking buttons
+[31m[1mAssertionError[22m: expected undefined to be true // Object.is equality[39m
+
+[32m- Expected:[39m 
+true
+
+[31m+ Received:[39m 
+undefined
+
+[36m [2m❯[22m src/components/settings/CounterToggle.test.ts:[2m73:31[22m[39m
+    [90m 71| [39m    
+    [90m 72| [39m    [90m// Component should update the bindable prop[39m
+    [90m 73| [39m    [34mexpect[39m(component[33m.[39mchecked)[33m.[39m[34mtoBe[39m([35mtrue[39m)[33m;[39m
+    [90m   | [39m                              [31m^[39m
+    [90m 74| [39m  })[33m;[39m
+    [90m 75| [39m
+
+[31m[2m⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[5/10]⎯[22m[39m
+
+[41m[1m FAIL [22m[49m src/components/settings/DrawCountToggle.test.ts[2m > [22mDrawCountToggle layout (TECH-023)[2m > [22muses column layout with label above controls
+[31m[1mAssertionError[22m: expected '' to be 'column' // Object.is equality[39m
+
+[32m- Expected[39m
+[31m+ Received[39m
+
+[32m- column[39m
+
+[36m [2m❯[22m src/components/settings/DrawCountToggle.test.ts:[2m19:34[22m[39m
+    [90m 17| [39m    
+    [90m 18| [39m    [35mconst[39m styles [33m=[39m window[33m.[39m[34mgetComputedStyle[39m(wrapper[33m![39m)[33m;[39m
+    [90m 19| [39m    [34mexpect[39m(styles[33m.[39mflexDirection)[33m.[39m[34mtoBe[39m([32m'column'[39m)[33m;[39m
+    [90m   | [39m                                 [31m^[39m
+    [90m 20| [39m  })[33m;[39m
+    [90m 21| [39m
+
+[31m[2m⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[6/10]⎯[22m[39m
+
+[41m[1m FAIL [22m[49m src/components/settings/DrawCountToggle.test.ts[2m > [22mDrawCountToggle layout (TECH-023)[2m > [22mtoggles between options
+[31m[1mAssertionError[22m: expected undefined to be 3 // Object.is equality[39m
+
+[32m- Expected:[39m 
+3
+
+[31m+ Received:[39m 
+undefined
+
+[36m [2m❯[22m src/components/settings/DrawCountToggle.test.ts:[2m35:29[22m[39m
+    [90m 33| [39m    [35mawait[39m user[33m.[39m[34mclick[39m(buttons[[34m1[39m])[33m;[39m
+    [90m 34| [39m    
+    [90m 35| [39m    [34mexpect[39m(component[33m.[39mvalue)[33m.[39m[34mtoBe[39m([34m3[39m)[33m;[39m
+    [90m   | [39m                            [31m^[39m
+    [90m 36| [39m  })[33m;[39m
+    [90m 37| [39m
+
+[31m[2m⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[7/10]⎯[22m[39m
+
+[41m[1m FAIL [22m[49m src/components/settings/HighlightToggle.test.ts[2m > [22mHighlightToggle layout (TECH-023)[2m > [22muses column layout with label above controls
+[31m[1mAssertionError[22m: expected '' to be 'column' // Object.is equality[39m
+
+[32m- Expected[39m
+[31m+ Received[39m
+
+[32m- column[39m
+
+[36m [2m❯[22m src/components/settings/HighlightToggle.test.ts:[2m18:34[22m[39m
+    [90m 16| [39m    
+    [90m 17| [39m    [35mconst[39m styles [33m=[39m window[33m.[39m[34mgetComputedStyle[39m(wrapper[33m![39m)[33m;[39m
+    [90m 18| [39m    [34mexpect[39m(styles[33m.[39mflexDirection)[33m.[39m[34mtoBe[39m([32m'column'[39m)[33m;[39m
+    [90m   | [39m                                 [31m^[39m
+    [90m 19| [39m  })[33m;[39m
+    [90m 20| [39m
+
+[31m[2m⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[8/10]⎯[22m[39m
+
+[41m[1m FAIL [22m[49m src/components/settings/RecycleToggle.test.ts[2m > [22mRecycleToggle layout (TECH-023)[2m > [22muses column layout with label above controls
+[31m[1mAssertionError[22m: expected '' to be 'column' // Object.is equality[39m
+
+[32m- Expected[39m
+[31m+ Received[39m
+
+[32m- column[39m
+
+[36m [2m❯[22m src/components/settings/RecycleToggle.test.ts:[2m19:34[22m[39m
+    [90m 17| [39m    
+    [90m 18| [39m    [35mconst[39m styles [33m=[39m window[33m.[39m[34mgetComputedStyle[39m(wrapper[33m![39m)[33m;[39m
+    [90m 19| [39m    [34mexpect[39m(styles[33m.[39mflexDirection)[33m.[39m[34mtoBe[39m([32m'column'[39m)[33m;[39m
+    [90m   | [39m                                 [31m^[39m
+    [90m 20| [39m  })[33m;[39m
+    [90m 21| [39m
+
+[31m[2m⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[9/10]⎯[22m[39m
+
+[41m[1m FAIL [22m[49m src/components/settings/RecycleToggle.test.ts[2m > [22mRecycleToggle layout (TECH-023)[2m > [22mtoggles between options
+[31m[1mAssertionError[22m: expected undefined to be 3 // Object.is equality[39m
+
+[32m- Expected:[39m 
+3
+
+[31m+ Received:[39m 
+undefined
+
+[36m [2m❯[22m src/components/settings/RecycleToggle.test.ts:[2m34:29[22m[39m
+    [90m 32| [39m    [35mawait[39m user[33m.[39m[34mclick[39m(button3)[33m;[39m
+    [90m 33| [39m    
+    [90m 34| [39m    [34mexpect[39m(component[33m.[39mvalue)[33m.[39m[34mtoBe[39m([34m3[39m)[33m;[39m
+    [90m   | [39m                            [31m^[39m
+    [90m 35| [39m  })[33m;[39m
+    [90m 36| [39m
+
+[31m[2m⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[10/10]⎯[22m[39m
+
+
+[2m Test Files [22m [1m[31m6 failed[39m[22m[2m | [22m[1m[32m7 passed[39m[22m[90m (13)[39m
+[2m      Tests [22m [1m[31m10 failed[39m[22m[2m | [22m[1m[32m259 passed[39m[22m[90m (269)[39m
+[2m   Start at [22m 16:03:17
+[2m   Duration [22m 30.19s[2m (transform 72.77s, setup 0ms, import 110.13s, tests 2.40s, environment 186.64s)[22m
+

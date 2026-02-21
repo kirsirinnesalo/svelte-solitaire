@@ -7,7 +7,6 @@ it explores structured agent guidance, architectural constraints, and rule-based
 
 🎮 **[Live demo](https://kirsirinnesalo.github.io/svelte-solitaire/)**
 
----
 
 ## 🎯 Project Goals
 
@@ -20,7 +19,6 @@ The games are real.
 
 The architecture is intentional.
 
----
 
 ## 🧱 Architectural Constraints
 
@@ -43,7 +41,6 @@ Rules modules:
 
 These constraints exist primarily to make AI-generated changes predictable and auditable.
 
----
 
 ## 🎮 Games
 
@@ -54,7 +51,6 @@ These constraints exist primarily to make AI-generated changes predictable and a
 
 Each game follows the same structural contract between UI and rules engine.
 
----
 
 ## 🚀 Getting Started
 
@@ -72,6 +68,7 @@ npm run test      # Run tests
 - **[AGENTS.md](AGENTS.md)** - Development guide for AI agents and maintainers
 - **[agents/tasks/backlog.md](agents/tasks/backlog.md)** - Task backlog and roadmap
 - **[docs/adrs/](docs/adrs/)** - Architecture Decision Records
+
 
 ## 📝 License
 

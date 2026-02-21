@@ -9,7 +9,7 @@
 
 ## In Progress
 
-- [TECH-004](TECH-004-unify-state-naming.md) - Rename `state` → `gameState` in AcesUp and Clock
+_(None)_
 
 ## Blocked
 

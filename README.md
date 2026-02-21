@@ -1,8 +1,58 @@
-# Pasianssit – Solitaire Collection
+# Svelte Solitaire Collection
 
-A single-page app featuring a collection of classic solitaire card games, built with Svelte 5, TypeScript and Vite.
+A collection of classic solitaire card games built with Svelte 5, TypeScript and Vite.
+
+This project primarily serves as an AI-assisted development experiment:
+it explores structured agent guidance, architectural constraints, and rule-based game implementations.
 
 🎮 **[Live demo](https://kirsirinnesalo.github.io/svelte-solitaire/)**
+
+---
+
+## 🎯 Project Goals
+
+- Experiment with AI agent–driven development workflows
+- Define explicit architectural constraints for automated contributors
+- Keep game rules deterministic and testable
+- Build a playable personal solitaire collection
+
+The games are real.
+
+The architecture is intentional.
+
+---
+
+## 🧱 Architectural Constraints
+
+Each game implementation is split into two clearly separated layers:
+
+1. UI Layer
+  - Svelte component
+  - Responsible only for rendering and user interaction
+
+2. Rules Layer
+  - Pure TypeScript module
+  - No UI dependencies
+  - Deterministic state transitions
+  - Fully testable in isolation
+
+Rules modules:
+  - Do not access DOM
+  - Do not mutate external state
+  - Expose explicit move validation and state updates
+
+These constraints exist primarily to make AI-generated changes predictable and auditable.
+
+---
+
+## 🎮 Games
+
+- **Klondike** - Classic draw-and-build solitaire
+- **Napoleon's Tomb** - Strategic foundation-building variant
+- **Aces Up** - Fast elimination-style solitaire
+- **Clock** - Luck based circular placement game
+
+Each game follows the same structural contract between UI and rules engine.
 
 ---
 
@@ -17,33 +67,11 @@ npm run check     # TypeScript validation
 npm run test      # Run tests
 ```
 
-## 🎮 Games
-
-- **Klondike** - Classic solitaire
-- **Napoleon's Tomb** - Strategic single-deck solitaire
-- **Aces Up** - Quick elimination game
-- **Clock** - Build the clock by placing cards on their hours
-
-## 📂 Project Structure
-
-```
-src/
-├── components/          # Reusable UI components
-├── games/               # Game implementations
-│   └── {game}/
-│       ├── {Game}.svelte      # UI component
-│       └── {game}Rules.ts     # Pure game logic (testable)
-├── lib/                 # Utilities and shared logic
-├── types/               # TypeScript type definitions
-├── App.svelte           # Root component
-└── main.ts              # Application entry point
-```
-
-## 📚 Documentation
+## 📚 Development Documentation
 
 - **[AGENTS.md](AGENTS.md)** - Development guide for AI agents and maintainers
-- **[docs/adrs/](docs/adrs/)** - Architecture Decision Records
 - **[agents/tasks/backlog.md](agents/tasks/backlog.md)** - Task backlog and roadmap
+- **[docs/adrs/](docs/adrs/)** - Architecture Decision Records
 
 ## 📝 License
 

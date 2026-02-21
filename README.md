@@ -1,12 +1,23 @@
 # Pasianssit – Solitaire Collection
 
-A single-page app featuring a collection of classic solitaire card games, built with Svelte 5.
+A single-page app featuring a collection of classic solitaire card games, built with Svelte 5, TypeScript and Vite.
 
 ---
 
+## 🚀 Getting Started
+
+```bash
+npm install       # Install dependencies
+npm run dev       # Development server at http://localhost:5173
+npm run build     # Production build
+npm run preview   # Preview production build
+npm run check     # TypeScript validation
+npm run test      # Run tests
+```
+
 ## 🎮 Current Features
 
-### Card Games
+### Games
 
 - ✅ **Klondike** - Classic solitaire
 - ✅ **Napoleon's Tomb** - Strategic single-deck solitaire
@@ -23,83 +34,22 @@ A single-page app featuring a collection of classic solitaire card games, built 
 - ✅ **Timer** - Optional time tracking
 - ✅ **Auto-complete** - Smart foundational moves (Klondike)
 - ✅ **Pause overlay** - Pause without showing cards
-
-### Infrastructure
-
-- ✅ **Svelte 5 runes** - Modern reactive state (ADR-002)
-- ✅ **TypeScript strict** - Full type safety
-- ✅ **Component architecture** - Reusable UI components
 - ⏳ **Testing** - Vitest setup in progress
-
-## 🚀 Getting Started
-
-### Development
-
-```bash
-# Install dependencies
-npm install
-
-# Start development server
-npm run dev
-
-# Open in browser
-http://localhost:5173
-```
-
-### Production
-
-```bash
-# Build for production
-npm run build
-
-# Preview production build
-npm run preview
-```
-
-## 🧪 Development Commands
-
-```bash
-# Type checking
-npm run check
-
-# Run tests (when available)
-npm run test
-
-# Watch mode for tests
-npm run test -- --watch
-```
 
 ## 📂 Project Structure
 
 ```
 src/
 ├── components/          # Reusable UI components
-│   ├── CardComponent.svelte   # Single card component
-│   └── GameSelector.svelte    # Game selection menu
-├── games/              # Game implementations
-│   ├── {game}/         # Each game in its own folder
-│   │   ├── {Game}.svelte      # UI component
-│   │   └── {game}Rules.ts     # Pure game logic
-├── lib/                # Utilities and shared logic
-│   └── cardUtils.ts    # Card and game utilities
-├── types/              # TypeScript type definitions
-│   └── game.ts
-├── App.svelte          # Root component
-├── main.ts             # Application entry point
-└── app.css             # Global styles
+├── games/               # Game implementations
+│   └── {game}/
+│       ├── {Game}.svelte      # UI component
+│       └── {game}Rules.ts     # Pure game logic (testable)
+├── lib/                 # Utilities and shared logic
+├── types/               # TypeScript type definitions
+├── App.svelte           # Root component
+└── main.ts              # Application entry point
 ```
-
-**Example**: Klondike game structure:
-- `games/klondike/Klondike.svelte` - UI and user interactions
-- `games/klondike/klondikeRules.ts` - Game logic
-- `games/klondike/klondikeRules.test.ts` - Tests
-
-## 🛠️ Technologies
-
-- **Svelte 5** - Modern reactive framework
-- **TypeScript 5** - Full type safety with strict mode
-- **Vite 7** - Lightning-fast dev server and build tool
-- **Vitest** - Unit testing framework (in setup)
 
 ## 🏗️ Architecture
 
@@ -112,10 +62,9 @@ For detailed architectural decisions, see [agents/adrs/](agents/adrs/).
 
 ## 📚 Documentation
 
-- **[AGENTS.md](AGENTS.md)** - Complete development guide for AI agents and maintainers
+- **[AGENTS.md](AGENTS.md)** - Development guide for AI agents and maintainers
 - **[agents/adrs/](agents/adrs/)** - Architecture Decision Records
-- **[agents/tasks/backlog.md](agents/tasks/backlog.md)** - Current task backlog and roadmap
-- **[.github/copilot-instructions.md](.github/copilot-instructions.md)** - GitHub Copilot instructions (Finnish)
+- **[agents/tasks/backlog.md](agents/tasks/backlog.md)** - Task backlog and roadmap
 
 ## 🤝 Contributing
 

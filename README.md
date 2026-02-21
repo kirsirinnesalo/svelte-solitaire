@@ -39,15 +39,6 @@ src/
 └── main.ts              # Application entry point
 ```
 
-## 🏗️ Architecture
-
-- **Runes-only** - Svelte 5 runes, no legacy patterns ([ADR-002](agents/adrs/ADR-002-svelte-5-runes-only.md))
-- **Separation of concerns** - UI components (`*.svelte`) + pure game logic (`*Rules.ts`)
-- **Callback props** - Component communication via props, not events ([ADR-003](agents/adrs/ADR-003-callback-props-over-event-dispatchers.md))
-- **TDD workflow** - Test-first development ([ADR-001](agents/adrs/ADR-001-test-driven-development.md))
-
-For detailed architectural decisions, see [agents/adrs/](agents/adrs/).
-
 ## 📚 Documentation
 
 - **[AGENTS.md](AGENTS.md)** - Development guide for AI agents and maintainers

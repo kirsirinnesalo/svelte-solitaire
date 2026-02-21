@@ -483,7 +483,7 @@
     <div class="top-row">
       <div class="stock-waste-wrapper">
         <div class="stock-area">
-          {#if firstGameStarted && activeMaxRecycles !== 'unlimited'}
+          {#if firstGameStarted && activeMaxRecycles !== 'unlimited' && activeMaxRecycles > 1}
             <div class="stock-counter">{recycleCount + 1}/{activeMaxRecycles}</div>
           {/if}
           <button

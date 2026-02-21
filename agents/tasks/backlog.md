@@ -12,7 +12,7 @@
 
 ## In Progress
 
-- [TECH-021](TECH-021-remove-napoleon-draw-counter.md) - Show recycle counters only when limit > 1
+_(None)_
 
 ## Blocked
 

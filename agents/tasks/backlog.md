@@ -8,7 +8,7 @@
 
 ## In Progress
 
-- [TECH-025](TECH-025-action-button-styling.md) - Primary green + neutral secondary actions
+_(None)_
 
 ## Blocked
 

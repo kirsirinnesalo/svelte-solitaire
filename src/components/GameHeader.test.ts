@@ -24,6 +24,26 @@ describe('GameHeader', () => {
     expect(hintBtn).toBeTruthy();
   });
 
+  it('marks new game as primary and others as secondary', () => {
+    const onNewGame = vi.fn();
+
+    render(GameHeader, {
+      props: {
+        onNewGame
+      }
+    });
+
+    const newGameBtn = screen.getByRole('button', { name: /uusi peli/i });
+    const restartBtn = screen.getByRole('button', { name: /uudelleen/i });
+    const undoBtn = screen.getByRole('button', { name: /kumoa/i });
+    const hintBtn = screen.getByRole('button', { name: /vihje/i });
+
+    expect(newGameBtn.classList.contains('action-btn-primary')).toBe(true);
+    expect(restartBtn.classList.contains('action-btn-secondary')).toBe(true);
+    expect(undoBtn.classList.contains('action-btn-secondary')).toBe(true);
+    expect(hintBtn.classList.contains('action-btn-secondary')).toBe(true);
+  });
+
   it('renders help button when onHelp is provided', () => {
     const onNewGame = vi.fn();
     const onHelp = vi.fn();

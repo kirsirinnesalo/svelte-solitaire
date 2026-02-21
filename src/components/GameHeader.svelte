@@ -44,7 +44,7 @@
   <div class="action-buttons">
     <button 
       onclick={onNewGame} 
-      class="new-game-btn action-btn-icon-only"
+      class="new-game-btn action-btn action-btn-primary action-btn-icon-only"
       aria-label="Uusi peli"
       title="Uusi peli"
     >
@@ -52,7 +52,7 @@
       <span class="label">Uusi peli</span>
     </button>
     <button 
-      class="restart-btn action-btn-icon-only" 
+      class="restart-btn action-btn action-btn-secondary action-btn-icon-only" 
       disabled={restartDisabled} 
       aria-label={restartDisabled ? "Uudelleen (tulossa pian)" : "Uudelleen"}
       title={restartDisabled ? "Tulossa pian" : "Aloita peli alusta samoilla korteilla"}
@@ -63,7 +63,7 @@
     </button>
     <button 
       onclick={onUndo} 
-      class="undo-btn action-btn-icon-only" 
+      class="undo-btn action-btn action-btn-secondary action-btn-icon-only" 
       disabled={undoDisabled}
       aria-label="Kumoa"
       title="Kumoa viimeisin siirto"
@@ -72,7 +72,7 @@
       <span class="label">Kumoa</span>
     </button>
     <button 
-      class="hint-btn action-btn-icon-only" 
+      class="hint-btn action-btn action-btn-secondary action-btn-icon-only" 
       disabled={hintDisabled} 
       aria-label={hintDisabled ? "Vihje (tulossa pian)" : "Vihje"}
       title={hintDisabled ? "Tulossa pian" : "Näytä mahdollinen siirto"}
@@ -83,7 +83,7 @@
     </button>
     {#if onHelp}
     <button 
-      class="help-btn action-btn-icon-only" 
+      class="help-btn action-btn action-btn-secondary action-btn-icon-only" 
       onclick={onHelp}
       aria-label="Ohjeet"
       title="Näytä pelin ohjeet (paina ? tai F1)"
@@ -167,15 +167,24 @@
     gap: 1rem;
   }
 
-  .new-game-btn, .restart-btn, .undo-btn, .hint-btn, .help-btn {
+  .action-btn {
     padding: 0.5rem 1rem;
-    border: none;
+    border: 1px solid transparent;
     border-radius: 6px;
-    background: #4CAF50;
-    color: white;
     cursor: pointer;
     font-size: 1rem;
     transition: background 0.2s;
+  }
+
+  .action-btn-primary {
+    background: #4CAF50;
+    color: white;
+  }
+
+  .action-btn-secondary {
+    background: #f7f7f7;
+    color: #1f2a24;
+    border-color: #cfd6cf;
   }
 
   /* Icon-only button behavior */
@@ -222,18 +231,18 @@
     }
   }
 
-  .new-game-btn:hover, 
-  .restart-btn:hover:not(:disabled), 
-  .undo-btn:hover:not(:disabled),
-  .hint-btn:hover:not(:disabled),
-  .help-btn:hover {
+  .action-btn-primary:hover {
     background: #45a049;
   }
 
-  .restart-btn:disabled, 
-  .undo-btn:disabled,
-  .hint-btn:disabled {
+  .action-btn-secondary:hover:not(:disabled) {
+    background: #eef1ef;
+  }
+
+  .action-btn:disabled {
     background: #ccc;
+    border-color: #ccc;
+    color: #5a5a5a;
     cursor: not-allowed;
     opacity: 0.6;
   }

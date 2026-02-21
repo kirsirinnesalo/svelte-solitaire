@@ -267,27 +267,7 @@ history = [...history, structuredClone(gameState)]; // Error!
 
 See [ADR-004](docs/adrs/ADR-004-json-parse-for-state-cloning.md) for rationale.
 
-## 🔴 Test-Driven Development Workflow
-
-### 1. Red Phase - Write Failing Test
-```bash
-touch src/games/klondike/klondikeRules.test.ts
-npm run test -- --watch
-```
-
-### 2. Green Phase - Implement Minimum Code
-```typescript
-// Implement just enough to make test pass
-export function moveCard(/* ... */) {
-  // Minimal implementation
-}
-```
-
-### 3. Refactor Phase - Improve Code
-```typescript
-// Clean up, optimize, remove duplication
-// Tests must still pass
-```
+## 🧪 Testing
 
 ### Test Hierarchy Priority
 1. **Pure functions** (`*Rules.ts`) - Test first, 100% coverage

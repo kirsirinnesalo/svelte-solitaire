@@ -50,6 +50,7 @@ Complete workflow for every task:
 4. **Refactor**: Improve code quality while keeping tests green — follow project patterns, no technical debt
 5. **Quality Gates (MANDATORY before commit)**:
    - Run unit tests: `npm run test` (Vitest)
+   - Run TypeScript check: `npm run check`
    - Run lint: `npm run lint` (if configured)
    - Run build: `npm run build`
 6. **Commit**: Commit frequently with `feat(TASK-ID): short summary` (Conventional Commits)
@@ -202,17 +203,6 @@ describe('Card animations', () => {
 4. Add to `GameType` in `src/types/game.ts`
 5. Add to `games` array in `GameSelector.svelte`
 6. Add rendering case in `App.svelte`
-
-## 🛠️ Development Commands
-
-```bash
-npm run dev               # Development server (port 5173)
-npm run check             # TypeScript validation
-npm run build             # Production build
-npm run test              # Run tests
-npm run test -- --watch   # Watch mode
-npm run test -- --coverage  # Coverage report
-```
 
 ## 🏗️ Architecture Decisions
 

@@ -8,7 +8,7 @@ _(None)_
 
 ## In Progress
 
-- [TECH-012](TECH-012-document-effect-usage.md) - Add documentation for $effect usage in Klondike
+_(None)_
 
 ## Blocked
 

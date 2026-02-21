@@ -46,7 +46,9 @@
   // Derived state for undo button
   let undoDisabled = $derived(history.length === 0 || isWon || isLost || !gameStarted);
 
-  // Automatically update maxRecycles when drawCount changes
+  // $effect (not $derived): drawCount changing must mutate the separate maxRecycles
+  // state variable. $derived only computes a new value from existing state; it cannot
+  // assign to a different $state variable. See ADR-002 for runes usage patterns.
   $effect(() => {
     if (drawCount === 1) {
       maxRecycles = 3;
@@ -55,7 +57,8 @@
     }
   });
   
-  // Update display time every second when game is running
+  // $effect for timer side effect: setInterval is a side effect that cannot be
+  // expressed with $derived. Cleanup function returned to stop interval on unmount.
   $effect(() => {
     if (startTime === 0 || isWon || isLost || isPaused) return;
     
@@ -66,7 +69,8 @@
     return () => clearInterval(interval);
   });
 
-  // Auto-complete when all cards are face-up
+  // $effect for auto-complete: triggers async card movement sequence as a side effect
+  // when game state changes. Not $derived because it mutates state and schedules timers.
   $effect(() => {
     if (isAutoCompleting || isWon || isLost || !gameStarted || isPaused) return;
     if (!canAutoComplete(gameState)) return;

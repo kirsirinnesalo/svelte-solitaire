@@ -42,39 +42,54 @@
 
 <div class="game-header">
   <div class="action-buttons">
-    <button onclick={onNewGame} class="new-game-btn">
-      ▶ Uusi peli
+    <button 
+      onclick={onNewGame} 
+      class="new-game-btn action-btn-icon-only"
+      aria-label="Uusi peli"
+      title="Uusi peli"
+    >
+      <span class="icon">▶</span>
+      <span class="label">Uusi peli</span>
     </button>
     <button 
-      class="restart-btn" 
+      class="restart-btn action-btn-icon-only" 
       disabled={restartDisabled} 
+      aria-label={restartDisabled ? "Uudelleen (tulossa pian)" : "Uudelleen"}
       title={restartDisabled ? "Tulossa pian" : "Aloita peli alusta samoilla korteilla"}
       onclick={onRestart}
     >
-      ↻ Uudelleen
+      <span class="icon">↻</span>
+      <span class="label">Uudelleen</span>
     </button>
     <button 
       onclick={onUndo} 
-      class="undo-btn" 
+      class="undo-btn action-btn-icon-only" 
       disabled={undoDisabled}
+      aria-label="Kumoa"
+      title="Kumoa viimeisin siirto"
     >
-      ↶ Kumoa
+      <span class="icon">↶</span>
+      <span class="label">Kumoa</span>
     </button>
     <button 
-      class="hint-btn" 
+      class="hint-btn action-btn-icon-only" 
       disabled={hintDisabled} 
+      aria-label={hintDisabled ? "Vihje (tulossa pian)" : "Vihje"}
       title={hintDisabled ? "Tulossa pian" : "Näytä mahdollinen siirto"}
       onclick={onHint}
     >
-      💡 Vihje
+      <span class="icon">💡</span>
+      <span class="label">Vihje</span>
     </button>
     {#if onHelp}
     <button 
-      class="help-btn" 
+      class="help-btn action-btn-icon-only" 
       onclick={onHelp}
+      aria-label="Ohjeet"
       title="Näytä pelin ohjeet (paina ? tai F1)"
     >
-      ❓ Ohjeet
+      <span class="icon">❓</span>
+      <span class="label">Ohjeet</span>
     </button>
     {/if}
     <div class="timer">
@@ -86,6 +101,7 @@
       class:disabled={!gameStarted || gameEnded}
       disabled={!gameStarted || gameEnded}
       onclick={onPause}
+      aria-label={isPaused ? "Jatka" : "Tauko"}
       title={isPaused ? "Jatka peliä" : "Tauko"}
     >
       {isPaused ? '▶' : '⏸'}
@@ -160,6 +176,50 @@
     cursor: pointer;
     font-size: 1rem;
     transition: background 0.2s;
+  }
+
+  /* Icon-only button behavior */
+  .action-btn-icon-only {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.3rem;
+    padding: 0.5rem;
+    transition: all 0.2s ease;
+  }
+
+  .action-btn-icon-only .label {
+    max-width: 0;
+    overflow: hidden;
+    opacity: 0;
+    white-space: nowrap;
+    transition: max-width 0.2s ease, opacity 0.2s ease, margin 0.2s ease;
+  }
+
+  .action-btn-icon-only:hover .label,
+  .action-btn-icon-only:focus .label,
+  .action-btn-icon-only:focus-visible .label {
+    max-width: 200px;
+    opacity: 1;
+    margin-left: 0.2rem;
+  }
+
+  .action-btn-icon-only:hover,
+  .action-btn-icon-only:focus,
+  .action-btn-icon-only:focus-visible {
+    padding: 0.5rem 1rem;
+  }
+
+  /* Touch devices: show label on active state */
+  @media (hover: none) and (pointer: coarse) {
+    .action-btn-icon-only:active .label {
+      max-width: 200px;
+      opacity: 1;
+      margin-left: 0.2rem;
+    }
+    
+    .action-btn-icon-only:active {
+      padding: 0.5rem 1rem;
+    }
   }
 
   .new-game-btn:hover, 

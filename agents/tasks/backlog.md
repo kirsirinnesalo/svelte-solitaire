@@ -4,7 +4,6 @@
 
 **Priority**: First task in this section = next task to work on. Physical order defines priority.
 
-- [FEAT-013](FEAT-013-version-display.md) - Show app version in UI
 - [TECH-026](TECH-026-card-back-selector-style.md) - Align card back selector styling with homepage
 - [BUG-002](BUG-002-napoleon-callback-props.md) - Fix Napoleon to use callback props (ADR-003 violation)
 - [TECH-027](TECH-027-timer-utility.md) - Extract shared timer utility (~80 lines duplication)
@@ -15,7 +14,7 @@
 
 ## In Progress
 
-_(None)_
+- [FEAT-013](FEAT-013-version-display.md) - Show app version in UI
 
 ## Blocked
 

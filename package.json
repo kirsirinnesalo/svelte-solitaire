@@ -1,6 +1,6 @@
 {
   "name": "svelte-solitaire",
-  "version": "1.0.1",
+  "version": "1.1.0",
   "description": "A collection of solitaire card games built with Svelte",
   "license": "MIT",
   "type": "module",

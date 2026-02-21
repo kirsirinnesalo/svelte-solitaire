@@ -1,8 +1,8 @@
 # AI Agent Development Guide
 
-Welcome to the Svelte Solitaire development team! This document contains everything needed to understand the project architecture, practices, and workflow.
+Everything needed to contribute to this project. In case of conflict, ADRs take precedence over this guide.
 
-> **Quick Start**: Read this document first. In case of conflict, ADRs take precedence over this guide.
+---
 
 ## 📋 Quick Reference
 
@@ -11,19 +11,6 @@ Welcome to the Svelte Solitaire development team! This document contains everyth
 - **Language**: Finnish UI, English code/docs
 - **Tasks**: [backlog.md](agents/tasks/backlog.md) | [Task Guide](agents/tasks/README.md)
 - **Commits**: `feat(TASK-ID): short summary`
-
-## ✈️ Pre-flight Checklist
-
-Before starting ANY task:
-
-1. [ ] Read task file completely (`agents/tasks/TASK-ID.md`)
-2. [ ] Review related ADRs listed in task
-3. [ ] On main: Move task to In Progress in `backlog.md`
-4. [ ] On main: Commit `git commit -m "chore(TASK-ID): start task"`
-5. [ ] Create feature branch: `git checkout -b feat/TASK-ID-description`
-6. [ ] Create todo list (VS Code Copilot: use `manage_todo_list` tool)
-
-**Then follow Task Workflow below.**
 
 ## 🚦 Critical Rules
 
@@ -42,7 +29,18 @@ Before starting ANY task:
 
 **How**: Document in task file, propose ADR update, ask specific questions.
 
-## 🔄 Task Workflow (Agent Responsibilities)
+## ✈️ Pre-flight Checklist
+
+Before starting ANY task:
+
+1. [ ] Read task file completely (`agents/tasks/TASK-ID.md`)
+2. [ ] Review related ADRs listed in task
+3. [ ] On main: Move task to In Progress in `backlog.md`
+4. [ ] On main: Commit `git commit -m "chore(TASK-ID): start task"`
+5. [ ] Create feature branch: `git checkout -b feat/TASK-ID-description`
+6. [ ] Create todo list (VS Code Copilot: use `manage_todo_list` tool)
+
+## 🔄 Task Workflow
 
 Complete workflow for every task:
 
@@ -73,17 +71,46 @@ Complete workflow for every task:
 
 **One task at a time**: Complete fully before starting next.
 
-**Scope control**:
-- Only implement what is required by the current task
-- If improvement is desirable but not required:
-  - Create a separate TECH/FEAT task
-  - Do NOT implement it under current task
+**Scope control**: Only implement what is required by the current task. If improvement is desirable but not required, create a separate TECH/FEAT task.
 
-**If merge is delayed**:
-- Agent must not continue new tasks on the same feature branch
-- Wait for user merge before starting next task
+**If merge is delayed**: Wait for user merge before starting next task. Do not continue on the same feature branch.
 
 **Note**: Task completion happens on feature branch. Main only gets "start" commits.
+
+### ✅ Definition of Done
+
+Every task is complete when:
+- [ ] Tests written and passing (TDD red-green-refactor)
+- [ ] Code follows Svelte 5 runes patterns
+- [ ] TypeScript strict mode compliance
+- [ ] Finnish UI text, English code
+- [ ] No console warnings/errors
+- [ ] Committed with task ID
+- [ ] ADR created if architectural change
+- [ ] README.md updated if user-visible
+
+## 🔐 Agent vs User Responsibilities
+
+### Agent MAY:
+- create feature branches
+- stage and commit changes
+- run tests, lint, and build locally
+
+### Agent MUST NOT:
+- git push
+- git pull
+- git merge
+- git rebase
+- git reset
+- delete branches
+
+### User DOES:
+- push branches
+- merge to main
+- delete branches
+- resolve merge conflicts
+
+---
 
 ## 🎯 Project Structure
 
@@ -111,108 +138,6 @@ src/
 - UI: `src/games/klondike/Klondike.svelte`
 - Logic: `src/games/klondike/klondikeRules.ts`
 - Tests: `src/games/klondike/klondikeRules.test.ts`
-
-## 🔐 Agent vs User Responsibilities
-
-### Agent MAY:
-- create feature branches
-- stage and commit changes
-- run tests, lint, and build locally
-
-### Agent MUST NOT:
-- git push
-- git pull
-- git merge
-- git rebase
-- git reset
-- delete branches
-
-### User DOES:
-- push branches
-- merge to main
-- delete branches
-- resolve merge conflicts
-
-## 🏗️ Architecture Decisions
-
-All architectural decisions are documented in `docs/adrs/`. Key decisions:
-
-- **[ADR-001](docs/adrs/ADR-001-test-driven-development.md)**: TDD workflow mandate
-- **[ADR-002](docs/adrs/ADR-002-svelte-5-runes-only.md)**: Svelte 5 runes-only approach
-- **[ADR-003](docs/adrs/ADR-003-callback-props-over-event-dispatchers.md)**: Callback props pattern
-- **[ADR-004](docs/adrs/ADR-004-json-parse-for-state-cloning.md)**: JSON.parse for state cloning
-- **[ADR-005](docs/adrs/ADR-005-game-over-overlay-refactor.md)**: Overlay component refactoring
-- **[ADR-006](docs/adrs/ADR-006-localstorage-for-game-statistics.md)**: LocalStorage for game statistics
-
-## 🔴 Test-Driven Development Workflow
-
-Always follow TDD workflow for new features and bug fixes.
-
-### 1. Red Phase - Write Failing Test
-```bash
-# Create test file first
-touch src/games/klondike/klondikeRules.test.ts
-
-# Write test that describes expected behavior
-npm run test -- --watch
-```
-
-### 2. Green Phase - Implement Minimum Code
-```typescript
-// Implement just enough to make test pass
-export function moveCard(/* ... */) {
-  // Minimal implementation
-}
-```
-
-### 3. Refactor Phase - Improve Code
-```typescript
-// Clean up, optimize, remove duplication
-// Tests must still pass
-```
-
-### Test Hierarchy Priority
-1. **Pure functions** (`*Rules.ts`) - Test first, 100% coverage
-2. **Component logic** - Test user interactions
-3. **Integration** - Test game flow end-to-end
-4. **Visual** - Manual verification only
-
-### Test Annotations
-
-Link tests to tasks using JSDoc annotations:
-
-```typescript
-/**
- * @covers FEAT-001
- * @description Tests card movement animations
- * @constrainedBy ADR-001, ADR-002
- */
-describe('Card animations', () => {
-  it('animates card movement', () => {
-    // test code
-  });
-});
-```
-
-This enables:
-- Traceability: Which tests cover which features
-- Impact analysis: What to test when changing a task
-- Coverage tracking: Which tasks have tests
-
-## 📝 Task Management
-
-**See [agents/tasks/README.md](agents/tasks/README.md) for complete guide.**
-
-**Critical Rules:**
-- **Priority**: Physical order in Ready section (first = next)
-- **Ready**: USER-MANAGED ONLY - agents take first, never add/reorder
-- **ONE task at a time** - complete before starting next
-- **Types**: FEAT (features), TECH (technical/testing/docs), BUG (bugs)
-- **Workflow**: Ready → In Progress → archive to `completed/` directory
-- **TDD**: Test first for all tasks
-- **Commits**: Short and focused - `feat(TASK-ID): what changed`
-  - Don't repeat acceptance criteria (DoD is implicit)
-  - Don't list test counts or implementation details
 
 ## 📐 Code Conventions
 
@@ -285,12 +210,6 @@ $effect(() => {
   const interval = setInterval(() => elapsedTime++, 1000);
   return () => clearInterval(interval);
 });
-
-// ✅ Correct - state synchronization
-$effect(() => {
-  if (drawCount === 1) maxRecycles = 3;
-  else maxRecycles = 'unlimited';
-});
 ```
 
 ### Bindable Props
@@ -310,8 +229,8 @@ export interface GameState {
 }
 
 export function moveCard(
-  state: GameState, 
-  from: Location, 
+  state: GameState,
+  from: Location,
   to: Location
 ): MoveResult {
   // Pure logic, fully testable
@@ -323,13 +242,13 @@ export function isGameWon(state: GameState): boolean {
 ```
 
 ### 2. UI Component (`*.svelte`)
-```typescript
+```svelte
 <script lang="ts">
   import { moveCard, isGameWon } from './gameRules';
-  
+
   let gameState: GameState = $state({/* ... */});
   let isWon = $derived(isGameWon(gameState));
-  
+
   function handleMove() {
     const result = moveCard(gameState, from, to);
     if (result.valid) gameState = result.newState!;
@@ -347,6 +266,48 @@ history = [...history, structuredClone(gameState)]; // Error!
 ```
 
 See [ADR-004](docs/adrs/ADR-004-json-parse-for-state-cloning.md) for rationale.
+
+## 🔴 Test-Driven Development Workflow
+
+### 1. Red Phase - Write Failing Test
+```bash
+touch src/games/klondike/klondikeRules.test.ts
+npm run test -- --watch
+```
+
+### 2. Green Phase - Implement Minimum Code
+```typescript
+// Implement just enough to make test pass
+export function moveCard(/* ... */) {
+  // Minimal implementation
+}
+```
+
+### 3. Refactor Phase - Improve Code
+```typescript
+// Clean up, optimize, remove duplication
+// Tests must still pass
+```
+
+### Test Hierarchy Priority
+1. **Pure functions** (`*Rules.ts`) - Test first, 100% coverage
+2. **Component logic** - Test user interactions
+3. **Integration** - Test game flow end-to-end
+4. **Visual** - Manual verification only
+
+### Test Annotations
+
+```typescript
+/**
+ * @covers FEAT-001
+ * @constrainedBy ADR-001, ADR-002
+ */
+describe('Card animations', () => {
+  it('animates card movement', () => {
+    // test code
+  });
+});
+```
 
 ## 🔧 Common Workflows
 
@@ -368,57 +329,29 @@ See [ADR-004](docs/adrs/ADR-004-json-parse-for-state-cloning.md) for rationale.
 1. Write failing test that reproduces bug
 2. Fix bug to make test pass
 3. Verify no regressions
-4. Commit with BUG-XXX prefix
+4. Commit with `fix(BUG-XXX): short summary`
 
 ## 🛠️ Development Commands
 
 ```bash
-# Check Node version (minimum Node 20 required)
-node -v
-
-# Development server (port 5173)
-npm run dev
-
-# Type checking
-npm run check
-
-# Build for production
-npm run build
-
-# Run tests (when implemented)
-npm run test
-npm run test -- --watch
-npm run test -- --coverage
+npm run dev               # Development server (port 5173)
+npm run check             # TypeScript validation
+npm run build             # Production build
+npm run test              # Run tests
+npm run test -- --watch   # Watch mode
+npm run test -- --coverage  # Coverage report
 ```
 
-## ✅ Definition of Done
+## 🏗️ Architecture Decisions
 
-Every task is complete when:
-- [ ] Tests written and passing (TDD red-green-refactor)
-- [ ] Code follows Svelte 5 runes patterns
-- [ ] TypeScript strict mode compliance
-- [ ] Finnish UI text, English code
-- [ ] No console warnings/errors
-- [ ] Committed with task ID
-- [ ] ADR created if architectural change
-- [ ] README.md updated if user-visible
+All architectural decisions are documented in `docs/adrs/`. Key decisions:
 
-**Task completion**: Move to Completed in backlog.md, archive to `completed/` with original filename.
-
-**See [agents/tasks/README.md](agents/tasks/README.md) for complete workflow.**
-
-- [Svelte 5 Runes Docs](https://svelte.dev/docs/svelte/what-are-runes)
-- [Project ADRs](docs/adrs/) | [ADR Index](docs/adrs/README.md)
-- [Task Backlog](agents/tasks/backlog.md) | [Task Guide](agents/tasks/README.md)
-
-## 🤝 Contributing
-
-1. Check [agents/tasks/backlog.md](agents/tasks/backlog.md) for next task
-2. Read related ADRs and task file before starting
-3. Follow TDD workflow (red-green-refactor)
-4. Update task status when complete
-5. Create ADR for architectural decisions
-6. Keep documentation updated
+- **[ADR-001](docs/adrs/ADR-001-test-driven-development.md)**: TDD workflow mandate
+- **[ADR-002](docs/adrs/ADR-002-svelte-5-runes-only.md)**: Svelte 5 runes-only approach
+- **[ADR-003](docs/adrs/ADR-003-callback-props-over-event-dispatchers.md)**: Callback props pattern
+- **[ADR-004](docs/adrs/ADR-004-json-parse-for-state-cloning.md)**: JSON.parse for state cloning
+- **[ADR-005](docs/adrs/ADR-005-game-over-overlay-refactor.md)**: Overlay component refactoring
+- **[ADR-006](docs/adrs/ADR-006-localstorage-for-game-statistics.md)**: LocalStorage for game statistics
 
 ---
 

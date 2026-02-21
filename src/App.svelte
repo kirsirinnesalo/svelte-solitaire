@@ -136,14 +136,16 @@
   .card-back-selector select {
     padding: 0.4rem 0.8rem;
     font-size: 0.95rem;
-    border: 2px solid #4CAF50;
+    border: 2px solid #e0e0e0;
     border-radius: 6px;
     background: white;
     cursor: pointer;
     color: #2c3e50;
+    transition: border-color 0.2s, background 0.2s;
   }
 
   .card-back-selector select:hover {
+    border-color: #4CAF50;
     background: #f0f0f0;
   }
 

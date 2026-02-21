@@ -34,6 +34,7 @@ _(None)_
 - [FEAT-007](FEAT-007-focus-styles.md) - Add visible focus styles for keyboard navigation
 - [FEAT-008](FEAT-008-dark-mode.md) - Implement dark mode theme
 - [FEAT-010](FEAT-010-show-card-underneath-drag.md) - Show card underneath when dragging from tableau
+- [FEAT-014](FEAT-014-tooltip-buttons.md) - Replace expanding buttons with icon tooltips
 
 ## Technical
 

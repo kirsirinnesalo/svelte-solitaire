@@ -13,7 +13,7 @@
 
 ## In Progress
 
-- [TECH-026](TECH-026-card-back-selector-style.md) - Align card back selector styling with homepage
+_(None)_
 
 ## Blocked
 

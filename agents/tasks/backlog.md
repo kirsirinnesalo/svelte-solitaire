@@ -5,6 +5,12 @@
 **Priority**: First task in this section = next task to work on. Physical order defines priority.
 
 - [TECH-026](TECH-026-card-back-selector-style.md) - Align card back selector styling with homepage
+- [BUG-002](BUG-002-napoleon-callback-props.md) - Fix Napoleon to use callback props (ADR-003 violation)
+- [TECH-027](TECH-027-timer-utility.md) - Extract shared timer utility (~80 lines duplication)
+- [TECH-010](TECH-010-undo-manager.md) - Create shared undo manager utility
+- [TECH-015](TECH-015-unify-drag-logic.md) - Unify drag & drop logic across games
+- [TECH-014](TECH-014-constants-file.md) - Create constants.ts for repeated values
+
 
 ## In Progress
 
@@ -31,11 +37,7 @@ _(None)_
 
 - [TECH-002](TECH-002-stats-storage.md) - Implement game statistics with LocalStorage (ADR-006)
 - [TECH-003](TECH-003-derived-undo-state.md) - Use $derived for undo button state
-- [TECH-010](TECH-010-undo-manager.md) - Create shared undo manager utility
-- [TECH-027](TECH-027-timer-utility.md) - Extract shared timer utility (~80 lines duplication)
 - [TECH-013](TECH-013-auto-start-games.md) - Fix initGame() auto-start for Klondike, Napoleon, Clock
-- [TECH-014](TECH-014-constants-file.md) - Create constants.ts for repeated values
-- [TECH-015](TECH-015-unify-drag-logic.md) - Unify drag & drop logic across games
 - [TECH-016](TECH-016-lazy-loading.md) - Implement lazy loading for game components
 - [TECH-017](TECH-017-bundle-analysis.md) - Analyze and optimize bundle size
 - [TECH-018](TECH-018-component-tests.md) - Add component tests with Testing Library
@@ -45,6 +47,5 @@ _(None)_
 ## Bugs
 
 - [BUG-001](BUG-001-cardback-persistence.md) - Fix cardBack localStorage persistence using ADR-006
-- [BUG-002](BUG-002-napoleon-callback-props.md) - Fix Napoleon to use callback props (ADR-003 violation)
 
 

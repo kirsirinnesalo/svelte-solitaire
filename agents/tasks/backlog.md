@@ -4,7 +4,6 @@
 
 **Priority**: First task in this section = next task to work on. Physical order defines priority.
 
-- [TECH-021](TECH-021-remove-napoleon-draw-counter.md) - Show recycle counters only when limit > 1
 - [TECH-022](TECH-022-counter-settings.md) - Add reusable counter settings (label: Laskurit)
 - [TECH-023](TECH-023-settings-layout.md) - Stack settings labels above controls
 - [TECH-024](TECH-024-icon-only-actions.md) - Icon-only action buttons with hover labels
@@ -13,7 +12,7 @@
 
 ## In Progress
 
-_(None)_
+- [TECH-021](TECH-021-remove-napoleon-draw-counter.md) - Show recycle counters only when limit > 1
 
 ## Blocked
 

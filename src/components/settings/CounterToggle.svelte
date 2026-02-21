@@ -46,16 +46,11 @@
   .slider-track {
     position: relative;
     display: flex;
-    background: #d0d0d0;
+    background: #e0e0e0;
     border-radius: 16px;
     padding: 2px;
     width: 70px;
     height: 32px;
-    transition: background 0.3s;
-  }
-
-  .toggle-slider.on .slider-track {
-    background: #90d090;
   }
 
   .slider-option {
@@ -72,14 +67,14 @@
   }
 
   .slider-label {
-    font-size: 1.1rem;
+    font-size: 0.9rem;
     font-weight: 600;
     color: #666;
     transition: color 0.3s;
   }
 
   .toggle-slider.on .slider-option:first-child .slider-label {
-    color: #888;
+    color: #666;
   }
 
   .toggle-slider:not(.on) .slider-option:first-child .slider-label,
@@ -93,14 +88,13 @@
     left: 2px;
     width: calc(50% - 2px);
     height: calc(100% - 4px);
-    background: #999;
+    background: #4CAF50;
     border-radius: 14px;
-    transition: all 0.3s ease;
+    transition: transform 0.3s ease;
     z-index: 1;
   }
 
   .toggle-slider.on .slider-thumb {
     transform: translateX(100%);
-    background: #4CAF50;
   }
 </style>

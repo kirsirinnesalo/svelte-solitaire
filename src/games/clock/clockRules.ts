@@ -46,6 +46,14 @@ export function revealCard(state: ClockState, pileIndex: number): ClockMoveResul
     return { valid: false };
   }
   
+  // Check if game has started (any card is face-up)
+  const gameStarted = state.piles.some(p => p.some(c => c.faceUp));
+  
+  // If game hasn't started, only allow revealing from center pile (index 12)
+  if (!gameStarted && pileIndex !== 12) {
+    return { valid: false };
+  }
+  
   // Create new state with revealed card
   const newPiles = state.piles.map(p => [...p]);
   const topCard = newPiles[pileIndex][newPiles[pileIndex].length - 1];

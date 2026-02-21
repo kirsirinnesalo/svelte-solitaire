@@ -10,7 +10,7 @@ Everything needed to contribute to this project. In case of conflict, ADRs take 
 - **Development**: TDD-first, feature branches, ONE task at a time, Conventional Commits
 - **Language**: Finnish UI, English code/docs
 - **Tasks**: [backlog.md](agents/tasks/backlog.md) | [Task Guide](agents/tasks/README.md)
-- **Commits**: `feat(TASK-ID): short summary`
+- **Commits**: `feat(TASK-ID): short summary` | `fix(BUG-XXX): short summary`
 
 ## 🚦 Critical Rules
 
@@ -47,12 +47,7 @@ Complete workflow for every task:
 1. **Prepare**: Complete Pre-flight Checklist above
 2. **Red**: Write failing tests (TDD red phase)
 3. **Green**: Implement minimum code to pass tests
-4. **Refactor**: Improve code quality while keeping tests green
-   - Remove duplication (DRY principle)
-   - Improve naming (clear, descriptive)
-   - Simplify structure (reduce complexity)
-   - Follow project patterns (ADRs, conventions)
-   - **No technical debt**: Code must be production-ready
+4. **Refactor**: Improve code quality while keeping tests green — follow project patterns, no technical debt
 5. **Quality Gates (MANDATORY before commit)**:
    - Run unit tests: `npm run test` (Vitest)
    - Run lint: `npm run lint` (if configured)
@@ -136,10 +131,6 @@ Every task is complete when:
 - Game-specific state interfaces in `*Rules.ts`
 - Inline type assertions for `$state`: `[] as Card[][]`
 
-### Test Coverage Targets
-- Pure functions (`*Rules.ts`): 100%
-- Components: 80%+
-
 ##  Game Implementation Pattern
 
 ### 1. Rules Module (`*Rules.ts`)
@@ -211,18 +202,6 @@ describe('Card animations', () => {
 4. Add to `GameType` in `src/types/game.ts`
 5. Add to `games` array in `GameSelector.svelte`
 6. Add rendering case in `App.svelte`
-
-### Refactoring
-1. Ensure existing tests pass
-2. Make changes incrementally
-3. Run tests after each change
-4. Document decision in ADR if architectural
-
-### Bug Fix
-1. Write failing test that reproduces bug
-2. Fix bug to make test pass
-3. Verify no regressions
-4. Commit with `fix(BUG-XXX): short summary`
 
 ## 🛠️ Development Commands
 

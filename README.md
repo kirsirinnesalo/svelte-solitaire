@@ -2,6 +2,8 @@
 
 A single-page app featuring a collection of classic solitaire card games, built with Svelte 5, TypeScript and Vite.
 
+🎮 **[Live demo](https://kirsirinnesalo.github.io/svelte-solitaire/)**
+
 ---
 
 ## 🚀 Getting Started

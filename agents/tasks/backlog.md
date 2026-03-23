@@ -9,6 +9,8 @@
 - [TECH-010](TECH-010-undo-manager.md) - Create shared undo manager utility
 - [TECH-015](TECH-015-unify-drag-logic.md) - Unify drag & drop logic across games
 - [TECH-014](TECH-014-constants-file.md) - Create constants.ts for repeated values
+- [TECH-020](TECH-020-card-bounds-collision.md) - Improve drag collision detection using card bounds
+- [FEAT-014](FEAT-014-tooltip-buttons.md) - Replace expanding buttons with icon tooltips
 
 
 ## In Progress
@@ -32,7 +34,6 @@ _(None)_
 - [FEAT-007](FEAT-007-focus-styles.md) - Add visible focus styles for keyboard navigation
 - [FEAT-008](FEAT-008-dark-mode.md) - Implement dark mode theme
 - [FEAT-010](FEAT-010-show-card-underneath-drag.md) - Show card underneath when dragging from tableau
-- [FEAT-014](FEAT-014-tooltip-buttons.md) - Replace expanding buttons with icon tooltips
 
 ## Technical
 
@@ -43,7 +44,6 @@ _(None)_
 - [TECH-017](TECH-017-bundle-analysis.md) - Analyze and optimize bundle size
 - [TECH-018](TECH-018-component-tests.md) - Add component tests with Testing Library
 - [TECH-019](TECH-019-e2e-tests.md) - Add E2E tests for game scenarios
-- [TECH-020](TECH-020-card-bounds-collision.md) - Improve drag collision detection using card bounds
 
 ## Bugs
 

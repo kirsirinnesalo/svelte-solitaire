@@ -32,6 +32,8 @@ jobs:
         run: npm ci
 
       - name: Build
+        env:
+          VITE_UMAMI_ENABLED: ${{ vars.VITE_UMAMI_ENABLED }}
         run: npm run build
 
       - name: Upload Pages artifact

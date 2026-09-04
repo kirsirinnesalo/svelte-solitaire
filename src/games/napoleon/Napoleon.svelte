@@ -1,5 +1,4 @@
 <script lang="ts">
-  import { createEventDispatcher } from 'svelte';
   import { createDeck, shuffleDeck } from '../../lib/cardUtils';
   import type { Card } from '../../types/game';
   import CardComponent from '../../components/CardComponent.svelte';
@@ -23,6 +22,8 @@
   import { allowDrop } from '../../lib/dragUtils';
   import { napoleonInstructions } from '../../lib/gameInstructions';
   import '../../styles/shared.css';
+
+  let { onback }: { onback: () => void } = $props();
 
   let gameState: NapoleonState = $state({
     center: [],

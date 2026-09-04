@@ -77,7 +77,7 @@
   {:else if selectedGame === 'klondike'}
     <Klondike />
   {:else if selectedGame === 'napoleon'}
-    <Napoleon />
+    <Napoleon onback={handleBackToMenu} />
   {:else if selectedGame === 'acesup'}
     <AcesUp />
   {:else if selectedGame === 'clock'}

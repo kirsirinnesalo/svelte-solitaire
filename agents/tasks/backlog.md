@@ -15,7 +15,7 @@
 
 ## In Progress
 
-- [BUG-002](BUG-002-napoleon-callback-props.md) - Fix Napoleon to use callback props (ADR-003 violation)
+_(None)_
 
 ## Blocked
 
@@ -48,4 +48,3 @@ _(None)_
 ## Bugs
 
 - [BUG-001](BUG-001-cardback-persistence.md) - Fix cardBack localStorage persistence using ADR-006
-
